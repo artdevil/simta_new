@@ -14,7 +14,7 @@ gem 'ancestry'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'ckeditor'
-gem 'activeadmin'
+gem 'activeadmin', :git => "git://github.com/gregbell/active_admin.git"
 gem "friendly_id", "~> 4.0.9"
 gem 'remotipart','1.0.2'
 gem 'cancan'
@@ -39,18 +39,8 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
-  gem 'rspec','2.12.0'
-  gem 'rspec-rails','2.12.0'
-  gem 'capybara','1.1.4'
-  gem 'capybara-webkit', '~> 0.12.1'
-  gem "capybara-mechanize", "~> 0.3.0"
-  gem 'launchy','2.1.2'
-  gem 'ruby-prof', '~> 0.12.0'
-  gem 'factory_girl_rails','4.1.0'
-  gem 'test-unit','2.5.3'
-  gem 'database_cleaner','0.9.1'
-  gem 'fakeweb','1.3.0'
-  gem 'debugger','1.2.3'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 # To use ActiveModel has_secure_password

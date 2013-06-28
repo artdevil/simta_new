@@ -1,4 +1,16 @@
 SimtaNew::Application.routes.draw do
+  devise_for :users
+  devise_for :users do
+    get "/", :to => "devise/sessions#new"
+  end
+  root :to => "devise/sessions#new"
+  authenticated :user do
+    root :to => 'dashboards#index'
+  end
+  
+  resources :dashboards
+  resources :user_profiles
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

@@ -1,0 +1,31 @@
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<fieldset>
+	<label>
+		<span class="block input-icon input-icon-right">
+      <%= f.text_field :keyid, :class => "span12", :placeholder => "NIM atau NIP" %>
+			<i class="icon-user"></i>
+		</span>
+	</label>
+
+	<label>
+		<span class="block input-icon input-icon-right">
+			<%= f.password_field :password, :class => "span12", :placeholder => "Password" %>
+			<i class="icon-lock"></i>
+		</span>
+	</label>
+
+	<div class="space"></div>
+
+	<div class="row-fluid">
+		<label class="span8">
+			<%= f.check_box :remember_me if devise_mapping.rememberable? %>
+			<span class="lbl"> Remember Me</span>
+		</label>
+
+    <%= f.button :submit, :class => "span4 btn btn-small btn-primary" do %>
+		  <i class="icon-key"></i>
+		  Login
+    <% end %>
+	</div>
+</fieldset>
+<% end %>

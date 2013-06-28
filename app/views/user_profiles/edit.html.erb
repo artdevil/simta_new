@@ -1,0 +1,51 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "user_profiles/breadcrumbs/edit" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Edit Profile
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= current_user.username %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+    <%= simple_form_for current_user, :url => user_profile_path, :method => "put", :html => {:class => "form-horizontal"} do |f| %>
+  		<div class="row-fluid">
+  			<!--PAGE CONTENT BEGINS HERE-->
+        <div class="span2 profile_picture_wrap">
+          <%= image_tag current_user.avatar_url.to_s, :class => "profile_picture_big" %>
+          <div class="clearfix"></div>
+          <br>
+          <%= f.input :avatar, :wrapper => :uploader, :input_html => {:id => "id-input-file-1"}%>
+        </div><!-- span -->
+  			<div class="span10">
+          <div class="row-fluid">
+            <div class="span6">
+              <%= f.input :username %>
+              <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
+              <%= f.input :password_confirmation, :required => false %>
+              <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
+            </div>
+          </div>
+  			</div><!-- span -->
+  			<!--PAGE CONTENT ENDS HERE-->
+  		</div><!--/row-->
+      <div class="row-fluid">
+				<div class="form-actions">
+					<button class="btn btn-info" type="submit">
+						<i class="icon-ok bigger-110"></i>
+						Submit
+					</button>
+
+					&nbsp; &nbsp; &nbsp;
+					<button class="btn" type="reset">
+						<i class="icon-undo bigger-110"></i>
+						Reset
+					</button>
+				</div>
+      </div><!--/row-->
+      <% end %>
+	</div><!--/#page-content-->
+	<%= render :partial => "user_profiles/partials/config_button" %>
+</div><!--/#main-content-->

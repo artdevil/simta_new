@@ -1,0 +1,24 @@
+.controls.description{
+  color: #2679b5;
+}
+
+.profile_picture_wrap{
+  text-align: center;
+  
+  .profile_picture_big{
+    width: 152px;
+    height: 152px;
+  }
+}
+
+#ace-settings-box{
+  width: auto;
+  &.open{
+    padding: 0px 10px 10px 10px;
+  }
+}
+
+.ace-file-input label span{
+  padding-left: 30px;
+  float: left;
+}

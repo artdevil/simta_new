@@ -8,6 +8,18 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap
+ *= require bootstrap-responsive
+ *= require font-awesome
+ *= require jquery-ui-1.10.3.custom.min
+ *= require chosen
+ *= require datepicker
+ *= require bootstrap-timepicker
+ *= require daterangepicker
+ *= require colorpicker
+ *= require ace
+ *= require ace-responsive
+ *= require ace-skins
+ *= require style
  *= require_self
- *= require_tree .
  */
