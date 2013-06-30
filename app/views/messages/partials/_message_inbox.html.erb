@@ -1,0 +1,48 @@
+<div id="messageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Read Message</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span6">
+        <dl class="dl-horizontal dt_align_left">
+          <dt>From</dt>
+          <dd><%= message.sender.username %></dd>
+          <dt>Date</dt>
+          <dd><%= message.created_at.strftime('%d %B %Y, %H:%M') %></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <h4>Message</h4>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <%= raw message.body %>
+      </div>
+    </div>
+    <% unless message.attachments.blank? %>
+      <div class="row-fluid">
+        <div class="span12">
+          <h4>Attachments</h4>
+        </div>
+      </div>
+      <% message.attachments.each do |f| %>
+        <div class="row-fluid">
+          <div class="span12">
+            <%= link_to File.basename(f.file.path), f.file.url.to_s, :target => f.id %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-small" data-dismiss="modal" aria-hidden="true">Close</button>
+    <%= link_to reply_message_path(message), :remote => true, :class => "btn btn-small btn-primary" do %>
+      <i class="icon-mail-reply"></i> Reply
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<li class="nav-header">
+	<i class="icon-warning-sign"></i>
+	<%= notification_unread_count.to_s %> New Notifications
+</li>
+<% notifications_all.each do |f| %>
+  <li> 
+  	<a href="#">
+  		<%= image_tag f.sender.avatar_url(:thumb).to_s %>
+  		<span class="msg-body">
+  			<span class="msg-title">
+  				<span class="blue"><%= f.sender.username %></span>
+  				<%= f.message %>
+  			</span>
+
+  			<span class="msg-time">
+  				<i class="icon-time"></i>
+  				<span class="timeago" title="<%= f.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  			</span>
+  		</span>
+  	</a>
+  </li>
+<% end %>
+<% notifications_all.update_all(:read => true)%>
+<li>
+	<a href="#">
+		See all notifications
+		<i class="icon-arrow-right"></i>
+	</a>
+</li>

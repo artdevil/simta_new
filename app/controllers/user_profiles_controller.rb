@@ -20,4 +20,12 @@ class UserProfilesController < ApplicationController
       render :action => 'edit'
     end
   end
+  
+  def search
+    if current_user.user_role_id == 1
+      @user = User.search_lecture(params[:term])
+    elsif current_user.user_role_id == 2
+      @user = User.search_student(params[:term])
+    end
+  end
 end

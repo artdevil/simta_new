@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+  message:
+    notification:
+      sent: "Your Message Has Been Sent"
+      failed: "Your Message Has Been Sent"

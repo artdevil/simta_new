@@ -10,6 +10,9 @@
 				</small>
 			</h1>
 		</div><!--/.page-header-->
+    <!-- bootstrap flash -->
+		<%= bootstrap_flash %>
+    <!-- end bootstrap flash -->
     <%= simple_form_for current_user, :url => user_profile_path, :method => "put", :html => {:class => "form-horizontal"} do |f| %>
   		<div class="row-fluid">
   			<!--PAGE CONTENT BEGINS HERE-->
@@ -47,5 +50,4 @@
       </div><!--/row-->
       <% end %>
 	</div><!--/#page-content-->
-	<%= render :partial => "user_profiles/partials/config_button" %>
 </div><!--/#main-content-->

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_private_messages
   #relation
   belongs_to :user_role
   # Include default devise modules. Others available are:
@@ -13,6 +14,9 @@ class User < ActiveRecord::Base
   #upload image
   mount_uploader :avatar, AvatarUploader
   
+  #scope definition
+  scope :search_lecture, lambda{|user| where{(user_role_id == 2) & (username =~ "%#{user}%")}}
+  scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%")}}
   protected
   
     def email_required?

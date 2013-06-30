@@ -1,0 +1,4 @@
+<% if @notification > 0 %>
+  $('#notification_number').html("<%= @notification.to_s %>");
+  $('.icon-bell-alt').addClass('icon-animated-bell');
+<% end %>

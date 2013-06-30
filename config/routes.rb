@@ -1,16 +1,29 @@
 SimtaNew::Application.routes.draw do
+  
+  mount Ckeditor::Engine => '/ckeditor'
+
   devise_for :users
   devise_for :users do
     get "/", :to => "devise/sessions#new"
   end
   root :to => "devise/sessions#new"
+  
   authenticated :user do
     root :to => 'dashboards#index'
+    resources :dashboards
+    resources :user_profiles do
+      collection do
+        get 'search'
+      end
+    end
+    resources :messages do
+      member do
+        get 'reply'
+      end
+    end
+    resources :notifications
   end
   
-  resources :dashboards
-  resources :user_profiles
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

@@ -1,0 +1,68 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "messages/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Messages
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Inbox, Outbox and Creating Messages
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+				<div class="span12">
+					<div class="tabbable">
+						<ul class="nav nav-tabs" id="myTab">
+							<li class="active">
+								<a data-toggle="tab" href="#inbox" id="message_inbox">
+									<i class="green icon-home bigger-110"></i>
+									Inbox
+								</a>
+							</li>
+
+							<li>
+								<a data-toggle="tab" href="#outbox" id="message_outbox">
+                  <i class="red icon-home bigger-110"></i>
+									Outbox
+								</a>
+							</li>
+              
+							<li>
+								<a data-toggle="tab" href="#new" id="message_new_tab">
+                  <i class="blue icon-envelope bigger-110"></i>
+									Create New Message
+								</a>
+							</li>
+							
+						</ul>
+
+						<div class="tab-content">
+							<div id="inbox" class="tab-pane in active">
+								<%= render :partial => "messages/partials/inbox", :locals => {:message_inbox => @message_inbox } %>
+							</div>
+							<div id="outbox" class="tab-pane">
+								<%= render :partial => "messages/partials/outbox", :locals => {:message_outbox => @message_outbox } %>
+							</div>
+              
+							<div id="new" class="tab-pane">
+								<%= render :partial => "messages/partials/new_message", :locals => {:message => @message} %>
+							</div>
+						</div>
+					</div>
+				</div><!--/span-->
+      </div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->
+<!-- Modal -->
+<div id="modal">
+  
+</div>

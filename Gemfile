@@ -11,11 +11,12 @@ gem 'jquery-ui-rails'
 gem 'jquery-migrate-rails'
 gem 'simple-private-messages', '0.0.0', :git => 'git://github.com/jongilbraith/simple-private-messages.git'
 gem 'ancestry'
+gem "nested_form"
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'ckeditor'
 gem 'activeadmin', :git => "git://github.com/gregbell/active_admin.git"
-gem "friendly_id", "~> 4.0.9"
+gem "friendly_id"
 gem 'remotipart','1.0.2'
 gem 'cancan'
 gem 'client_side_validations'
@@ -23,6 +24,7 @@ gem 'client_side_validations-simple_form'
 gem "nested_form"
 gem 'acts-as-taggable-on'
 gem 'kaminari'
+gem "squeel"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -47,7 +49,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'

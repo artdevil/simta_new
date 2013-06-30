@@ -12,6 +12,7 @@
  *= require bootstrap-responsive
  *= require font-awesome
  *= require jquery-ui-1.10.3.custom.min
+ *= require jquery.ui.autocomplete
  *= require chosen
  *= require datepicker
  *= require bootstrap-timepicker

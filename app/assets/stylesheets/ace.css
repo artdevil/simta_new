@@ -8179,6 +8179,7 @@ th.fc-widget-header {
     transform: rotate(0deg);
   }
 }
+
 .icon-animated-vertical {
   display: inline-block;
   -moz-animation: vertical 2.0s 5 ease 2.0s;

@@ -1,0 +1,38 @@
+<!-- outbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Outbox Messages
+	</div>
+
+	<table id="table_report" class="data_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Penerima</th>
+				<th class="hidden-phone">Tanggal</th>
+        <th class="hidden-phone">Jam</th>
+				<th>Subject</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+      <% message_outbox.each do |f| %>
+        <tr id="message_<%= f.id %>">
+          <td><%= f.recipient.username %></td>
+          <td class="hidden-phone"><%= f.created_at.strftime('%d %m %Y')%></td>
+          <td class="hidden-phone"><%= f.created_at.strftime('%H:%M')%></td>
+          <td><%= raw f.subject %></td>
+          <td>
+            <%= link_to message_path(f), :remote => true, :class => "btn btn-mini btn-yellow" do %>
+              <i class="icon-eye-open bigger-120"></i>
+            <% end %>
+            &nbsp;
+            <%= link_to message_path(f), :confirm => "apa anda yakin untuk menghapus pesan ini ?",:remote => true, :method => "delete", :class => "btn btn-mini btn-danger" do %>
+              <i class="icon-trash bigger-120"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end outbox -->

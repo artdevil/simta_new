@@ -1,0 +1,24 @@
+<!-- new message -->
+<div class="row-fluid">
+	<div class="span12">
+    <%= simple_nested_form_for message, :url => messages_path, :validate => true, :html => {:multipart => true, :class => "client_side_validation"} do |f| %>
+      <%= f.input :recipient_name, :label => "To :", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_user_profiles_path}} %>
+      <%= f.input :recipient_id, :as => :hidden, :input_html => {:class => "recipient_id"} %>
+      <%= f.input :subject, :label => "Subject :" %>
+      <%= f.ckeditor :body, :label => "Message :",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+      <%= f.simple_fields_for :attachments do |n| %>
+        <div class="row-fluid">
+          <div class="span6"><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
+        </div>
+      <% end %>
+      <p><%= f.link_to_add "Add a attachment", :attachments %></p>
+			<div class="form-actions">
+				<button class="btn btn-success" type="submit">
+					<i class="icon-ok bigger-110"></i>
+					Submit
+				</button>
+			</div>
+    <% end %>
+	</div><!--/span-->
+</div><!--/row-->
+<!-- end new message -->

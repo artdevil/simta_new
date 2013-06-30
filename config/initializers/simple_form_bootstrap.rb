@@ -1,5 +1,6 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
+  config.browser_validations = true
   config.wrappers :bootstrap, :tag => 'div', :class => 'control-group', :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
@@ -19,7 +20,6 @@ SimpleForm.setup do |config|
       ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
     end
   end
-  
 
   config.wrappers :prepend, :tag => 'div', :class => "control-group", :error_class => 'error' do |b|
     b.use :html5

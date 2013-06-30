@@ -22,3 +22,47 @@
   padding-left: 30px;
   float: left;
 }
+
+abbr[title=required]{
+  color: red;
+}
+
+.data_tables{
+  tbody{
+    tr.unread{
+      td{
+        background: #bdecfe;
+      }
+    }
+  }
+}
+
+.dl-horizontal.dt_align_left{
+  dt{
+    text-align: left;
+    width: auto;
+  }
+  
+  dd{
+    margin-left: 50px;
+  }
+}
+
+.fields{
+  margin-bottom: 10px;
+}
+
+.ace-file-input{
+  span.help-inline{
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+}
+
+#notification_message{
+  li{
+    img{
+      vertical-align: top;
+    }
+  }
+}
