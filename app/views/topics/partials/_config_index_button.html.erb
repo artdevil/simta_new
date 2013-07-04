@@ -1,0 +1,19 @@
+<div id="ace-settings-container">
+	<div class="btn btn-app btn-mini btn-warning" id="ace-settings-btn">
+		<i class="icon-cog"></i>
+	</div>
+	<div id="ace-settings-box">
+		<div>
+			<%= link_to '#pencarian',:id => "tampilkan_filter_pencarian", :class => "btn btn-small btn-info" do %>
+        <i class="icon-search"></i>
+        Tampilkan Filtering Pencarian
+      <% end %>
+		</div>
+	</div>
+  <br><br>
+</div><!--/#ace-settings-container-->
+<script type="text/javascript">
+$(document).on('click','#tampilkan_filter_pencarian', function(){
+  $('#filter_search_form').show();
+});
+</script>

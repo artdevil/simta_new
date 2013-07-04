@@ -8,21 +8,20 @@ SimtaNew::Application.routes.draw do
   end
   root :to => "devise/sessions#new"
   
-  authenticated :user do
-    root :to => 'dashboards#index'
-    resources :dashboards
-    resources :user_profiles do
-      collection do
-        get 'search'
-      end
+  resources :dashboards
+  resources :user_profiles do
+    collection do
+      get 'search'
     end
-    resources :messages do
-      member do
-        get 'reply'
-      end
-    end
-    resources :notifications
   end
+  resources :messages do
+    member do
+      get 'reply'
+    end
+  end
+  resources :notifications
+  resources :topics
+  
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

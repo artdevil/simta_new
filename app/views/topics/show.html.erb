@@ -1,0 +1,50 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "topics/breadcrumbs/show", :locals => {:topic_title => @topic.title} %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Topik Tugas Akhir
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @topic.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+        <div class="span12">
+          <div class="row-fluid item_header">
+            <div class="span12">
+          		<%= link_to topic_path(@topic) do %>
+            		<h4 class="<%= @topic.status ? 'active' : 'nonactive' %>">
+                  <%= @topic.title %>
+                </h4>
+              <% end %>
+              <h6>Di posting oleh : <%= @topic.user.username %></h6>
+              <h6>pada tanggal <%= @topic.created_at.strftime('%d %B %Y')%></h6>
+            </div>
+          </div><!-- end row -->
+          <br>
+          <div class="row-fluid item_body" style="font-size: 11px;">
+            <%#= raw "#{topic.description.truncate(600)} #{}" %>
+            <%# = truncate(topic.description) %>
+            <%= raw @topic.description %>
+          </div><!-- end row -->
+          <div class="row-fluid item_footer">
+            <p>Kata Kunci: <%= raw @topic.tag_list.map { |t| link_to t, topics_path(:keyword => t) }.join(', ') %></p>
+          </div><!-- end row -->
+        </div>
+      </div>
+      <div class="hr hr32 hr-dotted"></div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->
+<% if can? :edit, @topic %>
+  <%= render :partial => "topics/partials/config_show_button", :locals => {:topic => @topic} %>
+<% end %>

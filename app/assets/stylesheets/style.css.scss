@@ -1,3 +1,7 @@
+a:hover{
+  text-decoration: none; 
+}
+
 .controls.description{
   color: #2679b5;
 }
@@ -63,6 +67,35 @@ abbr[title=required]{
   li{
     img{
       vertical-align: top;
+    }
+  }
+}
+
+.form-horizontal.label-left{
+  .control-label{
+    text-align: left;
+  }
+}
+
+.item_topic{
+  .item_header{
+    h4{
+      &.active{
+        color: #87b87f;
+      }
+      &:hover{
+        color: #51a351;
+      }
+    }
+    h6{
+      color: #8089a0;
+      margin: 3px 0px;
+    }
+  }
+  
+  .item_footer{
+    p{
+      color: #8089a0;
     }
   }
 }

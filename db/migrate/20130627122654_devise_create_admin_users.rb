@@ -11,7 +11,7 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration
       ## Database authenticatable
       t.string :username, :null => false
       t.string :keyid, :null => false, :limit => 10
-      t.string :user_admin_role_id
+      t.integer :user_admin_role_id, :null => false, :limit => 10, :default => 2
       t.string :encrypted_password, :null => false, :default => ""
 
       ## Recoverable

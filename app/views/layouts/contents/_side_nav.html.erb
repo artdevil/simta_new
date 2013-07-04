@@ -8,10 +8,10 @@
       <%= link_to messages_path, :class => "btn btn-small btn-success" do %>
         <i class="icon-envelope"></i>
       <% end %>
-
-			<button class="btn btn-small btn-info">
-				<i class="icon-pencil"></i>
-			</button>
+      
+      <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
+        <i class="icon-pencil"></i>
+      <% end %>
 
 			<button class="btn btn-small btn-warning">
 				<i class="icon-group"></i>
@@ -39,6 +39,13 @@
 			  <i class="icon-dashboard"></i><span>Dashboard</span>
       <% end %>
 		</li>
+	  <% if can? :read, Topic %>
+  		<li class="<%= 'active' if controller_name == 'topics' %>">
+        <%= link_to topics_path do %>
+  			  <i class="icon-list"></i><span>Topik Tugas Akhir</span>
+        <% end %>
+  		</li>
+    <% end %>
 	</ul><!--/.nav-list-->
 
 	<div id="sidebar-collapse">

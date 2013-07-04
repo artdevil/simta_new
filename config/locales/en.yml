@@ -7,3 +7,12 @@ en:
     notification:
       sent: "Your Message Has Been Sent"
       failed: "Your Message Has Been Sent"
+  cancan:
+    unauthorized: "You are not authorized to access this page."
+  topic:
+    create:
+      success: "Your Topic Has Been Created"
+      failed: "Your Topic Can't Save"
+    update:
+      success: "Your Topic Has Been Updated"
+      failed: "You Topic Can't updated"

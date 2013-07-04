@@ -25,6 +25,7 @@ gem "nested_form"
 gem 'acts-as-taggable-on'
 gem 'kaminari'
 gem "squeel"
+gem "truncate_html"
 
 # Gems used only for assets and not required
 # in production environments by default.

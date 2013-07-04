@@ -53,3 +53,33 @@ users.each do |f|
     t.save!
   end
 end
+
+puts 'creating topic'
+
+# deskripsi TA
+
+description = '<p><span style="color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 14px; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </span></p>'
+# judul TA
+
+topics = [
+  {:user_id => 9, :title => "Perancangan dan implementasi monitoring tugas akhir", :tag_list => "monitoring", :description => "#{description}"},
+  {:user_id => 9, :title => "perancangan quadcopter dengan menggunakan raspberry", :tag_list => "quadcopter, raspberry", :description => "#{description}"},
+  {:user_id => 9, :title => "augmented reality untuk jalan raya", :tag_list => "augmented reality", :description => "#{description}"},
+  {:user_id => 9, :title => "perancangan web services untuk rumah sakit", :tag_list => "web services, rumah sakit", :description => "#{description}"},
+  {:user_id => 10, :title => "pencarian lokasi terdekat dengan menggunakan algoritma djikstra", :tag_list => "algoritma djikstra", :description => "#{description}"},
+  {:user_id => 10, :title => "monitoring pada jalur kereta api", :tag_list => "monitoring, kereta api", :description => "#{description}"},
+  {:user_id => 10, :title => "pencitraan menggunakan matlab", :tag_list => "pencitraan,matlab", :description => "#{description}"},
+  {:user_id => 11, :title => "pembuatan aplikasi web dengan menggunakan node.js", :tag_list => "aplikasi web,node.js", :description => "#{description}"},
+  {:user_id => 11, :title => "aplikasi android untuk monitoring kesehatan", :tag_list => "android,monitoring, kesehatan", :description => "#{description}"},
+  {:user_id => 10, :title => "antena mikrostrip", :tag_list => "antena, mikrostrip", :description => "#{description}"},
+  {:user_id => 9, :title => "collaborator application dengan ruby on rails web framework", :tag_list => "collaborator application,ruby on rails, web framework", :description => "#{description}"}
+]
+
+# bikin TA
+topics.each do |f|
+  Topic.create(f)
+end

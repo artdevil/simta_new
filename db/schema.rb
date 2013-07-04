@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130630044834) do
+ActiveRecord::Schema.define(:version => 20130701160130) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -95,6 +95,48 @@ ActiveRecord::Schema.define(:version => 20130630044834) do
     t.datetime "updated_at",                         :null => false
   end
 
+  create_table "proposals", :force => true do |t|
+    t.integer  "topic_id"
+    t.integer  "user_id"
+    t.integer  "advisor_1_id"
+    t.integer  "advisor_2_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "progress",     :default => 0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "topics", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "status",          :default => true, :null => false
+    t.integer  "proposals_count", :default => 0
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "slug"
+  end
+
+  add_index "topics", ["slug"], :name => "index_topics_on_slug", :unique => true
+
   create_table "user_admin_roles", :force => true do |t|
     t.string "name", :limit => 10, :null => false
   end
@@ -126,6 +168,6 @@ ActiveRecord::Schema.define(:version => 20130630044834) do
 
   add_index "users", ["keyid"], :name => "index_users_on_keyid", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["slug"], :name => "index_users_on_slug"
+  add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
 
 end

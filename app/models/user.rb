@@ -1,22 +1,29 @@
 class User < ActiveRecord::Base
   has_private_messages
+  extend FriendlyId
+  friendly_id :username, use: :slugged
+  
   #relation
   belongs_to :user_role
+  has_many :topics, :dependent => :destroy
+  has_one :proposal, :dependent => :destroy
+  has_many :advisor_1_proposals, :class_name => "Proposal", :foreign_key => "advisor_1_id"
+  has_many :advisor_2_proposals, :class_name => "Proposal", :foreign_key => "advisor_2_id"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :authentication_keys => [:keyid]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :password, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid
+  attr_accessible :password, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug
   # attr_accessible :title, :body
   
   #upload image
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
-  scope :search_lecture, lambda{|user| where{(user_role_id == 2) & (username =~ "%#{user}%")}}
-  scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%")}}
+  scope :search_lecture, lambda{|user| where{(user_role_id == 2) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
+  scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
   protected
   
     def email_required?
