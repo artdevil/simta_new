@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :user_role
   has_many :topics, :dependent => :destroy
   has_one :proposal, :dependent => :destroy
+  has_many :topic_tags, :dependent => :destroy
   has_many :advisor_1_proposals, :class_name => "Proposal", :foreign_key => "advisor_1_id"
   has_many :advisor_2_proposals, :class_name => "Proposal", :foreign_key => "advisor_2_id"
   # Include default devise modules. Others available are:

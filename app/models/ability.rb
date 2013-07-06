@@ -4,9 +4,13 @@ class Ability
   def initialize(user)
     if user.user_role_id == 1
       can :read, Topic
+      can :create, TopicTag
+      cannot :update, TopicTag
     elsif user.user_role_id == 2
       can :read, Topic
       can :manage, Topic, :user_id => user.id
+      cannot :create, TopicTag
+      can :update, TopicTag
     end
     # Define abilities for the passed in user here. For example:
     #

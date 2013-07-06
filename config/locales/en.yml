@@ -16,3 +16,7 @@ en:
     update:
       success: "Your Topic Has Been Updated"
       failed: "You Topic Can't updated"
+  topic_tag:
+    create:
+      success: "Your Send Request Has Been Sent"
+      failed: "Your Send Request Failed To Sent"

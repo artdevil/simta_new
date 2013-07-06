@@ -38,9 +38,27 @@
           <div class="row-fluid item_footer">
             <p>Kata Kunci: <%= raw @topic.tag_list.map { |t| link_to t, topics_path(:keyword => t) }.join(', ') %></p>
           </div><!-- end row -->
+          <div class="row-fluid">
+            <% if can? :create, TopicTag and @topic.status %>
+              <% if current_user.topic_tags %>
+                <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
+                  <i class="icon-ok"></i>
+                  Anda Sudah Mengambil Topik TA. Silahkan Tunggu Konfirmasi
+                <% end %>
+              <% else %>
+                <%= link_to "#form_topic_tag", :id => "tag_topic_button", :class => "btn btn-mini btn-success" do %>
+                  <i class="icon-ok"></i>
+                  Jadikan topik TA
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
-      </div>
+      </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
+      <% if can? :create, TopicTag and @topic.status and current_user.topic_tags.blank? %>
+        <%= render :partial => "topics/partials/topic_tag", :locals => {:topic => @topic} %>
+      <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->

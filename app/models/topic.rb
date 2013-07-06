@@ -10,6 +10,7 @@ class Topic < ActiveRecord::Base
   has_many :proposals, :dependent => :destroy
   has_many :attachments, :as => :attachmentable , :dependent => :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
+  has_many :topic_tag
   
   attr_accessible :description, :proposals_count, :status, :tag_list, :title, :user_id, :attachments_attributes, :slug
   

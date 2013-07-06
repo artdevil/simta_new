@@ -54,6 +54,11 @@ $(document).ready(function(){
   }
   
   $('.timeago').timeago();
+  
+  $('#tag_topic_button').click(function(){
+    $('#form_topic_tag').show();
+    $(this).hide();
+  });
 });
 
 function updateComments() {

@@ -21,7 +21,7 @@ SimtaNew::Application.routes.draw do
   end
   resources :notifications
   resources :topics
-  
+  resources :topic_tags
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
