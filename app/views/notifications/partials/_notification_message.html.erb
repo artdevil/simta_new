@@ -4,7 +4,7 @@
 </li>
 <% notifications_all.each do |f| %>
   <li> 
-  	<a href="#">
+  	<a href="<%= notification_link(f) %>">
   		<%= image_tag f.sender.avatar_url(:thumb).to_s %>
   		<span class="msg-body">
   			<span class="msg-title">

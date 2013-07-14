@@ -59,6 +59,10 @@ $(document).ready(function(){
     $('#form_topic_tag').show();
     $(this).hide();
   });
+  
+  $(document).on('hover','.btn-tooltip',function(){
+    $('.btn-tooltip').tooltip();
+  });
 });
 
 function updateComments() {

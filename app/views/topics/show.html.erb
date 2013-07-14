@@ -40,7 +40,7 @@
           </div><!-- end row -->
           <div class="row-fluid">
             <% if can? :create, TopicTag and @topic.status %>
-              <% if current_user.topic_tags %>
+              <% if current_user.topic_tags.blank? == false %>
                 <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
                   <i class="icon-ok"></i>
                   Anda Sudah Mengambil Topik TA. Silahkan Tunggu Konfirmasi

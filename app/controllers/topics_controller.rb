@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   def index
-    @topics = Topic.page(params[:page]).per(5)
+    @topics = Topic.includes(:user).page(params[:page]).per(5)
   end
   
   def new

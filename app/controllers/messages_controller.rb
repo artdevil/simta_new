@@ -2,7 +2,16 @@ class MessagesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @message = Message.new
+    if params[:recipient_key_id]
+      user = User.find_by_keyid(params[:recipient_key_id])
+      if user.blank?
+        redirect_to messages_path
+      else
+        @message = Message.new(:recipient_id => user.id, :recipient_name => user.username)
+      end
+    else
+      @message = Message.new
+    end
     @message_inbox = current_user.received_messages
     @message_outbox = current_user.sent_messages
   end

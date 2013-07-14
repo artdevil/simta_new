@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704013047) do
+ActiveRecord::Schema.define(:version => 20130707053939) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20130704013047) do
   create_table "admin_users", :force => true do |t|
     t.string   "username",                                             :null => false
     t.string   "keyid",                  :limit => 10,                 :null => false
-    t.string   "user_admin_role_id"
+    t.integer  "user_admin_role_id",                   :default => 2,  :null => false
     t.string   "encrypted_password",                   :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20130704013047) do
 
   add_index "admin_users", ["keyid"], :name => "index_admin_users_on_keyid", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "advisors_statuses", :force => true do |t|
+    t.integer  "user_id",                        :null => false
+    t.integer  "max_coordinator", :default => 5, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "attachments", :force => true do |t|
     t.integer  "attachmentable_id"
@@ -107,6 +114,13 @@ ActiveRecord::Schema.define(:version => 20130704013047) do
     t.datetime "updated_at",                  :null => false
   end
 
+  create_table "students_statuses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "status",     :default => 0, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -126,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20130704013047) do
 
   create_table "topic_tags", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "advisor_id"
     t.integer  "topic_id"
     t.string   "title_recommended"
     t.text     "description_recommended"

@@ -6,11 +6,15 @@ class Ability
       can :read, Topic
       can :create, TopicTag
       cannot :update, TopicTag
+      can :show, TopicTag, :user_id == user.id
+      can :manage, StudentsStatus, :user_id == user.id
     elsif user.user_role_id == 2
       can :read, Topic
-      can :manage, Topic, :user_id => user.id
+      can :manage, Topic, :user_id == user.id
+      can :show, TopicTag, :advisor_id == user.id
       cannot :create, TopicTag
       can :update, TopicTag
+      can :create, Proposal
     end
     # Define abilities for the passed in user here. For example:
     #

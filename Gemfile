@@ -26,6 +26,8 @@ gem 'acts-as-taggable-on'
 gem 'kaminari'
 gem "squeel"
 gem "truncate_html"
+gem "powder"
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -44,8 +46,14 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  
 end
 
+
+group :development do
+  gem 'bullet'
+  
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

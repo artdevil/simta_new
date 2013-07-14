@@ -1,0 +1,61 @@
+<div class="span6">
+  <div class="widget-box">
+  	<div class="widget-header">
+  		<h4>Konfirmasi Permintaan Bimbingan</h4>
+
+  		<span class="widget-toolbar">
+  			<a href="#" data-action="collapse">
+  				<i class="icon-chevron-up"></i>
+  			</a>
+
+  			<a href="#" data-action="close">
+  				<i class="icon-remove"></i>
+  			</a>
+  		</span>
+  	</div>
+
+  	<div class="widget-body">
+  		<div class="widget-main">
+        <div class="row-fluid">
+          <div class="span12">
+						<table id="table_bug_report" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Action</th>
+                  <th></th>
+								</tr>
+							</thead>
+							<tbody>
+                <% current_user.advisor_topic_tag.each do |f| %>
+                  <tr id="topic_tag_<%= f.id %>">
+                    <td><%= link_to f.user.username, user_profile_path(f.user) %></td>
+                    <td>
+                      <%= link_to topic_tag_path(f), :class => "btn btn-minier btn-success btn-tooltip", :title => "lihat Judul Yang Diajukan", :data => {:placement => "bottom"} do %>
+                        <i class="icon-bookmark"></i>
+                      <% end %>
+                      <%= link_to topic_path(f.topic), :class => "btn btn-minier btn-warning btn-tooltip", :title => "lihat Topik", :data => {:placement => "bottom"} do %>
+                        <i class="icon-eye-open"></i>
+                      <% end %>
+                      <%= link_to messages_path(:recipient_key_id => f.user.keyid), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Kirim Pesan ke mahasiswa", :data => {:placement => "bottom"} do %>
+                        <i class="icon-envelope"></i>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to topic_tag_path(f), :class => "btn btn-minier btn-success btn-tooltip", :title => "Konfirmasi", :data => {:placement => "bottom"} do %>
+                        <i class="icon-ok"></i>
+                      <% end %>
+                      <%= link_to topic_tag_path(f, :confirm => "decline"), :method => "put", :confirm => "apakah anda setuju ?", :remote => true, :class => "btn btn-minier btn-danger btn-tooltip", :title => "Batalkan", :data => {:placement => "bottom"} do %>
+                        <i class="icon-remove"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+							</tbody>
+						</table>
+          </div>
+        </div>
+  		</div>
+  	</div>
+  </div>
+</div><!-- end span-->

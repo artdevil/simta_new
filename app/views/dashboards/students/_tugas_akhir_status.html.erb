@@ -1,0 +1,31 @@
+<div class="span6">
+  <div class="widget-box">
+  	<div class="widget-header">
+  		<h4>Status Tugas Akhir</h4>
+
+  		<span class="widget-toolbar">
+  			<a href="#" data-action="collapse">
+  				<i class="icon-chevron-up"></i>
+  			</a>
+
+  			<a href="#" data-action="close">
+  				<i class="icon-remove"></i>
+  			</a>
+  		</span>
+  	</div>
+
+  	<div class="widget-body">
+  		<div class="widget-main">
+        <div class="row-fluid">
+          <div class="span12">
+            <% if current_user.students_status.status == 0 %>
+              Anda belum memilih topik. Silahkan mencari topik tugas akhir anda <%= link_to "di sini", topics_path %>
+            <% elsif current_user.students_status.status == 1 %>
+              Menunggu konfirmasi dari dosen. Klik <%= link_to "di sini", messages_path(:recipient_key_id => current_user.topic_tags.get_empty_topic_with_key_id) %> untuk mengirim pesan ke dosen.
+            <% end %>
+          </div>
+        </div>
+  		</div>
+  	</div>
+  </div>
+</div><!-- end span-->

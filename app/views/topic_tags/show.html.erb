@@ -1,0 +1,47 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "topic_tags/breadcrumbs/show", :locals => {:tag_title => @topic_tag.title_recommended} %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Topik Tugas Akhir
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @topic_tag.topic.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+        <div class="span12">
+          <div class="row-fluid item_header">
+            <div class="span12">
+          		<%= link_to topic_tags_path(@topic_tag) do %>
+            		<h4>
+                  <%= @topic_tag.title_recommended %>
+                </h4>
+              <% end %>
+              <h6>Di sarankan oleh : <%= @topic_tag.user.username %></h6>
+              <h6>pada tanggal <%= @topic_tag.created_at.strftime('%d %B %Y')%></h6>
+            </div>
+          </div><!-- end row -->
+          <br>
+          <div class="row-fluid item_body" style="font-size: 11px;">
+            <%#= raw "#{topic.description.truncate(600)} #{}" %>
+            <%# = truncate(topic.description) %>
+            <%= raw @topic_tag.description_recommended %>
+          </div><!-- end row -->
+        </div><!-- end span12 -->
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+      <% if can? :create, Proposal %>
+        <%= render :partial => "topic_tags/partials/proposal", :locals => {:proposal => @proposal, :topic_tag_id => @topic_tag.id} %>
+      <% end %>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

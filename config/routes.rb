@@ -12,6 +12,7 @@ SimtaNew::Application.routes.draw do
   resources :user_profiles do
     collection do
       get 'search'
+      get 'search_only_advisor'
     end
   end
   resources :messages do

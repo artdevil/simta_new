@@ -28,4 +28,8 @@ class UserProfilesController < ApplicationController
       @user = User.search_student(params[:term])
     end
   end
+  
+  def search_only_advisor
+    @user = User.search_lecture(params[:term])
+  end
 end

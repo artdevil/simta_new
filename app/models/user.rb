@@ -9,14 +9,19 @@ class User < ActiveRecord::Base
   has_one :proposal, :dependent => :destroy
   has_many :topic_tags, :dependent => :destroy
   has_many :advisor_1_proposals, :class_name => "Proposal", :foreign_key => "advisor_1_id"
+  accepts_nested_attributes_for :advisor_1_proposals, :allow_destroy => true
   has_many :advisor_2_proposals, :class_name => "Proposal", :foreign_key => "advisor_2_id"
+  has_one :students_status, :dependent => :destroy
+  has_one :advisors_status, :dependent => :destroy
+  has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
+  accepts_nested_attributes_for :students_status
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :authentication_keys => [:keyid]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :password, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug
+  attr_accessible :password, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes
   # attr_accessible :title, :body
   
   #upload image
@@ -25,6 +30,22 @@ class User < ActiveRecord::Base
   #scope definition
   scope :search_lecture, lambda{|user| where{(user_role_id == 2) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
   scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
+  
+  #validating before save
+  after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.user_role_id == 1}
+  after_create :build_advisors_status, :if => Proc.new{ self.user_role_id == 2}
+  
+  def build_students_status
+    student_status = StudentsStatus.new(:user_id => self.id)
+    student_status.save
+  end
+  
+  def build_advisors_status
+    advisor_status = AdvisorsStatus.new(:user_id => self.id)
+    advisor_status.save
+  end
+  
+    
   protected
   
     def email_required?

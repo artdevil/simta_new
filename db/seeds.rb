@@ -75,8 +75,8 @@ topics = [
   {:user_id => 10, :title => "pencitraan menggunakan matlab", :tag_list => "pencitraan,matlab", :description => "#{description}"},
   {:user_id => 11, :title => "pembuatan aplikasi web dengan menggunakan node.js", :tag_list => "aplikasi web,node.js", :description => "#{description}"},
   {:user_id => 11, :title => "aplikasi android untuk monitoring kesehatan", :tag_list => "android,monitoring, kesehatan", :description => "#{description}"},
-  {:user_id => 10, :title => "antena mikrostrip", :tag_list => "antena, mikrostrip", :description => "#{description}"},
-  {:user_id => 9, :title => "collaborator application dengan ruby on rails web framework", :tag_list => "collaborator application,ruby on rails, web framework", :description => "#{description}"}
+  {:user_id => 11, :title => "antena mikrostrip", :tag_list => "antena, mikrostrip", :description => "#{description}"},
+  {:user_id => 10, :title => "collaborator application dengan ruby on rails web framework", :tag_list => "collaborator application,ruby on rails, web framework", :description => "#{description}"}
 ]
 
 # bikin TA
