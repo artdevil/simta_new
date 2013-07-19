@@ -33,8 +33,9 @@
 //= require jquery.knob.min
 //= require jquery.inputlimiter.1.3.1.min
 //= require jquery.maskedinput.min
-//= require ace.min
 //= require ace-elements.min
+//= require ace.min
+//= require jquery.easy-pie-chart.min
 //= require ckeditor/init
 //= require rails.validations
 //= require rails.validations.simple_form

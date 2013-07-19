@@ -22,3 +22,14 @@ en:
       failed: "Your Send Request Failed To Sent"
     proposal:
       failed: "This Topic Tag has been approve or remove"
+  proposal:
+    create:
+      success: "Your proposal has been create"
+      failed: "Your proposal Can't Save"
+    update:
+      success: "Your proposal Has Been Updated"
+      failed: "You proposal Can't updated"
+  todo_proposals:
+    create:
+      success: "Your to do proposal has been create"
+      failed: "Your to do proposal Can't Save"

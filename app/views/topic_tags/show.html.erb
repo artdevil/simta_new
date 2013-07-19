@@ -35,6 +35,16 @@
             <%# = truncate(topic.description) %>
             <%= raw @topic_tag.description_recommended %>
           </div><!-- end row -->
+          <div class="row-fluid">
+            <div class="span12">
+              <% if can? :create, Proposal %>
+                <%= link_to "#form_topic_tag", :id => "tag_topic_button", :class => "btn btn-mini btn-success" do %>
+                  <i class="icon-ok"></i>
+                  Setujui Permintaan Proposal Tugas Akhir
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div><!-- end span12 -->
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>

@@ -29,7 +29,7 @@ class TopicTagsController < ApplicationController
   def show
     @topic_tag = current_user.advisor_topic_tag.find(params[:id])
     if @topic_tag.status == nil
-      @proposal = current_user.advisor_1_proposals.new(:title => @topic_tag.title_recommended, :description => @topic_tag.description_recommended, :topic_id => @topic_tag.topic.id)
+      @proposal = current_user.advisor_1_proposals.new(:title => @topic_tag.title_recommended, :description => @topic_tag.description_recommended, :topic_id => @topic_tag.topic.id, :user_id => @topic_tag.user_id)
     else
       redirect_to dashboards_path, :notice => "#{I18n.t('topic_tag.proposal.failed')}"
     end

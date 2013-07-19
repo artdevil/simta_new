@@ -25,6 +25,10 @@ class TopicTag < ActiveRecord::Base
     where(:status => nil).first.topic.user.keyid
   end
   
+  def update_status_true
+    self.update_column(:status, true)
+  end
+  
   private
     def checking_user_tag
       self.advisor_id = self.topic.user.id

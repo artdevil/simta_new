@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130707053939) do
+ActiveRecord::Schema.define(:version => 20130715053317) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130707053939) do
   create_table "advisors_statuses", :force => true do |t|
     t.integer  "user_id",                        :null => false
     t.integer  "max_coordinator", :default => 5, :null => false
+    t.integer  "coordinator",     :default => 0, :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
@@ -136,6 +137,18 @@ ActiveRecord::Schema.define(:version => 20130707053939) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "todo_proposals", :force => true do |t|
+    t.integer  "proposal_id"
+    t.integer  "user_id"
+    t.integer  "issue_number"
+    t.string   "title"
+    t.text     "message"
+    t.boolean  "status",       :default => false, :null => false
+    t.string   "slug"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "topic_tags", :force => true do |t|

@@ -14,7 +14,7 @@ class TopicsController < ApplicationController
     if @topic.save
       redirect_to topic_path(@topic), :notice => "#{I18n.t('topic.create.success')}"
     else
-      flash[:notice] = "#{I18n.t('topic.create.failed')}"
+      flash[:alert] = "#{I18n.t('topic.create.failed')}"
       render 'new'
     end
   end
@@ -28,7 +28,7 @@ class TopicsController < ApplicationController
     if @topic.update_attributes(params[:topic])
       redirect_to topic_path(@topic), :notice => "#{I18n.t('topic.update.success')}"
     else
-      flash[:notice] = "#{I18n.t('topic.update.failed')}"
+      flash[:alert] = "#{I18n.t('topic.update.failed')}"
       render 'edit'
     end
   end

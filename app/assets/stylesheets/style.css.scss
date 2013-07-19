@@ -103,3 +103,25 @@ abbr[title=required]{
 #form_topic_tag{
   display: none;
 }
+
+.infobox-data-number a{
+  color: #9abc32;
+  
+  &:hover{
+    color: #87af0c;
+  };
+}
+
+.todo_item{
+  .number{
+    font-size: 16px;
+    color: #b5b5b5;
+    img{
+      height: 20px;
+      float: right;
+    }
+  }
+  .title{
+    font-size: 16px;
+  }
+}

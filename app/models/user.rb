@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_one :advisors_status, :dependent => :destroy
   has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
   accepts_nested_attributes_for :students_status
+  has_many :todo_proposals
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

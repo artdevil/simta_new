@@ -1,0 +1,113 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "todo_proposals/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Todos Proposals
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Todos and progress
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid">
+        <div class="span4">
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4>
+								<i class="icon-list"></i>
+								Proposal Data
+							</h4>
+						</div>
+
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="row-fluid">
+									<label for="colorpicker1">Color Picker</label>
+								</div>
+
+								<div class="control-group">
+									<div class="bootstrap-colorpicker">
+										<input id="colorpicker1" type="text" class="input-mini" />
+									</div>
+								</div>
+
+								<hr />
+								<label for="simple-colorpicker-1">Custom Color Picker</label>
+
+								<select id="simple-colorpicker-1" class="hidden">
+									<option value="#ac725e">#ac725e</option>
+									<option value="#d06b64">#d06b64</option>
+									<option value="#f83a22">#f83a22</option>
+									<option value="#fa573c">#fa573c</option>
+									<option value="#ff7537">#ff7537</option>
+									<option value="#ffad46" selected="">#ffad46</option>
+									<option value="#42d692">#42d692</option>
+									<option value="#16a765">#16a765</option>
+									<option value="#7bd148">#7bd148</option>
+									<option value="#b3dc6c">#b3dc6c</option>
+									<option value="#fbe983">#fbe983</option>
+									<option value="#fad165">#fad165</option>
+									<option value="#92e1c0">#92e1c0</option>
+									<option value="#9fe1e7">#9fe1e7</option>
+									<option value="#9fc6e7">#9fc6e7</option>
+									<option value="#4986e7">#4986e7</option>
+									<option value="#9a9cff">#9a9cff</option>
+									<option value="#b99aff">#b99aff</option>
+									<option value="#c2c2c2">#c2c2c2</option>
+									<option value="#cabdbf">#cabdbf</option>
+									<option value="#cca6ac">#cca6ac</option>
+									<option value="#f691b2">#f691b2</option>
+									<option value="#cd74e6">#cd74e6</option>
+									<option value="#a47ae2">#a47ae2</option>
+									<option value="#555">#555</option>
+								</select>
+							</div>
+						</div>
+					</div>
+        </div>
+        <div class="span8">
+					<div class="row-fluid">
+						<div class="span12">
+							<div class="tabbable">
+								<ul class="nav nav-tabs" id="myTab">
+									<li class="active">
+										<a data-toggle="tab" href="#open">
+											Open
+                      <span class="badge badge-success" id="open_count"><%= @todo_proposals_open.size %></span>
+										</a>
+									</li>
+
+									<li>
+										<a data-toggle="tab" href="#close">
+											Close
+											<span class="badge badge-important" id="close_count"><%= @todo_proposals_close.size %></span>
+										</a>
+									</li>
+								</ul>
+
+								<div class="tab-content">
+									<div id="open" class="tab-pane in active">
+									  <%= render :partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals_open } %>
+									</div>
+
+									<div id="close" class="tab-pane">
+										<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+									</div>
+								</div>
+							</div>
+						</div><!--/span-->
+					</div><!--/row-->
+        </div><!-- end span12 -->
+      </div><!-- end row -->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+  <%= render :partial => "todo_proposals/partials/config_button" %>
+</div><!--/#main-content-->

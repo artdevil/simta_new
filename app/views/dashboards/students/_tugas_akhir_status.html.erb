@@ -1,4 +1,4 @@
-<div class="span6">
+<div class="span8">
   <div class="widget-box">
   	<div class="widget-header">
   		<h4>Status Tugas Akhir</h4>
@@ -22,6 +22,8 @@
               Anda belum memilih topik. Silahkan mencari topik tugas akhir anda <%= link_to "di sini", topics_path %>
             <% elsif current_user.students_status.status == 1 %>
               Menunggu konfirmasi dari dosen. Klik <%= link_to "di sini", messages_path(:recipient_key_id => current_user.topic_tags.get_empty_topic_with_key_id) %> untuk mengirim pesan ke dosen.
+            <% elsif current_user.students_status.status == 2 %>
+              <%= render :partial => "dashboards/students/progress", :locals => {:proposal_status => current_user.proposal} %>
             <% end %>
           </div>
         </div>

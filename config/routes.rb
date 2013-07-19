@@ -1,5 +1,9 @@
 SimtaNew::Application.routes.draw do
   
+  get "todo_proposals/index"
+
+  get "todo_proposals/show"
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -23,6 +27,16 @@ SimtaNew::Application.routes.draw do
   resources :notifications
   resources :topics
   resources :topic_tags
+  resources :proposals
+  resources :todo_proposals do
+    collection do
+      get 'issue'
+      get 'open'
+      get 'close'
+    end
+  end
+  
+  match 'issue/:user_id' => 'todo_proposals#issue'
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
