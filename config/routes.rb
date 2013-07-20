@@ -36,6 +36,8 @@ SimtaNew::Application.routes.draw do
     end
   end
   
+  resources :comments
+  
   match 'issue/:user_id' => 'todo_proposals#issue'
   
   devise_for :admin_users, ActiveAdmin::Devise.config

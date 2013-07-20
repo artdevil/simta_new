@@ -1,0 +1,3 @@
+$('#comments').append('<%= escape_javascript(render :partial => "todo_proposals/partials/item_todo_comment", :local => {:comment => @comment}).html_safe %>');
+$('#comments').html('<%= escape_javascript(render :partial => "todo_proposals/partials/todo_form", :local => {:todo_comment => @comment.commentable.comments.new}).html_safe %>');
+$('.timeago').timeago();

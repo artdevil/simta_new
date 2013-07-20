@@ -1,6 +1,7 @@
 class TodoProposalsController < ApplicationController
+  before_filter :authenticate_user!
   def index
-    @todo_proposals_open = current_user.todo_proposals.open_issue
+    @todo_proposals_open = current_user.todo_proposals.includes(:user).open_issue
     @todo_proposals_close = current_user.todo_proposals.close_issue
   end
 

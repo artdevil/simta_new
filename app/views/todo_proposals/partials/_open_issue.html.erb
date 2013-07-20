@@ -1,6 +1,6 @@
 <div class="comments">
   <% open_issue.each do |f| %>
-  	<div class="itemdiv commentdiv">
+  	<div class="itemdiv commentdiv open">
   		<div class="user">
   			<%= image_tag f.user.avatar.thumb.url %>
   		</div>
@@ -17,16 +17,8 @@
 
   			<div class="text">
   				<i class="icon-quote-left"></i>
-  				<%= f.title %>
+  				<%= link_to f.title, todo_proposal_path(f) %>
   			</div>
-  		</div>
-  		<div class="tools">
-        <%= link_to todo_proposal_path(f), :class => "btn btn-minier btn-info" do %>
-          <i class="icon-only icon-eye-open"></i>
-        <% end %>
-  			<a href="#" class="btn btn-minier btn-danger">
-  				<i class="icon-only icon-trash"></i>
-  			</a>
   		</div>
   	</div>
   <% end %>

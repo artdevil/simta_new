@@ -1,0 +1,19 @@
+<%= simple_nested_form_for todo_comment, :validate => true, :remote => true, :html => {:multipart => true, :class => "client_side_validation"} do |f| %>
+  <%= f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id} %>
+  <%= f.input :commentable_id, :as => :hidden %>
+  <%= f.input :commentable_type, :as => :hidden %>
+  <%= f.ckeditor :comment, :label => false,:input_html => {:id => "ckeditor_input", :ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+  <%= f.simple_fields_for :attachments do |n| %>
+    <div class="row-fluid">
+      <div class="span6"><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
+      <div class="span6"><%= n.link_to_remove "remove" %></div>
+    </div>
+  <% end %>
+  <p><%= f.link_to_add "Add a attachment", :attachments %></p>
+	<div class="form-actions">
+		<button class="btn btn-success" type="submit">
+			<i class="icon-ok bigger-110"></i>
+			Send Message
+		</button>
+	</div>
+<% end %>

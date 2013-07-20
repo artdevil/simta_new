@@ -6,7 +6,7 @@ CKEDITOR.editorConfig = function( config )
      { name: 'links', items: [ 'Link', 'Unlink'] },
      { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] },
      { name: 'paragraph', groups: [ 'list', 'align' ], items: [ 'NumberedList', 'BulletedList','JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-     { name: 'styles', items: [ 'Font','FontSize' ] }
+     { name: 'styles', items: [ 'FontSize' ] }
    ];
   
   // config.toolbar = 'Basic';

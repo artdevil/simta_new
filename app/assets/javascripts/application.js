@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery-migrate-min
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require bootstrap.min
 //= require jquery-ui-1.10.3.custom.min
 //= require jquery.ui.autocomplete
