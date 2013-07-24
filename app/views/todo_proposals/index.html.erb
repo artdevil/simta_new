@@ -18,7 +18,7 @@
       <!-- end bootstrap flash -->
       <div class="row-fluid">
         <div class="span4">
-					<%= render :partial => "todo_proposals/partials/progress", :locals => {:student_data => current_user } %>
+					<%= render :partial => "todo_proposals/partials/progress", :locals => {:proposal => @proposal } %>
         </div>
         <div class="span8">
 					<div class="row-fluid">
@@ -26,27 +26,26 @@
 							<div class="tabbable">
 								<ul class="nav nav-tabs" id="myTab">
 									<li class="active">
-										<a data-toggle="tab" href="#open">
-											Open
+                    <%= link_to "/todo_proposals/#{@proposal.user.slug}/open", :remote => true, :data => {:toggle => "tab", :target => "#open"} do %>
+										  Open
                       <span class="badge badge-success" id="open_count"><%= @todo_proposals_open.size %></span>
-										</a>
+                    <% end %>
 									</li>
 
 									<li>
-										<a data-toggle="tab" href="#close">
-											Close
-											<span class="badge badge-important" id="close_count"><%= @todo_proposals_close.size %></span>
-										</a>
+                    <%= link_to "/todo_proposals/#{@proposal.user.slug}/close",:remote => true, :data => {:toggle => "tab", :target => "#close"} do %>
+										  Close
+										  <span class="badge badge-important" id="close_count"><%= @todo_proposals_close.size %></span>
+                    <% end %>
 									</li>
 								</ul>
 
 								<div class="tab-content">
 									<div id="open" class="tab-pane in active">
-									  <%= render :partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals_open } %>
+									  <%= render :partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals_open, :proposal => @proposal } %>
 									</div>
 
 									<div id="close" class="tab-pane">
-										<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
 									</div>
 								</div>
 							</div>

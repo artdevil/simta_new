@@ -1,5 +1,5 @@
 <div id="main-content" class="clearfix">
-	<%= render :partial => "todo_proposals/breadcrumbs/show", :locals => {:topic_title => @todo_proposal.title} %>
+	<%= render :partial => "todo_proposals/breadcrumbs/issue_item", :locals => {:todo_proposal_title => @todo_proposal.title, :proposal => @proposal } %>
 	<div id="page-content" class="clearfix">
 		<div class="page-header position-relative">
 			<h1>

@@ -31,18 +31,6 @@
           <% end %>
         </div>
       </div><!-- row fluid end -->
-      <% if proposal.progress == 100 and current_user.user_role_id == 1 %>
-        <div class="row-fluid">
-          <div class="span12" id="upload_file_proposal">
-            <%= simple_form_for proposal, :remote => true do |f| %>
-              <%= f.input :exam, :input_html => {:class => "upload_file"}, :label => "lembar pemeriksa" %>
-              <%= f.input :events, :input_html => {:class => "upload_file"}, :label => "Berita Acara" %>
-              <%= f.input :proposal, :input_html => {:class => "upload_file"}, :label => "Proposal" %>
-              <%= f.submit 'upload file', :class => "btn btn-success"%>
-            <% end %>
-          </div>
-        </div><!-- row fluid end -->
-      <% end %>
 		</div>
 	</div>
 </div>

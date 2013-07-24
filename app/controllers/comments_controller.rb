@@ -3,11 +3,13 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(params[:comment])
     if @comment.save
-      comment = render_to_string(:partial => "todo_proposals/partials/item_todo_comment", :locals => {:comment => @comment}).to_json
-      form = render_to_string(:partial => "todo_proposals/partials/todo_form", :locals => {:todo_comment => Comment.new(:commentable_id => @comment.commentable_id, :commentable_type => @comment.commentable_type)}).to_json
-      render :js => "$('.remove_nested_fields').click();$('#comments').append(#{comment});$('.timeago').timeago();"
+      respond_to do |format|
+        format.js
+      end
     else
-      render :nothing => :true
+      respond_to do |format|
+        format.js {render "comments/created_failed" }
+      end
     end
   end
 end

@@ -1,25 +1,26 @@
 <div class="itemdiv dialogdiv">
 	<div class="user">
-		<%= image_tag comment_status.user.avatar.thumb.url %>
+		<%= image_tag comment.user.avatar.thumb.url %>
 	</div>
 	<div class="body">
 		<div class="time">
 			<i class="icon-time"></i>
-			<span class="timeago green" title="<%= comment_status.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+			<span class="timeago green" title="<%= comment.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
 		</div>
+
 		<div class="name">
-			<a href="#"><%= comment_status.user.username %></a>
+			<a href="#"><%= comment.user.username %></a>
 		</div>
 		<div class="text">
-		  <%= raw comment_status.comment %>
+		  <%= raw comment.comment %>
       <br>
-      <% unless comment_status.attachments.blank? %>
+      <% unless comment.attachments.includes(:attachments).blank? %>
         <div class="row-fluid">
           <div class="span12">
             <h5 style="color: #d15b47;">Attachments</h5>
           </div>
         </div>
-        <% comment_status.attachments.each do |f| %>
+        <% comment.attachments.each do |f| %>
           <div class="row-fluid">
             <div class="span12">
               <%= link_to File.basename(f.file.path), f.file.url.to_s, :target => f.id %>

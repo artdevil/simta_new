@@ -9,18 +9,28 @@ class Proposal < ActiveRecord::Base
   
   
   attr_accessor :advisor_2_name
-  attr_accessible :advisor_1_id, :advisor_2_id, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name
+  attr_accessible :advisor_1_id, :advisor_2_id, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal
   
   #validate
-  validates_presence_of :advisor_1_id, :advisor_2_id, :title, :topic_id, :user_id, :advisor_2_name
-  validate :check_user_advisor_2_input
+  validates_presence_of :advisor_1_id, :advisor_2_id, :title, :topic_id, :user_id, :advisor_2_name, :on => :create
+  validate :check_user_advisor_2_input, :on => :create
+  validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
+  
+  #upload image
+  mount_uploader :exam, ExamUploader
+  mount_uploader :events, EventsUploader
+  mount_uploader :proposal, ProposalUploader
   
   #callback
   after_create :send_message_to_student_and_advisor_2
   after_create :set_quota
   after_create :update_student_status
+  after_save :set_notification_finished, :if => Proc.new{ self.progress == 100 }
+  
+  scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
   private
+     
     def check_user_advisor_2_input
       @user = User.where(:username => self.advisor_2_name, :user_role_id => 2).first
       if @user
@@ -46,5 +56,10 @@ class Proposal < ActiveRecord::Base
     
     def update_student_status
       self.user.students_status.update_column(:status, 2)
+    end
+    
+    def set_notification_finished
+      notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Proposal anda telah selesai silahkan unduh berkas untung sidang proposal")
+      notification.save
     end
 end

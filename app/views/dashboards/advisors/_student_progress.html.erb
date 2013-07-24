@@ -1,0 +1,59 @@
+<div class="span6">
+	<div class="widget-box transparent">
+		<div class="widget-header widget-header-flat">
+			<h4 class="lighter">
+				<i class="icon-star orange"></i>
+				Student Progress
+			</h4>
+
+			<div class="widget-toolbar">
+				<a href="#" data-action="collapse">
+					<i class="icon-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main no-padding">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>
+								<i class="icon-caret-right blue"></i>
+								name
+							</th>
+
+							<th>
+								<i class="icon-caret-right blue"></i>
+								Status
+							</th>
+
+							<th class="hidden-phone">
+								<i class="icon-caret-right blue"></i>
+								Progress
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+            <% Proposal.advisor_student(current_user).each do |f| %>
+  						<tr>
+  							<td><%= f.user.username %></td>
+  							<td class="hidden-phone">
+  								<a href="/todo_proposals/issue/<%= f.user.slug %>">
+  								  <span class="label label-info arrowed-right arrowed-in">Proposal</span>
+  								</a>
+  							</td>
+  							<td>
+  								<div class="progress" data-percent="<%= f.progress %>%">
+  									<div class="bar" style="width: <%= f.progress %>%;"></div>
+  								</div>
+  							</td>
+  						</tr>
+            <% end %>
+					</tbody>
+				</table>
+			</div><!--/widget-main-->
+		</div><!--/widget-body-->
+	</div><!--/widget-box-->
+</div><!-- end span-->

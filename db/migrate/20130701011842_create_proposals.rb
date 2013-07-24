@@ -7,6 +7,7 @@ class CreateProposals < ActiveRecord::Migration
       t.integer :advisor_2_id
       t.string :title
       t.text :description
+      
       t.integer :progress, :default => 0
 
       t.timestamps

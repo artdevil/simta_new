@@ -11,7 +11,7 @@ gem 'jquery-ui-rails'
 gem 'jquery-migrate-rails'
 gem 'simple-private-messages', '0.0.0', :git => 'git://github.com/jongilbraith/simple-private-messages.git'
 gem 'ancestry'
-gem "nested_form"
+gem 'nested_form', '0.2.3'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'ckeditor'
@@ -21,7 +21,6 @@ gem 'remotipart','1.0.2'
 gem 'cancan'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
-gem "nested_form"
 gem 'acts-as-taggable-on'
 gem 'kaminari'
 gem "squeel"

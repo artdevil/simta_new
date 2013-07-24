@@ -29,6 +29,7 @@ en:
     update:
       success: "Your proposal Has Been Updated"
       failed: "You proposal Can't updated"
+    completed: "Please download and upload document for sidang proposal"
   todo_proposals:
     create:
       success: "Your to do proposal has been create"

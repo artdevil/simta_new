@@ -27,18 +27,27 @@ SimtaNew::Application.routes.draw do
   resources :notifications
   resources :topics
   resources :topic_tags
-  resources :proposals
+  resources :proposals do
+    member do
+      put 'update_progress'
+    end
+  end
   resources :todo_proposals do
     collection do
-      get 'issue'
+      get 'issue/:user_id', :action => "issue"
+      get 'issue/:user_id/new', :action => "new_todo"
+      post 'issue/:user_id', :action => "create_todo"
+      get ':user_id/open', :action => "open"
+      get ':user_id/close', :action => "close"
+      get 'issue/:user_id/:id', :action => "issue_todo"
+      # post 'issue/:user_id/:id', :action => "issue_todo_create"
+      put 'issue/:user_id/:id', :action => "finished"
       get 'open'
       get 'close'
     end
   end
   
   resources :comments
-  
-  match 'issue/:user_id' => 'todo_proposals#issue'
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

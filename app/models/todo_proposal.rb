@@ -10,7 +10,7 @@ class TodoProposal < ActiveRecord::Base
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy
   
-  attr_accessible :message, :proposal_id, :status, :title, :user_id
+  attr_accessible :message, :proposal_id, :status, :title, :user_id, :attachments_attributes
   
   #validation
   validates_presence_of :message, :proposal_id, :title, :user_id
@@ -38,18 +38,18 @@ class TodoProposal < ActiveRecord::Base
     
     def set_notification
       if self.user.user_role_id == 1
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_1_id, :message => "Membuat to do baru'")
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru'")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_1_id, :message => "Membuat to do baru")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru")
       elsif self.user.user_role_id == 2 and self.user_id == self.proposal.advisor_1_id
         #for student
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.user_id, :message => "Membuat to do baru'")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.user_id, :message => "Membuat to do baru")
         #for advisor 2
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru'")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru")
       elsif self.user.user_role_id == 2 and self.user_id == self.proposal.advisor_2_id
         #for student
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.user_id, :message => "Membuat to do baru'")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.user_id, :message => "Membuat to do baru")
         #for advisor 2
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru'")
+        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru")
       end
     end       
 end
