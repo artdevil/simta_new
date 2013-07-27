@@ -1,8 +1,4 @@
 SimtaNew::Application.routes.draw do
-  
-  get "todo_proposals/index"
-
-  get "todo_proposals/show"
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -30,6 +26,8 @@ SimtaNew::Application.routes.draw do
   resources :proposals do
     member do
       put 'update_progress'
+      post 'update_document'
+      put 'finished'
     end
   end
   resources :todo_proposals do

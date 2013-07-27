@@ -1,0 +1,23 @@
+<%= simple_form_for proposal_form, :url => update_document_proposal_path(proposal_form), :method => :post, :remote => true do |f| %>
+  <%= link_to File.basename(proposal_form.exam.path), proposal_form.exam.url unless proposal_form.exam.blank? %>
+  <%= f.input :exam, :input_html => {:class => "upload_file"}, :label => "lembar pemeriksa" %>
+  <%= link_to File.basename(proposal_form.events.path), proposal_form.events.url unless proposal_form.events.blank? %>
+  <%= f.input :events, :input_html => {:class => "upload_file"}, :label => "Berita Acara" %>
+  <%= link_to File.basename(proposal_form.proposal.path), proposal_form.proposal.url unless proposal_form.proposal.blank? %>
+  <%= f.input :proposal, :input_html => {:class => "upload_file"}, :label => "Proposal" %>
+  <%= f.submit 'upload file', :class => "btn btn-success"%>
+<% end %>
+<script type="text/javascript">
+$('.upload_file').ace_file_input({
+	no_file:'No File',
+	btn_choose:'Choose',
+	btn_change:'Change',
+	droppable:false,
+	onchange:null,
+	thumbnail:true, //| true | large
+	whitelist: 'png|jpg|jpeg|pdf|JPG'
+	//blacklist:'exe|php'
+	//onchange:''
+	//
+});
+</script>

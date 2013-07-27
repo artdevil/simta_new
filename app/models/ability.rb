@@ -9,9 +9,12 @@ class Ability
       can :show, TopicTag, :user_id == user.id
       can :manage, StudentsStatus, :user_id == user.id
       cannot :create, Proposal
+      can :update, Proposal
+      can :update_document, Proposal
       cannot :update_progress, Proposal
       can :create, TodoProposal
       cannot :finished, TodoProposal
+      cannot :finished, Proposal
     elsif user.user_role_id == 2
       can :read, Topic
       can :manage, Topic, :user_id == user.id
@@ -19,9 +22,11 @@ class Ability
       cannot :create, TopicTag
       can :update, TopicTag
       can :create, Proposal
+      can :update, Proposal
       can :update_progress, Proposal
       can :create, TodoProposal
       can :finished, TodoProposal
+      can :finished, Proposal
     end
     # Define abilities for the passed in user here. For example:
     #
