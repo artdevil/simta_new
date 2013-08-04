@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724060648) do
+ActiveRecord::Schema.define(:version => 20130727053619) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -89,6 +89,19 @@ ActiveRecord::Schema.define(:version => 20130724060648) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "final_projects", :force => true do |t|
+    t.integer  "proposal_id",                     :null => false
+    t.integer  "user_id",                         :null => false
+    t.integer  "advisor_1_id",                    :null => false
+    t.integer  "advisor_2_id",                    :null => false
+    t.string   "title"
+    t.text     "description"
+    t.integer  "progress",     :default => 0,     :null => false
+    t.boolean  "finished",     :default => false, :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
@@ -150,6 +163,18 @@ ActiveRecord::Schema.define(:version => 20130724060648) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "todo_final_projects", :force => true do |t|
+    t.integer  "final_project_id",                    :null => false
+    t.integer  "user_id",                             :null => false
+    t.integer  "issue_number"
+    t.string   "title"
+    t.text     "message"
+    t.boolean  "status",           :default => false, :null => false
+    t.string   "slug",                                :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   create_table "todo_proposals", :force => true do |t|

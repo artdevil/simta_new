@@ -30,7 +30,14 @@ en:
       success: "Your proposal Has Been Updated"
       failed: "You proposal Can't updated"
     completed: "Please download and upload document for sidang proposal"
+    finished: 
+      success: "Proposal is finished."
+      failed: "Proposal can't be finished. Please check it again"
   todo_proposals:
     create:
       success: "Your to do proposal has been create"
       failed: "Your to do proposal Can't Save"
+  todo_final_projects:
+    create:
+      success: "Your to do final project has been create"
+      failed: "Your to do final project Can't Save"

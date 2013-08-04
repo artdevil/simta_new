@@ -4,17 +4,19 @@ class Proposal < ActiveRecord::Base
   belongs_to :topic, :counter_cache => true
   belongs_to :advisor_1, :class_name => "User", :foreign_key => "advisor_1_id"
   belongs_to :advisor_2, :class_name => "User", :foreign_key => "advisor_2_id"
+  has_one :final_project
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
   
   
   attr_accessor :advisor_2_name
-  attr_accessible :advisor_1_id, :advisor_2_id, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal
+  attr_accessible :advisor_1_id, :advisor_2_id, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
   
   #validate
   validates_presence_of :advisor_1_id, :advisor_2_id, :title, :topic_id, :user_id, :advisor_2_name, :on => :create
   validate :check_user_advisor_2_input, :on => :create
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
+  # validates_presence_of :finished, :unless: Proc.new { |a| a.exam.blank? and a.events.blank? and a.proposal.blank? and a.progress < 100}
   
   #upload image
   mount_uploader :exam, ExamUploader
@@ -26,6 +28,7 @@ class Proposal < ActiveRecord::Base
   after_create :set_quota
   after_create :update_student_status
   after_save :set_notification_finished, :if => Proc.new{ self.progress == 100 }
+  after_save :create_final_project, :if => Proc.new{ self.finished == true }
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
@@ -61,5 +64,14 @@ class Proposal < ActiveRecord::Base
     def set_notification_finished
       notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Proposal anda telah selesai silahkan unduh berkas untung sidang proposal")
       notification.save
+    end
+    
+    def create_final_project
+      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :proposal_id => self.id, :title => self.title, :description => self.description)
+      if final_project.save
+        notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Pengerjaan proposal telah selesai silahkan mengerjakan tugas akhir")
+        notification.save
+        self.user.students_status.update_column(:status, 3)
+      end
     end
 end

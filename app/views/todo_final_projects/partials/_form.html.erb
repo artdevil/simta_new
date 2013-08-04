@@ -1,0 +1,27 @@
+<%= simple_nested_form_for @todo_proposal, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <div class="row-fluid">
+    <div class="span12">
+      <%= f.input :title, :label => "Judul" %>
+      <%= f.input :message, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+      <%= f.input :proposal_id, :as => :hidden %>
+    </div>
+  </div><!-- end row -->
+  <%= f.simple_fields_for :attachments do |n| %>
+    <div class="row-fluid">
+      <div class="span6"><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
+      <div class="span6"><%= n.link_to_remove "remove" %></div>
+    </div>
+  <% end %>
+  <p><%= f.link_to_add "Add a attachment", :attachments %></p>
+  <div class="row-fluid">
+    <div class="span12"></div>
+  </div>
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-success" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Save
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

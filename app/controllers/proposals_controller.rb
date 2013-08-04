@@ -58,7 +58,11 @@ class ProposalsController < ApplicationController
   end
   
   def finished
-    
+    if !@proposal.exam.blank? and !@proposal.events.blank? and !@proposal.proposal.blank? and @proposal.update_attributes(:finished => true)
+      redirect_to dashboards_path, :notice => "#{I18n.t('proposal.finished.success')}"
+    else
+      redirect_to "/todo_proposals/issue/#{@proposal.user.slug}", :alert => "#{I18n.t('proposal.finished.failed')}"
+    end
   end
   
   #check validation

@@ -23,11 +23,20 @@ SimtaNew::Application.routes.draw do
   resources :notifications
   resources :topics
   resources :topic_tags
+  
   resources :proposals do
     member do
       put 'update_progress'
       post 'update_document'
       put 'finished'
+    end
+  end
+  
+  resources :final_projects do
+    member do
+      put 'update_progress'
+      get 'new_report_final_project'
+      post 'create_report_final_project'
     end
   end
   resources :todo_proposals do
@@ -42,6 +51,17 @@ SimtaNew::Application.routes.draw do
       put 'issue/:user_id/:id', :action => "finished"
       get 'open'
       get 'close'
+    end
+  end
+  
+  resources :todo_final_projects do
+    collection do
+      get 'issue/:user_id', :action => "issue"
+      get 'issue/:user_id/new', :action => "new_todo"
+      post 'issue/:user_id', :action => "create_todo"
+      get 'issue/:user_id/:id', :action => "issue_todo"
+      get ':user_id/open', :action => "open"
+      get ':user_id/close', :action => "close"
     end
   end
   

@@ -51,6 +51,21 @@
   							</td>
   						</tr>
             <% end %>
+            <% FinalProject.advisor_student(current_user).each do |f| %>
+  						<tr>
+  							<td><%= f.user.username %></td>
+  							<td class="hidden-phone">
+  								<a href="/todo_final_projects/issue/<%= f.user.slug %>">
+  								  <span class="label label-success arrowed-in arrowed-in-right">Tugas Akhir</span>
+  								</a>
+  							</td>
+  							<td>
+  								<div class="progress" data-percent="<%= f.progress %>%">
+  									<div class="bar" style="width: <%= f.progress %>%;"></div>
+  								</div>
+  							</td>
+  						</tr>
+            <% end %>
 					</tbody>
 				</table>
 			</div><!--/widget-main-->

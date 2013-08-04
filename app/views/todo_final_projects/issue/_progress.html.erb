@@ -1,0 +1,56 @@
+<div class="widget-box">
+	<div class="widget-header">
+		<h4>
+			<i class="icon-list"></i>
+			Final Project Data
+		</h4>
+		<span class="widget-toolbar">
+			<a href="#" data-action="settings">
+				<i class="icon-cog"></i>
+			</a>
+			<a href="#" data-action="collapse">
+				<i class="icon-chevron-up"></i>
+			</a>
+
+			<a href="#" data-action="close">
+				<i class="icon-remove"></i>
+			</a>
+		</span>
+	</div>
+	<div class="widget-body">
+		<div class="widget-main">
+			<div class="row-fluid">
+				<div class="span12">
+				  <dl>
+				    <dt>Judul Tugas Akhir</dt>
+            <dd><%= final_project.title %></dt>
+  				  <dt>Pembimbing 1</dt>
+            <dd><%= final_project.advisor_1.username %></dt>
+    				<dt>Pembimbing 2</dt>
+            <dd><%= final_project.advisor_2.username %></dt>
+				  </dl>
+				</div>
+			</div><!-- row fluid end -->
+      <div class="row-fluid">
+        <div class="span12">
+  				<div class="progress" data-percent="<%= final_project.progress %>%" id="progress_bar">
+  					<div class="bar" style="width: <%= final_project.progress %>%;" id="progress_bar_count"></div>
+  				</div>
+          <% if can? :update_progress, FinalProject %>
+            <div id="update_progress_form">
+              <%= render :partial => 'todo_final_projects/partials/update_progress_form', :locals => {:final_project => final_project} %>
+            </div>
+          <% end %>
+        </div>
+      </div><!-- row fluid end -->
+      <%# if proposal.progress == 100 %>
+        <%#= render :partial => "todo_proposals/issue/finished_layout", :locals => {:proposal => proposal} %>
+      <%# end %>
+      <div class="row-fluid">
+        <div class="span12">
+          <%= link_to "lihat dokumen proposal", "/todo_proposals/issue/#{final_project.user.slug}"%>
+        </div>
+      </div><!-- row fluid end -->
+		</div>
+	</div>
+</div>

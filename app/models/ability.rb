@@ -12,6 +12,7 @@ class Ability
       can :update, Proposal
       can :update_document, Proposal
       cannot :update_progress, Proposal
+      cannot :update_progess, FinalProject
       can :create, TodoProposal
       cannot :finished, TodoProposal
       cannot :finished, Proposal
@@ -24,6 +25,7 @@ class Ability
       can :create, Proposal
       can :update, Proposal
       can :update_progress, Proposal
+      can :update_progress, FinalProject
       can :create, TodoProposal
       can :finished, TodoProposal
       can :finished, Proposal

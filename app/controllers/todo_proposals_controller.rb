@@ -71,10 +71,10 @@ class TodoProposalsController < ApplicationController
     @proposal = Proposal.where(:user_id => user.id).first
     @todo_proposals = @proposal.todo_proposals.includes(:user).close_issue
     if current_user.user_role_id == 1
-      close = render_to_string(:partial => "todo_proposals/partials/close_issue", :locals => {:open_issue => @todo_proposals}).to_json
+      close = render_to_string(:partial => "todo_proposals/partials/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
     elsif current_user.user_role_id == 2
-      close = render_to_string(:partial => "todo_proposals/issue/close_issue", :locals => {:open_issue => @todo_proposals}).to_json
+      close = render_to_string(:partial => "todo_proposals/issue/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
     end
   end

@@ -1,0 +1,4 @@
+<%= simple_form_for final_project, :url => update_progress_final_project_path(final_project), :remote => true do |f| %>
+  <%= f.input :progress, :title => "update_progress" %>
+  <%= f.submit 'update progress', :class => "btn btn-success"%>
+<% end %>
