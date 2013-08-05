@@ -13,12 +13,24 @@ class FinalProjectsController < ApplicationController
     end
   end
   
-  def new_report_final_project
-    
+  def new_report
+    final_project = check_user(params[:id])
+    @final_project_report = final_project.report_final_projects.new
+    modal = render_to_string(:partial => "todo_final_projects/issue/report_final_project_modal").to_json
+    form = render_to_string(:partial => "todo_final_projects/issue/report_form", :locals => {:final_project_report => @final_project_report}).to_json
+    render :js => "$('#report_final_project_modal_in').html(#{modal});$('#reportFinalProjectModal .modal-content').html(#{form});$('#reportFinalProjectModal').modal('show');"
   end
   
-  def create_report_final_project
-    
+  def create_report
+    final_project = check_user(params[:id])
+    @final_project_report = final_project.report_final_projects.new(params[:report_final_project])
+    if @final_project_report.save
+      data = render_to_string(:partial => "todo_final_projects/partials/reports_data", :locals => {:report_data => @final_project_report}).to_json
+      render :js => "$('#table_bug_report tbody').prepend(#{data});$('#reportFinalProjectModal').modal('hide');"
+    else
+      form = render_to_string(:partial => "todo_final_projects/issue/report_form", :locals => {:final_project_report => @final_project_report}).to_json
+      render :js => "$('#reportFinalProjectModal .modal-content').html(#{form});"
+    end
   end
   
   #check validation

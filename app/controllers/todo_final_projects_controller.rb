@@ -7,6 +7,7 @@ class TodoFinalProjectsController < ApplicationController
   
   def issue
     @final_project = check_user_advisor(params[:user_id])
+    @report_final_projects = @final_project.report_final_projects
     @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
     @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
   end

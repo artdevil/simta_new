@@ -55,7 +55,7 @@
       </div><!-- end row -->
       <div class="row-fluid">
         <div class="span12">
-          <%= render :partial => "todo_final_projects/issue/reposts", :locals => {:reports => @final_project}%>
+          <%= render :partial => "todo_final_projects/partials/reports", :locals => {:reports => @report_final_projects, :final_project => @final_project} %>
         </div>
       </div><!-- end row -->
 			<!--PAGE CONTENT ENDS HERE-->

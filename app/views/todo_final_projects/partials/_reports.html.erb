@@ -1,0 +1,49 @@
+<div class="widget-box transparent">
+	<div class="widget-header">
+		<h4>Final Project Reports</h4>
+
+		<span class="widget-toolbar no-border">
+			<a href="#" data-action="settings">
+        <%= link_to new_report_final_project_path(final_project), :data => {:action => "setting"}, :remote => true do %>
+          <i class="icon-briefcase"></i>
+        <% end %>
+			</a>
+
+			<a href="#" data-action="reload">
+				<i class="icon-refresh"></i>
+			</a>
+
+			<a href="#" data-action="collapse">
+				<i class="icon-chevron-up"></i>
+			</a>
+
+			<a href="#" data-action="close">
+				<i class="icon-remove"></i>
+			</a>
+		</span>
+	</div>
+
+	<div class="widget-body">
+		<div class="widget-main">
+			<div class="row-fluid">
+				<div class="span12">
+					<table id="table_bug_report" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 200px;">Date</th>
+								<th>Note</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<% reports.each do |f| %>
+                <%= render :partial => "todo_final_projects/partials/reports_data", :locals => {:report_data => f} %>
+              <% end %>
+						</tbody>
+					</table>
+				</div><!--/span-->
+			</div><!--/row-->
+		</div>
+	</div>
+</div>
+<div id="report_final_project_modal_in"></div>

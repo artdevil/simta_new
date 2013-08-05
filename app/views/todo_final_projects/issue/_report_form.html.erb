@@ -1,0 +1,18 @@
+<%= simple_form_for final_project_report, :url => create_report_final_project_path(final_project_report.final_project), :validate => true, :html => {:class => "client_side_validation",:multipart => true}, :remote => true do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">New Final Project Reports</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span12">
+        <%= f.input :note, :as => :ckeditor, :input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+        <%= f.input :final_project_id, :as => :hidden %>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <%= f.submit "Save changes", :class => "btn btn-primary" %>
+  </div>
+<% end %>

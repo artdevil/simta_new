@@ -26,6 +26,8 @@ class Ability
       can :update, Proposal
       can :update_progress, Proposal
       can :update_progress, FinalProject
+      can :new_report, FinalProject
+      can :create_report, FinalProject
       can :create, TodoProposal
       can :finished, TodoProposal
       can :finished, Proposal
