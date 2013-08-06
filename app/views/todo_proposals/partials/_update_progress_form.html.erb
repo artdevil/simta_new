@@ -1,4 +1,10 @@
 <%= simple_form_for proposal, :url => update_progress_proposal_path(@proposal), :remote => true do |f| %>
   <%= f.input :progress, :title => "update_progress" %>
-  <%= f.submit 'update progress', :class => "btn btn-success"%>
+  <% if @proposal.finished %>
+    <btn class="btn btn-warning disabled">
+      Update Progress
+    </btn>
+  <% else %>
+    <%= f.submit 'update progress', :class => "btn btn-success"%>
+  <% end %>
 <% end %>

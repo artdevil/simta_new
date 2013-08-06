@@ -7,9 +7,16 @@
   </div>
   <% unless proposal.exam.blank? and proposal.events.blank? and proposal.proposal.blank? %>
     <% if can? :finished, Proposal %>
-      <%= link_to finished_proposal_path(proposal), :method => "put", :class => "btn btn-success", :confirm => "apakah anda yakin ?" do %>
-        <i class="icon-ok"></i>
-        Proposal Telah Selesai
+      <% if proposal.finished %>
+        <btn class="btn btn-warning disabled">
+          <i class="icon-ok"></i>
+          Proposal Telah Selesai
+        </btn>
+      <% else %>
+        <%= link_to finished_proposal_path(proposal), :method => "put", :class => "btn btn-success", :confirm => "apakah anda yakin ?" do %>
+          <i class="icon-ok"></i>
+          Proposal Telah Selesai
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
