@@ -2,15 +2,16 @@
 	<div class="widget-header">
 		<h4>
 			<i class="icon-list"></i>
-			Proposal Data
+			Final Project Data
 		</h4>
 		<span class="widget-toolbar">
-      <%= link_to edit_proposal_path(proposal), :data => {:action => "setting"} do %>
-        <i class="icon-cog"></i>
-      <% end %>
+			<a href="#" data-action="settings">
+				<i class="icon-cog"></i>
+			</a>
 			<a href="#" data-action="collapse">
 				<i class="icon-chevron-up"></i>
 			</a>
+
 			<a href="#" data-action="close">
 				<i class="icon-remove"></i>
 			</a>
@@ -21,34 +22,27 @@
 			<div class="row-fluid">
 				<div class="span12">
 				  <dl>
-				    <dt>Judul Proposal</dt>
-            <dd><%= proposal.title %></dt>
+				    <dt>Judul Tugas Akhir</dt>
+            <dd><%= final_project.title %></dt>
   				  <dt>Pembimbing 1</dt>
-            <dd><%= proposal.advisor_1.username %></dt>
+            <dd><%= final_project.advisor_1.username %></dt>
     				<dt>Pembimbing 2</dt>
-            <dd><%= proposal.advisor_2.username %></dt>
+            <dd><%= final_project.advisor_2.username %></dt>
 				  </dl>
 				</div>
 			</div><!-- row fluid end -->
       <div class="row-fluid">
         <div class="span12">
-  				<div class="progress" data-percent="<%= proposal.progress %>%" id="progress_bar">
-  					<div class="bar" style="width: <%= proposal.progress %>%;" id="progress_bar_count"></div>
+  				<div class="progress" data-percent="<%= final_project.progress %>%" id="progress_bar">
+  					<div class="bar" style="width: <%= final_project.progress %>%;" id="progress_bar_count"></div>
   				</div>
-          <% if can? :update_progress, Proposal %>
-            <div id="update_progress_form">
-              <%= render :partial => 'todo_proposals/partials/update_progress_form', :locals => {:proposal => proposal} %>
-            </div>
-          <% end %>
         </div>
       </div><!-- row fluid end -->
-      <% if proposal.progress == 100 and current_user.user_role_id == 1 %>
-        <div class="row-fluid">
-          <div class="span12" id="upload_file_proposal">
-            <%= render :partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal_form => proposal} %>
-          </div>
-        </div><!-- row fluid end -->
-      <% end %>
+      <div class="row-fluid">
+        <div class="span12">
+          <%= link_to "lihat dokumen proposal", todo_proposals_path %>
+        </div>
+      </div><!-- row fluid end -->
 		</div>
 	</div>
 </div>

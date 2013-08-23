@@ -1,6 +1,7 @@
 class AdminUser < ActiveRecord::Base
   #relation
   belongs_to :user_admin_role
+  has_many :news
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

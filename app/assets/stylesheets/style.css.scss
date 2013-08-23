@@ -143,3 +143,20 @@ abbr[title=required]{
     }
   }
 }
+
+.news{
+  hr{
+    margin: 3px 0px;
+  }
+  .news_item{
+    h4{
+      margin: 10px 0px 0px 0px;
+    }
+    h5{
+      margin: 0px;
+    }
+    .span12{
+      margin-left: 0px;
+    }
+  }
+}

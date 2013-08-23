@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130804124309) do
+ActiveRecord::Schema.define(:version => 20130818230946) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(:version => 20130804124309) do
     t.integer  "coordinator",     :default => 0, :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "attachment_admins", :force => true do |t|
+    t.integer  "attachment_adminable_id"
+    t.string   "attachment_adminable_type"
+    t.string   "file"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "attachments", :force => true do |t|
@@ -112,6 +120,14 @@ ActiveRecord::Schema.define(:version => 20130804124309) do
     t.datetime "read_at"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+  end
+
+  create_table "news", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "notifications", :force => true do |t|

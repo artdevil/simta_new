@@ -15,48 +15,17 @@
   	</div>
 
   	<div class="widget-body">
-  		<div class="widget-main">
-  			<div class="row-fluid">
-  				<label for="id-date-picker-1">News</label>
-  			</div>
-
-  			<div class="control-group">
-  				<div class="row-fluid input-append date">
-  					<input class="span10 date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
-  					<span class="add-on">
-  						<i class="icon-calendar"></i>
-  					</span>
-  				</div>
-  			</div>
-
-  			<hr />
-  			<div class="row-fluid">
-  				<label for="id-date-range-picker-1">Date Range Picker</label>
-  			</div>
-
-  			<div class="control-group">
-  				<div class="input-prepend">
-  					<span class="add-on">
-  						<i class="icon-calendar"></i>
-  					</span>
-
-  					<input class="span11" type="text" name="date-range-picker" id="id-date-range-picker-1" />
-  				</div>
-  			</div>
-
-  			<hr />
-  			<div class="row-fluid">
-  				<label for="timepicker1">Time Picker</label>
-  			</div>
-
-  			<div class="control-group">
-  				<div class="input-append bootstrap-timepicker">
-  					<input id="timepicker1" type="text" class="input-small" />
-  					<span class="add-on">
-  						<i class="icon-time"></i>
-  					</span>
-  				</div>
-  			</div>
+  		<div class="widget-main news">
+        <% @news.each do |f| %>
+          <div class="row-fluid news_item">
+            <h4><%= f.title %></h4>
+            <h5><small>Dipost tanggal <%= f.created_at.strftime('%m %B %Y')%></small></h5>
+            <div class="span12">
+              <%= truncate_html(f.description, :length => 200, :omission => "... #{link_to 'read more', news_path(f)}") %>
+            </div>
+          </div>
+          <hr>
+        <% end %>
   		</div>
   	</div>
   </div>

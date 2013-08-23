@@ -3,11 +3,11 @@
 		<h4>Final Project Reports</h4>
 
 		<span class="widget-toolbar no-border">
-			<a href="#" data-action="settings">
-        <%= link_to new_report_final_project_path(final_project), :data => {:action => "setting"}, :remote => true do %>
+      <% if can? :new_report, FinalProject %>
+        <%= link_to new_report_final_project_path(final_project), :data => {:action => "settings"}, :remote => true do %>
           <i class="icon-briefcase"></i>
         <% end %>
-			</a>
+      <% end %>
 
 			<a href="#" data-action="reload">
 				<i class="icon-refresh"></i>

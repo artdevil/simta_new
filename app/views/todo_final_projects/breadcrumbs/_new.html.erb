@@ -1,0 +1,34 @@
+<div id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to dashboards_path do %>
+        <%= current_user.username %>
+      <% end %>
+
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to todo_final_projects_path do %>
+        To Do Proposals
+      <% end %>
+
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li class="active">New</li>
+	</ul><!--.breadcrumb-->
+
+	<div id="nav-search">
+		<form class="form-search">
+			<span class="input-icon">
+				<input type="text" placeholder="Search ..." class="input-small search-query" id="nav-search-input" autocomplete="off" />
+				<i class="icon-search" id="nav-search-icon"></i>
+			</span>
+		</form>
+	</div><!--#nav-search-->
+</div>

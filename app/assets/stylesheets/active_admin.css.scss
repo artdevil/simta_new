@@ -27,3 +27,16 @@
 // .active_admin       applies to any Active Admin namespace
 // .admin_namespace    applies to the admin namespace (eg: /admin)
 // .other_namespace    applies to a custom namespace named other (eg: /other)
+
+.cke_chrome {
+  width: 76% !important;
+  overflow: hidden;
+}
+
+body.active_admin {
+  .cke_toolbar {
+    .cke_button {
+      padding: 5px;
+    }
+  }
+}

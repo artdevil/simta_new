@@ -49,6 +49,11 @@ end
 
 group :development do
   gem 'bullet'
+  gem 'meta_request'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'rack-mini-profiler'
+  gem 'quiet_assets'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

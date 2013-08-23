@@ -23,7 +23,9 @@
             <% elsif current_user.students_status.status == 1 %>
               Menunggu konfirmasi dari dosen. Klik <%= link_to "di sini", messages_path(:recipient_key_id => current_user.topic_tags.get_empty_topic_with_key_id) %> untuk mengirim pesan ke dosen.
             <% elsif current_user.students_status.status == 2 %>
-              <%= render :partial => "dashboards/students/progress", :locals => {:proposal_status => current_user.proposal} %>
+              <%= render :partial => "dashboards/students/progress_proposal", :locals => {:proposal_status => current_user.proposal} %>
+            <% elsif current_user.students_status.status == 3 %>
+              <%= render :partial => "dashboards/students/progress_final_project", :locals => {:final_project_status => current_user.final_project} %>
             <% end %>
           </div>
         </div>

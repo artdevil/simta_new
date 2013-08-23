@@ -18,19 +18,36 @@ class Comment < ActiveRecord::Base
   
   private
     def set_notification
-      if self.user.user_role_id == 1
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_1_id, :message => "Mengomentari todos")
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_2_id, :message => "Mengomentari todos")
-      elsif self.user.user_role_id == 2 and self.commentable_type == "TodoProposal" and self.user_id == self.commentable.proposal.advisor_1_id
-        #for student
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.user_id, :message => "Mengomentari todos")
-        #for advisor 2
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_2_id, :message => "Mengomentari todos")
-      elsif self.user.user_role_id == 2 and self.commentable_type == "TodoProposal" and self.user_id == self.commentable.proposal.advisor_2_id
-        #for student
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.user_id, :message => "Mengomentari todos")
-        #for advisor 1
-        self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_1_id, :message => "Mengomentari todos")
+      if self.commentable_type == "TodoProposal"
+        if self.user.user_role_id == 1
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_1_id, :message => "Mengomentari todos proposal")
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_2_id, :message => "Mengomentari todos proposal")
+        elsif self.user.user_role_id == 2 and self.commentable_type == "TodoProposal" and self.user_id == self.commentable.proposal.advisor_1_id
+          #for student
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.user_id, :message => "Mengomentari todos proposal")
+          #for advisor 2
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_2_id, :message => "Mengomentari todos proposal")
+        elsif self.user.user_role_id == 2 and self.commentable_type == "TodoProposal" and self.user_id == self.commentable.proposal.advisor_2_id
+          #for student
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.user_id, :message => "Mengomentari todos proposal")
+          #for advisor 1
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_1_id, :message => "Mengomentari todos proposal")
+        end
+      elsif self.commentable_type == "TodoFinalProject"
+        if self.user.user_role_id == 1
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_1_id, :message => "Mengomentari todos final project")
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_2_id, :message => "Mengomentari todos final project")
+        elsif self.user.user_role_id == 2 and self.user_id == self.commentable.final_project.advisor_1_id
+          #for student
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.user_id, :message => "Mengomentari todos final project")
+          #for advisor 2
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_2_id, :message => "Mengomentari todos final project")
+        elsif self.user.user_role_id == 2 and self.user_id == self.commentable.final_project.advisor_2_id
+          #for student
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.user_id, :message => "Mengomentari todos final project")
+          #for advisor 1
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_1_id, :message => "Mengomentari todos final project")
+        end
       end
     end
 end

@@ -6,10 +6,20 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_in_path_for(resource)
-    dashboards_path
+    if current_user
+      dashboards_path
+    else current_admin_user
+      admin_dashboard_path
+    end
   end
   
   def current_ability
     @current_ability ||= Ability.new(current_user)
+  end
+  
+  def authorize
+    if current_user.is_admin? 
+      Rack::MiniProfiler.authorize_request
+    end
   end
 end

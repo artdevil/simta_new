@@ -1,0 +1,40 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "todo_final_projects/breadcrumbs/show", :locals => {:todo_final_project_title => @todo_final_project.title } %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Todo Final Project
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @todo_final_project.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid">
+        <%= render :partial => "todo_final_projects/partials/todo_title", :locals => {:todo_final_project => @todo_final_project} %>
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+      <div class="row-fluid">
+				<div class="dialogs" id="comments">
+          <% @todo_final_project.comments.includes(:user).includes(:attachments).each do |f| %>
+            <%= render :partial => "todo_final_projects/partials/item_todo_comment", :locals => {:comment_status => f}%>
+          <% end %>
+				</div>
+      </div><!-- end row -->
+      <% unless @todo_final_project.status %>
+        <div class="row-fluid">
+          <div class="span12" id="comment_form">
+            <%= render :partial => "todo_final_projects/partials/todo_form", :locals => {:todo_comment => @todo_final_project.comments.new } %>
+          </div>
+        </div><!-- end row -->
+      <% end %>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

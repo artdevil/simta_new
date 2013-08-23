@@ -2,7 +2,18 @@ class TodoFinalProjectsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    
+    @final_project = current_user.final_project
+    if @final_project.progress == 100
+      flash[:notice] = "#{I18n.t('proposal.completed')}"
+    end
+    @report_final_projects = @final_project.report_final_projects
+    @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
+    @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
+  end
+  
+  def show
+    @final_project = current_user.final_project
+    @todo_final_project = @final_project.todo_final_projects.find(params[:id])
   end
   
   def issue
@@ -15,6 +26,23 @@ class TodoFinalProjectsController < ApplicationController
   def issue_todo
     @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
+  end
+  
+  def new
+    @final_project = current_user.final_project
+    @todo_final_project = @final_project.todo_final_projects.new
+  end
+  
+  def create
+    @final_project = current_user.final_project
+    @todo_final_project = @final_project.todo_final_projects.new(params[:todo_final_project])
+    @todo_final_project.user_id = current_user.id
+    if @todo_final_project.save
+      redirect_to todo_final_project_path(@todo_final_project), :notice => "#{I18n.t('todo_final_projects.create.success')}"
+    else
+      flash[:alert] = "#{I18n.t('todo_final_projects.create.failed')}"
+      render :new
+    end
   end
   
   def new_todo
