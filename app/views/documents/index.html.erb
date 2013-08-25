@@ -1,0 +1,52 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "documents/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Documents
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Hasil Pencarian
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+        <div class="span12">
+					<ul id="browser" class="filetree">
+						<li class="closed"><span class="folder">Folder Tugas Akhir</span>
+							<ul>
+								<li><span class="file">Item 1.1</span></li>
+							</ul>
+						</li>
+						<li class="closed"><span class="folder">Folder Proposal</span>
+							<ul>
+								<li><span class="folder">Subfolder 2.1</span>
+									<ul id="folder21">
+										<li><span class="file">File 2.1.1</span></li>
+										<li><span class="file">File 2.1.2</span></li>
+									</ul>
+								</li>
+								<li><span class="file">File 2.2</span></li>
+							</ul>
+						</li>
+						<li class="closed"><span class="folder">Folder Dokumen Lain</span>
+							<ul>
+			          <% @documents_miss.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %></span>
+									</li>
+			          <% end %>
+							</ul>
+						</li>
+					</ul>
+        </div>
+      </div><!-- end row fluid-->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

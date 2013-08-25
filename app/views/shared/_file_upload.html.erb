@@ -1,4 +1,5 @@
 <div class='row-fluid'>
   <div class='span6'><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
+	<%= n.input :user_id, :as => :hidden, :input_html => {:value => current_user.id} %>
   <div class='span6'><%= n.link_to_remove "remove" %></div>
 </div>

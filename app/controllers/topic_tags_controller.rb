@@ -18,7 +18,7 @@ class TopicTagsController < ApplicationController
   def update
     if params[:confirm] == "decline"
       @topic_tag = current_user.advisor_topic_tag.find(params[:id])
-      if @topic_tag.update_column(:status,false)
+      if @topic_tag.update_attributes(:status => false)
         render :js => "$('#topic_tag_#{@topic_tag.id}').html('<td colspan=\"3\">#{content_tag(:div,'permintaan konfirmasi telah dibatalkan.', :class => 'alert alert-danger')}</td>')"
       end
     elsif params[:confirm] == "accept"

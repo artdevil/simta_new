@@ -1,4 +1,5 @@
 SimtaNew::Application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -20,7 +21,11 @@ SimtaNew::Application.routes.draw do
       get 'reply'
     end
   end
-  resources :notifications
+  resources :notifications do
+    collection do
+      get 'old'
+    end
+  end
   resources :topics
   resources :topic_tags
   
@@ -67,6 +72,8 @@ SimtaNew::Application.routes.draw do
   
   resources :comments
   resources :news
+  resources :documents
+  resources :archives
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

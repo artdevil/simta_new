@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+  $("#browser").treeview();
   $(document).on('change','.ace-file-input label span',function(){
     $("form[data-validate]").resetClientSideValidations();
   });
@@ -31,18 +31,18 @@ $(document).ready(function(){
     });
   });
   
-  $('.upload_file').ace_file_input({
-  	no_file:'No File',
-  	btn_choose:'Choose',
-  	btn_change:'Change',
-  	droppable:false,
-  	onchange:null,
-  	thumbnail:true, //| true | large
-  	whitelist: 'png|jpg|jpeg|pdf|JPG'
-  	//blacklist:'exe|php'
-  	//onchange:''
-  	//
-  });
+  // $('.upload_file').ace_file_input({
+  // 	no_file:'No File',
+  // 	btn_choose:'Choose',
+  // 	btn_change:'Change',
+  // 	droppable:false,
+  // 	onchange:null,
+  // 	thumbnail:true, //| true | large
+  // 	whitelist: 'png|jpg|jpeg|pdf|JPG'
+  // 	//blacklist:'exe|php'
+  // 	//onchange:''
+  // 	//
+  // });
   
   $(document).on('click','.client_side_validation', function(){
     $("form[data-validate]").validate();

@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :students_status
   has_many :todo_proposals
   has_many :todo_final_projects
+  has_many :attachments
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

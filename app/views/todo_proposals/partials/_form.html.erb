@@ -7,10 +7,7 @@
     </div>
   </div><!-- end row -->
   <%= f.simple_fields_for :attachments do |n| %>
-    <div class="row-fluid">
-      <div class="span6"><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
-      <div class="span6"><%= n.link_to_remove "remove" %></div>
-    </div>
+    <%= render :partial => "shared/file_upload", :locals => {:n => n} %>
   <% end %>
   <p><%= f.link_to_add "Add a attachment", :attachments %></p>
   <div class="row-fluid">

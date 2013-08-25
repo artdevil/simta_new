@@ -160,3 +160,16 @@ abbr[title=required]{
     }
   }
 }
+
+#news_dashboard{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	li{
+		font-size: 13px;
+		margin-bottom: 5px;
+		&:hover{
+			font-size: 14px;
+		};
+	}
+}

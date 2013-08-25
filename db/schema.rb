@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130818230946) do
+ActiveRecord::Schema.define(:version => 20130824080741) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20130818230946) do
     t.string   "file"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "user_id"
   end
 
   create_table "ckeditor_assets", :force => true do |t|
@@ -95,6 +96,15 @@ ActiveRecord::Schema.define(:version => 20130818230946) do
     t.text     "comment"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "documents", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.string   "name"
+    t.string   "file"
+    t.string   "document_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "final_projects", :force => true do |t|
@@ -126,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20130818230946) do
     t.integer  "admin_user_id"
     t.string   "title"
     t.text     "description"
+    t.string   "slug"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

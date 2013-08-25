@@ -1,2 +1,42 @@
-<h1>News#show</h1>
-<p>Find me in app/views/news/show.html.erb</p>
+<div id="main-content" class="clearfix">
+	<%= render :partial => "news/breadcrumbs/show", :locals => {:news_title => @news.title} %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				News
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @news.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+        <div class="span12">
+          <div class="row-fluid item_header">
+            <div class="span12">
+          		<%= link_to news_path(@news) do %>
+            		<h4>
+                  <%= @news.title %>
+                </h4>
+              <% end %>
+              <h6>Di posting oleh : <%= @news.admin_user.username %></h6>
+              <h6>pada tanggal <%= @news.created_at.strftime('%d %B %Y')%></h6>
+            </div>
+          </div><!-- end row -->
+          <br>
+          <div class="row-fluid item_body" style="font-size: 11px;">
+            <%= raw @news.description %>
+          </div><!-- end row -->
+        </div>
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

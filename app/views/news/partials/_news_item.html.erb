@@ -1,0 +1,22 @@
+<div class="row-fluid item_topic">
+  <div class="span12">
+    <div class="row-fluid item_header">
+      <div class="span12">
+    		<%= link_to news_path(news) do %>
+      		<h4>
+            <%= news.title %>
+          </h4>
+        <% end %>
+        <h6>Di posting oleh : <%= news.admin_user.username %></h6>
+        <h6>pada tanggal <%= news.created_at.strftime('%d %B %Y')%></h6>
+      </div>
+    </div><!-- end row -->
+    <br>
+    <div class="row-fluid item_body" style="font-size: 11px;">
+      <%#= raw "#{topic.description.truncate(600)} #{}" %>
+      <%# = truncate(topic.description) %>
+      <%= truncate_html(news.description, :length => 500, :omission => "... #{link_to 'read more', news_path(news)}") %>
+    </div><!-- end row -->
+  </div>
+</div>
+<div class="hr hr32 hr-dotted"></div>

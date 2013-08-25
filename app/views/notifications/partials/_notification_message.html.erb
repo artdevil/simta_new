@@ -22,8 +22,8 @@
 <% end %>
 <% notifications_all.update_all(:read => true)%>
 <li>
-	<a href="#">
+	<%= link_to old_notifications_path do %>
 		See all notifications
 		<i class="icon-arrow-right"></i>
-	</a>
+	<% end %>
 </li>

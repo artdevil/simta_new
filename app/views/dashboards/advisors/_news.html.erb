@@ -15,17 +15,16 @@
   	</div>
 
   	<div class="widget-body">
-  		<div class="widget-main news">
-        <% @news.each do |f| %>
-          <div class="row-fluid news_item">
-            <h4><%= f.title %></h4>
-            <h5><small>Dipost tanggal <%= f.created_at.strftime('%m %B %Y')%></small></h5>
-            <div class="span12">
-              <%= truncate_html(f.description, :length => 200, :omission => "... #{link_to 'read more', news_path(f)}") %>
-            </div>
-          </div>
-          <hr>
-        <% end %>
+  		<div class="widget-main">
+				<div class="row-fluid">
+					<div class="span12">
+						<ul id="news_dashboard">
+							<% @news.each do |f| %>
+								<li><%= link_to f.title, news_path(f)%></li>
+							<% end %>
+						</ul>
+					</div>
+				</div>
   		</div>
   	</div>
   </div>

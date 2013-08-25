@@ -20,6 +20,7 @@
         <%= render :partial => "todo_proposals/partials/todo_title", :locals => {:todo_proposal => @todo_proposal} %>
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
+			<h4>Comments</h4>
       <div class="row-fluid">
 				<div class="dialogs" id="comments">
           <% @todo_proposal.comments.includes(:user).includes(:attachments).each do |f| %>
@@ -27,6 +28,7 @@
           <% end %>
 				</div>
       </div><!-- end row -->
+			<div class="hr hr32 hr-dotted"></div>
       <% unless @todo_proposal.status %>
         <div class="row-fluid">
           <div class="span12" id="comment_form">

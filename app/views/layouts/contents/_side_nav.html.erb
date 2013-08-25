@@ -39,6 +39,11 @@
 			  <i class="icon-dashboard"></i><span>Dashboard</span>
       <% end %>
 		</li>
+		<li class="<%= 'active' if controller_name == 'messages' %>">
+      <%= link_to messages_path do %>
+			  <i class="icon-envelope"></i><span>Messages</span>
+      <% end %>
+		</li>
 	  <% if can? :read, Topic %>
   		<li class="<%= 'active' if controller_name == 'topics' %>">
         <%= link_to topics_path do %>
@@ -46,6 +51,33 @@
         <% end %>
   		</li>
     <% end %>
+		<li class="<%= 'active' if controller_name == 'news' %>">
+      <%= link_to news_index_path do %>
+			  <i class="icon-list-alt"></i><span>News</span>
+      <% end %>
+		</li>
+		<% if current_user.user_role_id == 1 and current_user.proposal.present? and current_user.students_status.status == 2 %>
+			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
+	      <%= link_to todo_proposals_path do %>
+				  <i class="icon-tasks"></i><span>Todo Proposal</span>
+	      <% end %>
+			</li>
+		<% end %>
+		<li class="<%= 'active' if controller_name == 'documents' %>">
+      <%= link_to documents_path do %>
+			  <i class="icon-edit"></i><span>Documents</span>
+      <% end %>
+		</li>
+		<li class="<%= 'active' if controller_name == 'notifications' %>">
+      <%= link_to old_notifications_path do %>
+			  <i class="icon-comments"></i><span>Notifications</span>
+      <% end %>
+		</li>
+		<li class="<%= 'active' if controller_name == 'archives' %>">
+      <%= link_to archives_path do %>
+			  <i class="icon-copy"></i><span>Archives</span>
+      <% end %>
+		</li>
 	</ul><!--/.nav-list-->
 
 	<div id="sidebar-collapse">

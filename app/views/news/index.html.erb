@@ -1,2 +1,35 @@
-<h1>News#index</h1>
-<p>Find me in app/views/news/index.html.erb</p>
+<div id="main-content" class="clearfix">
+	<%= render :partial => "news/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				News
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Hasil Pencarian
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+        <div class="span12">
+          <% @news.each do |f| %>
+            <%= render :partial => 'news/partials/news_item', :locals => {:news => f} %>
+          <% end %>
+        </div>
+      </div><!-- end row fluid-->
+      <div class="row-fluid">
+        <div class="span12" style="text-align: center;">
+          <div class="pagination">
+            <%= paginate @news %>
+          </div>
+        </div>
+      </div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

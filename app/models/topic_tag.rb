@@ -15,6 +15,7 @@ class TopicTag < ActiveRecord::Base
   #callback
   before_create :checking_user_tag, :if => Proc.new{ self.user.user_role_id == 1 }
   after_update :set_notification_to_student
+  after_update :update_user_status_cancel, :if => Proc.new{ self.status == false}
   after_create :set_notification_for_lecture
   after_create :update_user_status
   
@@ -52,6 +53,10 @@ class TopicTag < ActiveRecord::Base
     
     def update_user_status
       self.user.students_status.update_column(:status, 1)
+    end
+    
+    def update_user_status_cancel
+      self.user.students_status.update_column(:status, 0)
     end
     
 end
