@@ -42,6 +42,7 @@ SimtaNew::Application.routes.draw do
       put 'update_progress'
       get 'new_report'
       post 'create_report'
+      put 'finished'
     end
   end
   resources :todo_proposals do

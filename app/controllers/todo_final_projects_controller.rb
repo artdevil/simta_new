@@ -4,7 +4,7 @@ class TodoFinalProjectsController < ApplicationController
   def index
     @final_project = current_user.final_project
     if @final_project.progress == 100
-      flash[:notice] = "#{I18n.t('proposal.completed')}"
+      flash[:notice] = "#{I18n.t('final_project.completed')}"
     end
     @report_final_projects = @final_project.report_final_projects
     @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue

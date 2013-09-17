@@ -1,16 +1,8 @@
 <div class="row-fluid">
   <div class="span12">
-    <h3>Upload File</h3>
-    <p>lembar pemeriksa : <%= link_to File.basename(proposal.exam.path), proposal.exam.url unless proposal.exam.blank? %></p>
-    <p>lembar berita acara : <%= link_to File.basename(proposal.events.path), proposal.events.url unless proposal.events.blank? %></p>
-    <p>Proposal : <%= link_to File.basename(proposal.proposal.path), proposal.proposal.url unless proposal.proposal.blank? %></p>
-  </div>
-  <% unless proposal.exam.blank? and proposal.events.blank? and proposal.proposal.blank? %>
-    <% if can? :finished, Proposal %>
-      <%= link_to finished_proposal_path(proposal), :method => "put", :class => "btn btn-success", :confirm => "apakah anda yakin ?" do %>
-        <i class="icon-ok"></i>
-        Proposal Telah Selesai
-      <% end %>
+    <%= link_to finished_final_project_path(final_project), :method => "put", :class => "btn btn-success btn-small", :confirm => "apakah anda yakin ?" do %>
+      <i class="icon-ok"></i>
+      Final Project Telah Selesai
     <% end %>
-  <% end %>
+  </div>
 </div><!-- row fluid end -->

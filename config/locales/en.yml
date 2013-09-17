@@ -33,6 +33,11 @@ en:
     finished: 
       success: "Proposal is finished."
       failed: "Proposal can't be finished. Please check it again"
+  final_project:
+    completed: "Final Project anda telah selesai. Silahkan mengajukan diri untuk sidang TA"
+    finished: 
+      success: "Final Project is finished."
+      failed: "Final Project can't be finished. Please check it again"
   todo_proposals:
     create:
       success: "Your to do proposal has been create"

@@ -18,7 +18,9 @@ class Ability
       cannot :finished, Proposal
     elsif user.user_role_id == 2
       can :read, Topic
-      can :manage, Topic, :user_id == user.id
+      can :manage, Topic do |topic|
+        topic.try(:user) == user
+      end
       can :show, TopicTag, :advisor_id == user.id
       cannot :create, TopicTag
       can :update, TopicTag

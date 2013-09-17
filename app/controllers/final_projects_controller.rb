@@ -1,6 +1,5 @@
 class FinalProjectsController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
   
   def update_progress
     @final_project = check_user(params[:id])
@@ -30,6 +29,15 @@ class FinalProjectsController < ApplicationController
     else
       form = render_to_string(:partial => "todo_final_projects/issue/report_form", :locals => {:final_project_report => @final_project_report}).to_json
       render :js => "$('#reportFinalProjectModal .modal-content').html(#{form});"
+    end
+  end
+  
+  def finished
+    final_project = check_user(params[:id])
+    if final_project.update_attributes(:finished => true)
+      redirect_to dashboards_path, :notice => "#{I18n.t('final_project.finished.success')}"
+    else
+      redirect_to "/todo_proposals/issue/#{final_project.user.slug}", :alert => "#{I18n.t('final_project.finished.failed')}"
     end
   end
   

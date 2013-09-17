@@ -1,6 +1,7 @@
 class NotificationsController < ApplicationController
+  before_filter :authenticate_user!, :only => [:old, :show]
   def index
-    @notification = Notification.count_notification_unread(current_user.id).count
+    @notification = current_user ? Notification.count_notification_unread(current_user.id).count : 0
     respond_to do |format|
       format.js
     end

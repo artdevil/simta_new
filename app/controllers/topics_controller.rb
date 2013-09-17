@@ -1,6 +1,5 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
   def index
     @topics = Topic.includes(:user).page(params[:page]).per(5)
   end
@@ -34,5 +33,6 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @topic = Topic.find(params[:id])
   end
 end

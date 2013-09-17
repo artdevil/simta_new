@@ -40,8 +40,13 @@ class User < ActiveRecord::Base
   scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
   
   #validating before save
+  before_create :set_password, :if => Proc.new{ self.password.blank? }
   after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.user_role_id == 1}
   after_create :build_advisors_status, :if => Proc.new{ self.user_role_id == 2}
+  
+  def set_password
+    self.password = "Passw0rd"
+  end
   
   def build_students_status
     student_status = StudentsStatus.new(:user_id => self.id)
