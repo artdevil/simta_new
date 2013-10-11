@@ -51,11 +51,13 @@
         <% end %>
   		</li>
     <% end %>
-		<li class="<%= 'active' if controller_name == 'news' %>">
-      <%= link_to news_index_path do %>
-			  <i class="icon-list-alt"></i><span>News</span>
+    <% if current_user.user_role_id == 1 and current_user.topic_tags.present? and current_user.students_status.status == 1 %>
+		<li class="<%= 'active' if controller_name == 'topic_tags' %>">
+      <%= link_to topic_tag_path(current_user.topic_tags.first) do %>
+			  <i class="icon-tasks"></i><span>Topic Tag</span>
       <% end %>
 		</li>
+    <% end %>
 		<% if current_user.user_role_id == 1 and current_user.proposal.present? and current_user.students_status.status == 2 %>
 			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
 	      <%= link_to todo_proposals_path do %>
@@ -63,6 +65,11 @@
 	      <% end %>
 			</li>
 		<% end %>
+		<li class="<%= 'active' if controller_name == 'news' %>">
+      <%= link_to news_index_path do %>
+			  <i class="icon-list-alt"></i><span>News</span>
+      <% end %>
+		</li>
 		<li class="<%= 'active' if controller_name == 'documents' %>">
       <%= link_to documents_path do %>
 			  <i class="icon-edit"></i><span>Documents</span>

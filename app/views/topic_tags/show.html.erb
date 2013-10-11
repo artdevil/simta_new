@@ -3,7 +3,7 @@
 	<div id="page-content" class="clearfix">
 		<div class="page-header position-relative">
 			<h1>
-				Topik Tugas Akhir
+				Pengajuan Topik Tugas Akhir
 				<small>
 					<i class="icon-double-angle-right"></i>
 					<%= @topic_tag.topic.title %>
@@ -31,8 +31,6 @@
           </div><!-- end row -->
           <br>
           <div class="row-fluid item_body" style="font-size: 11px;">
-            <%#= raw "#{topic.description.truncate(600)} #{}" %>
-            <%# = truncate(topic.description) %>
             <%= raw @topic_tag.description_recommended %>
           </div><!-- end row -->
           <div class="row-fluid">
@@ -41,6 +39,12 @@
                 <%= link_to "#form_topic_tag", :id => "tag_topic_button", :class => "btn btn-mini btn-success" do %>
                   <i class="icon-ok"></i>
                   Setujui Permintaan Proposal Tugas Akhir
+                <% end %>
+              <% end %>
+              <% if can? :edit, @topic_tag %>
+                <%= link_to edit_topic_tag_path(@topic_tag), :class => "btn btn-mini btn-success" do %>
+                  <i class="icon-ok"></i>
+                  Edit pengajuan Topik
                 <% end %>
               <% end %>
             </div>

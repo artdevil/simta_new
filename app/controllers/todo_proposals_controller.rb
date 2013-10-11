@@ -1,6 +1,7 @@
 class TodoProposalsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :check_user_advisor, :only => ['issue','issue_todo', 'finished', 'new_todo','create_todo']
+  load_and_authorize_resource
   
   def index
     @proposal = current_user.proposal

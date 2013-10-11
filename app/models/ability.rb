@@ -2,38 +2,61 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.user_role_id == 1
+    alias_action :destroy, :edit, :to => :ud
+    user ||= User.new # guest user (not logged in)
+    if user
       can :read, Topic
-      can :create, TopicTag
-      cannot :update, TopicTag
-      can :show, TopicTag, :user_id == user.id
-      can :manage, StudentsStatus, :user_id == user.id
-      cannot :create, Proposal
-      can :update, Proposal
-      can :update_document, Proposal
-      cannot :update_progress, Proposal
-      cannot :update_progess, FinalProject
-      can :create, TodoProposal
-      cannot :finished, TodoProposal
-      cannot :finished, Proposal
-    elsif user.user_role_id == 2
-      can :read, Topic
-      can :manage, Topic do |topic|
-        topic.try(:user) == user
+      can :manage, Message
+      if user.user_role_id == 1
+        can :manage, TopicTag
+        can :edit, TopicTag do |topic_tag|
+          topic_tag.try(:user) == user
+        end
+        can [:open,:close, :check_user_advisor, :read], TodoProposal
+        can :create, Comment
+      elsif user.user_role_id == 2
+        can :create, Topic
+        can :ud, Topic do |topic|
+          topic.try(:user) == user
+        end
+        can :read, TopicTag
+        can :update, TopicTag
+        can :manage, [Proposal, TodoProposal]
+        can :create, Comment
       end
-      can :show, TopicTag, :advisor_id == user.id
-      cannot :create, TopicTag
-      can :update, TopicTag
-      can :create, Proposal
-      can :update, Proposal
-      can :update_progress, Proposal
-      can :update_progress, FinalProject
-      can :new_report, FinalProject
-      can :create_report, FinalProject
-      can :create, TodoProposal
-      can :finished, TodoProposal
-      can :finished, Proposal
     end
+    # if user.user_role_id == 1
+#       can :read, Topic
+#       can :create, TopicTag
+#       cannot :update, TopicTag
+#       can :show, TopicTag, :user_id == user.id
+#       can :manage, StudentsStatus, :user_id == user.id
+#       cannot :create, Proposal
+#       can :update, Proposal
+#       can :update_document, Proposal
+#       cannot :update_progress, Proposal
+#       cannot :update_progess, FinalProject
+#       can :create, TodoProposal
+#       cannot :finished, TodoProposal
+#       cannot :finished, Proposal
+#     elsif user.user_role_id == 2
+#       can :read, Topic
+#       can :manage, Topic do |topic|
+#         topic.try(:user) == user
+#       end
+#       can :show, TopicTag, :advisor_id == user.id
+#       cannot :create, TopicTag
+#       can :update, TopicTag
+#       can :create, Proposal
+#       can :update, Proposal
+#       can :update_progress, Proposal
+#       can :update_progress, FinalProject
+#       can :new_report, FinalProject
+#       can :create_report, FinalProject
+#       can :create, TodoProposal
+#       can :finished, TodoProposal
+#       can :finished, Proposal
+#     end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

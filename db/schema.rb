@@ -108,16 +108,17 @@ ActiveRecord::Schema.define(:version => 20130827072109) do
   end
 
   create_table "final_projects", :force => true do |t|
-    t.integer  "proposal_id",                     :null => false
-    t.integer  "user_id",                         :null => false
-    t.integer  "advisor_1_id",                    :null => false
-    t.integer  "advisor_2_id",                    :null => false
-    t.string   "title"
+    t.integer  "proposal_id",                       :null => false
+    t.integer  "user_id",                           :null => false
+    t.integer  "advisor_1_id",                      :null => false
+    t.integer  "advisor_2_id"
+    t.string   "advisor_2_name",                    :null => false
+    t.string   "title",                             :null => false
     t.text     "description"
-    t.integer  "progress",     :default => 0,     :null => false
-    t.boolean  "finished",     :default => false, :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.integer  "progress",       :default => 0,     :null => false
+    t.boolean  "finished",       :default => false, :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "messages", :force => true do |t|
@@ -153,19 +154,20 @@ ActiveRecord::Schema.define(:version => 20130827072109) do
   end
 
   create_table "proposals", :force => true do |t|
-    t.integer  "topic_id"
-    t.integer  "user_id"
-    t.integer  "advisor_1_id"
+    t.integer  "topic_id",                          :null => false
+    t.integer  "user_id",                           :null => false
+    t.integer  "advisor_1_id",                      :null => false
     t.integer  "advisor_2_id"
-    t.string   "title"
+    t.string   "advisor_2_name",                    :null => false
+    t.string   "title",                             :null => false
     t.text     "description"
-    t.integer  "progress",     :default => 0
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "finished",     :default => false, :null => false
+    t.integer  "progress",       :default => 0,     :null => false
+    t.boolean  "finished",       :default => false, :null => false
     t.string   "exam"
     t.string   "events"
     t.string   "proposal"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "report_final_projects", :force => true do |t|

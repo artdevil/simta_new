@@ -20,6 +20,9 @@ en:
     create:
       success: "Your Send Request Has Been Sent"
       failed: "Your Send Request Failed To Sent"
+    update:
+      success: "Your Send Request Has Been Update"
+      failed: "Your Send Request Failed To update"
     proposal:
       failed: "This Topic Tag has been approve or remove"
   proposal:
