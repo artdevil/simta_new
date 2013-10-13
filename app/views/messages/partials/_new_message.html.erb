@@ -2,8 +2,8 @@
 <div class="row-fluid">
 	<div class="span12">
     <%= simple_nested_form_for message, :url => messages_path, :validate => true, :html => {:multipart => true, :class => "client_side_validation"} do |f| %>
-      <%= f.input :recipient_name, :label => "To :", :placeholder => "#{current_user.user_role_id == 1 ? 'masukkan nama atau NIP' : 'masukkan nama atau NIM'}", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_user_profiles_path}} %>
-      <%= f.input :recipient_id, :as => :hidden, :input_html => {:class => "recipient_id"} %>
+      <%= f.input :recipient_name, :label => "To :", :placeholder => "#{current_user.user_role_id == 1 ? 'masukkan nama atau NIP' : 'masukkan nama atau NIM'}", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_user_profiles_path, :input => "recipient_id"}} %>
+      <%= f.input :recipient_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
       <%= f.input :subject, :label => "Subject :" %>
       <%= f.input :body, :label => "Message :", :as => :ckeditor %>
       <%= f.simple_fields_for :attachments do |n| %>

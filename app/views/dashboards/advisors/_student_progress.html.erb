@@ -14,6 +14,13 @@
 		</div>
 
 		<div class="widget-body">
+      <div>
+        <h3>Kuota Bimbingan</h3>
+				<div class="progress" data-percent="<%= "#{current_user.advisors_status.coordinator} of #{current_user.advisors_status.max_coordinator}" %> bimbingan">
+					<div class="bar" style="width: <%= (current_user.advisors_status.coordinator.to_f/current_user.advisors_status.max_coordinator.to_f)*100 %>%;"></div>
+				</div>
+      </div>
+      <div class="clearfix"></div>
 			<div class="widget-main no-padding">
 				<table class="table table-bordered table-striped">
 					<thead>
@@ -36,7 +43,7 @@
 					</thead>
 
 					<tbody>
-            <% Proposal.advisor_student(current_user).each do |f| %>
+            <% Proposal.advisor_student(current_user).includes(:user).each do |f| %>
   						<tr>
   							<td><%= f.user.username %></td>
   							<td class="hidden-phone">

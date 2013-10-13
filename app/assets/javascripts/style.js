@@ -7,10 +7,10 @@ $(document).ready(function(){
   $(document).on('click','.user_find_ajax',function(){
     $('.user_find_ajax').autocomplete({
       minLength: 3,
-      source: $('.user_find_ajax').data('autocomplete-source'),
+      source: $(this).data('autocomplete-source'),
       select: function( event, ui ) {
         var parent = $(this).parent().parent().parent();
-        parent.find('.recipient_id').val(ui.item.id);
+        parent.find('#'+$(this).data('input')).val(ui.item.id);
         $("form[data-validate]").resetClientSideValidations();
       }
     });
@@ -57,8 +57,8 @@ $(document).ready(function(){
   
   $('.timeago').timeago();
   
-  $('#tag_topic_button').click(function(){
-    $('#form_topic_tag').show();
+  $('#tag_show').click(function(){
+    $('#tag_init_show').show();
     $(this).hide();
   });
   

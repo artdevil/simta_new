@@ -36,8 +36,10 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
-  scope :search_lecture, lambda{|user| where{(user_role_id == 2) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
-  scope :search_student, lambda{|user| where{(user_role_id == 1) & (username =~ "%#{user}%") | (keyid =~ "%#{user}%")}.limit(5)}
+  scope :search_lecture, lambda{|user, current_user| where{(user_role_id == 2) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
+  scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
+  scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
+  scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
   
   #validating before save
   before_create :set_password, :if => Proc.new{ self.password.blank? }
@@ -49,13 +51,11 @@ class User < ActiveRecord::Base
   end
   
   def build_students_status
-    student_status = StudentsStatus.new(:user_id => self.id)
-    student_status.save
+    StudentsStatus.create(:user_id => self.id)
   end
   
   def build_advisors_status
-    advisor_status = AdvisorsStatus.new(:user_id => self.id)
-    advisor_status.save
+    AdvisorsStatus.create(:user_id => self.id)
   end
   
     

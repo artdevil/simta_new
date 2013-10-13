@@ -14,6 +14,7 @@ SimtaNew::Application.routes.draw do
     collection do
       get 'search'
       get 'search_only_advisor'
+      get 'search_only_student'
     end
   end
   resources :messages do

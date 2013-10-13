@@ -7,10 +7,11 @@ class Proposal < ActiveRecord::Base
   has_one :final_project
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
-  attr_accessible :advisor_1_id, :advisor_2_id,:advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
-  
+  attr_accessible :user_name, :advisor_1_id, :advisor_2_id,:advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
+  attr_accessor :user_name
   #validate
-  validates_presence_of :advisor_1_id, :advisor_2_name, :title, :topic_id, :user_id, :advisor_2_name, :on => :create
+  validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
+  validates_presence_of :user_name, :advisor_1_id, :advisor_2_name, :title, :on => :create
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   # validates_presence_of :finished, :unless: Proc.new { |a| a.exam.blank? and a.events.blank? and a.proposal.blank? and a.progress < 100}
   
@@ -23,10 +24,42 @@ class Proposal < ActiveRecord::Base
   after_create :send_message_to_student_and_advisor_2, :set_quota, :update_student_status
   after_save :set_notification_finished, :if => Proc.new{ self.progress == 100 }
   after_save :create_final_project, :if => Proc.new{ self.finished == true }
+  before_destroy :set_quota_decrease
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
   private
+    def cek_user_id
+      if self.user_id.blank?
+        errors.add(:user_name, "User can't found")
+      end
+    end 
+    
+    def cek_status_user
+      if self.user_id.blank? == false
+        user_status = User.select_student(self.user_id).first.students_status
+        unless user_status.status != 0 or user_status.status != 1
+          errors.add(:user_name, "user not in search topic status")
+        end
+      end
+    end
+    
+    def cek_advisor_1_quota
+      advisor_1_status = User.select_lecture(self.advisor_1_id).first.advisors_status
+      if advisor_1_status.coordinator >= advisor_1_status.max_coordinator
+        errors.add(:advisor_1_id, "Your quota is full")
+      end
+    end
+    
+    def cek_advisor_2_quota
+      if self.advisor_2_id.blank? == false
+        advisor_2_status = User.select_lecture(self.advisor_2_id).first.advisors_status
+        if advisor_2_status.coordinator >= advisor_2_status.max_coordinator
+          errors.add(:advisor_2_name, "Advisor quota is full")
+        end
+      end
+    end
+    
     def send_message_to_student_and_advisor_2
       self.notifications.create(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Permintaan proposal anda telah disetujui")
       unless self.advisor_2_id.blank?
@@ -38,6 +71,13 @@ class Proposal < ActiveRecord::Base
       self.advisor_1.advisors_status.update_column(:coordinator, self.advisor_1.advisors_status.coordinator + 1)
       unless self.advisor_2_id.blank?
         self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_2.advisors_status.coordinator + 1)
+      end
+    end
+    
+    def set_quota_decrease
+      self.advisor_1.advisors_status.update_column(:coordinator, self.advisor_1.advisors_status.coordinator - 1)
+      unless self.advisor_2_id.blank?
+        self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_2.advisors_status.coordinator - 1)
       end
     end
     

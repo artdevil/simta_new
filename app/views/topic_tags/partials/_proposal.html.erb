@@ -1,4 +1,7 @@
-<%= simple_form_for proposal, :url => proposals_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "form_topic_tag"} do |f| %>
+<%= simple_form_for proposal, :url => proposals_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "tag_init_show"} do |f| %>
+  <% if proposal.errors.any? %>
+    <%= render :partial => "shared/error_messages", :locals => {:context => proposal } %>
+  <% end %>
   <div class="row-fluid">
     <div class="span12">
   		<blockquote>
@@ -8,12 +11,13 @@
   </div>
   <div class="row-fluid">
     <div class="span12">
-      <%= f.input :advisor_2_name, :label => "Nama Pembimbing 2", :placeholder => "masukkan nama atau NIP", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_advisor_user_profiles_path}} %>
+      <%= f.input :advisor_2_name, :label => "Nama Pembimbing 2", :placeholder => "masukkan nama atau NIP", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_advisor_user_profiles_path, :input => "recipient_id"}} %>
       <%= f.input :title, :label => "Judul Proposal Tugas Akhir" %>
       <%= f.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
       <%= f.input :user_id, :as => :hidden %>
+      <%= f.input :user_name, :as => :hidden %>
       <%= f.input :advisor_1_id, :as => :hidden %>
-      <%= f.input :advisor_2_id, :as => :hidden, :input_html => {:class => "recipient_id"} %>
+      <%= f.input :advisor_2_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
       <%= f.input :topic_id, :as => :hidden %>
       <%= hidden_field_tag :topic_tag_id, topic_tag_id %>
     </div>

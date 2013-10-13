@@ -108,12 +108,12 @@ ActiveRecord::Schema.define(:version => 20130827072109) do
   end
 
   create_table "final_projects", :force => true do |t|
-    t.integer  "proposal_id",                       :null => false
-    t.integer  "user_id",                           :null => false
-    t.integer  "advisor_1_id",                      :null => false
+    t.integer  "proposal_id"
+    t.integer  "user_id"
+    t.integer  "advisor_1_id"
     t.integer  "advisor_2_id"
-    t.string   "advisor_2_name",                    :null => false
-    t.string   "title",                             :null => false
+    t.string   "advisor_2_name"
+    t.string   "title"
     t.text     "description"
     t.integer  "progress",       :default => 0,     :null => false
     t.boolean  "finished",       :default => false, :null => false
@@ -154,12 +154,12 @@ ActiveRecord::Schema.define(:version => 20130827072109) do
   end
 
   create_table "proposals", :force => true do |t|
-    t.integer  "topic_id",                          :null => false
-    t.integer  "user_id",                           :null => false
-    t.integer  "advisor_1_id",                      :null => false
+    t.integer  "topic_id"
+    t.integer  "user_id"
+    t.integer  "advisor_1_id"
     t.integer  "advisor_2_id"
-    t.string   "advisor_2_name",                    :null => false
-    t.string   "title",                             :null => false
+    t.string   "advisor_2_name"
+    t.string   "title"
     t.text     "description"
     t.integer  "progress",       :default => 0,     :null => false
     t.boolean  "finished",       :default => false, :null => false

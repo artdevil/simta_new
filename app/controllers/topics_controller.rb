@@ -7,6 +7,7 @@ class TopicsController < ApplicationController
   
   def new
     @topic = current_user.topics.new
+    @topic.proposals.build(:advisor_1_id => current_user.id)
   end
   
   def create

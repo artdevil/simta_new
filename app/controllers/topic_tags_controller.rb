@@ -39,7 +39,7 @@ class TopicTagsController < ApplicationController
   def show
     @topic_tag = @user_set.find(params[:id])
     if @topic_tag.status == nil and current_user.user_role.name == 'lecture'
-      @proposal = current_user.advisor_1_proposals.new(:title => @topic_tag.title_recommended, :description => @topic_tag.description_recommended, :topic_id => @topic_tag.topic.id, :user_id => @topic_tag.user_id)
+      @proposal = current_user.advisor_1_proposals.new(:title => @topic_tag.title_recommended, :description => @topic_tag.description_recommended, :topic_id => @topic_tag.topic.id, :user_id => @topic_tag.user_id, :user_name => @topic_tag.user.username)
     end
   end
   

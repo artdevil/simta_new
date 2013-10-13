@@ -10,7 +10,7 @@ class TopicTag < ActiveRecord::Base
   
   #validate
   validates_presence_of :topic_id, :user_id, :title_recommended, :description_recommended
-  validate :checking_topic_status
+  validate :checking_topic_status, :check_advisor_status
   
   #callback
   before_create :checking_user_tag, :if => Proc.new{ self.user.user_role_id == 1 }
@@ -28,6 +28,13 @@ class TopicTag < ActiveRecord::Base
   
   def update_status_true
     self.update_column(:status, true)
+  end
+  
+  def check_advisor_status
+    advisor_status = Topic.find(self.topic_id).user.advisors_status
+    if advisor_status.coordinator >= advisor_status.max_coordinator
+      errors.add(:status, "Advisor reach max quota")
+    end
   end
   
   private

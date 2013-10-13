@@ -1,4 +1,4 @@
-<%= simple_nested_form_for current_user.topic_tags.new(:topic_id => topic.id), :url => topic_tags_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "form_topic_tag"} do |f| %>
+<%= simple_nested_form_for current_user.topic_tags.new(:topic_id => topic.id), :url => topic_tags_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "tag_init_show"} do |f| %>
   <div class="row-fluid">
 		<blockquote>
 			<p>Pastikan Anda Yakin Untuk Mengambil Topik Tugas Akhir Ini. Anda Hanya Bisa Mengajukan Satu Topik Tugas Akhir</p>
