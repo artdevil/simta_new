@@ -13,7 +13,7 @@
     <!-- bootstrap flash -->
 		<%= bootstrap_flash %>
     <!-- end bootstrap flash -->
-    <%= simple_form_for current_user, :url => user_profile_path, :method => "put", :html => {:class => "form-horizontal"} do |f| %>
+    <%= simple_form_for current_user, :url => user_profile_path, :validate => true, :method => "put", :html => {:class => "form-horizontal"} do |f| %>
   		<div class="row-fluid">
   			<!--PAGE CONTENT BEGINS HERE-->
         <div class="span2 profile_picture_wrap">
@@ -25,10 +25,16 @@
   			<div class="span10">
           <div class="row-fluid">
             <div class="span6">
-              <%= f.input :username %>
+              <%= f.input :keyid, :disabled => true, :label => "#{f.object.user_role_id == 1 ? 'NIM' : 'NIP'}" %>
+              <%= f.input :faculty, :disabled => true, :input_html => {:value => f.object.faculty.name} %>
               <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
               <%= f.input :password_confirmation, :required => false %>
               <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
+            </div>
+            <div class="span6">
+              <%= f.input :username, :disabled => true %>
+              <%= f.input :phone %>
+              <%= f.input :address, :input_html => {:rows => 5} %>
             </div>
           </div>
   			</div><!-- span -->

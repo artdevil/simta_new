@@ -188,10 +188,6 @@ ActiveRecord::Schema.define(:version => 20131107042430) do
     t.integer  "status",     :default => 0, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.string   "department"
-    t.string   "prodi"
-    t.string   "address"
-    t.string   "phone"
   end
 
   create_table "taggings", :force => true do |t|
@@ -286,6 +282,8 @@ ActiveRecord::Schema.define(:version => 20131107042430) do
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.string   "slug"
+    t.text     "address"
+    t.string   "phone"
     t.integer  "faculty_id"
   end
 

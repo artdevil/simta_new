@@ -6,7 +6,7 @@ class UserProfilesController < ApplicationController
   end
 
   def show
-    
+    @user = User.find(params[:id])
   end
 
   def edit
@@ -15,8 +15,10 @@ class UserProfilesController < ApplicationController
   
   def update
     if current_user.update_with_password(params[:user])
+      flash[:success] = "Your Profile Has Been Updates"
       redirect_to user_profiles_path
     else
+      flash[:error] = "Your Profile can't updates"
       render :action => 'edit'
     end
   end

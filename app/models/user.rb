@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :birthday
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :password,:birthday, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes, :faculty_id
+  attr_accessible :password,:birthday, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes, :faculty_id,
+  :phone, :address
   # attr_accessible :title, :body
   
   
@@ -54,6 +55,7 @@ class User < ActiveRecord::Base
   validates :password, :confirmation => true, :presence => true,:on => :create, :if => :birtday_need?
   validates :birthday, :presence => true, :format => {:with => /\A[0-9]{2}-[0-9]{2}-[0-9]{4}/, message: "invalid birthday"}, :unless => :birtday_need?
   validates :faculty_id, :presence => true
+  validates :phone, :allow_blank => true, :numericality => {:only_integer => true}, :length => {:minimum => 10, :maximum => 12}
   
   #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }

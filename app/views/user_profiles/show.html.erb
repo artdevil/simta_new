@@ -1,2 +1,59 @@
-<h1>UserProfiles#show</h1>
-<p>Find me in app/views/user_profiles/show.html.erb</p>
+<div id="main-content" class="clearfix">
+	<%= render :partial => "user_profiles/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				User Profile
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @user.username %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+        <div class="span2 profile_picture_wrap">
+          <%= image_tag @user.avatar_url.to_s, :class => "profile_picture_big" %>
+        </div>
+  			<div class="span10">
+  				<div class="control-group">
+  					<label class="control-label" for="form-field-1">Nama</label>
+  					<div class="controls description">
+  						<%= @user.username %>
+  					</div>
+  				</div>
+  				<div class="control-group">
+  					<label class="control-label" for="form-field-1"><%= @user.user_role_id == 1 ? 'NIM' : 'NIP' %></label>
+  					<div class="controls description">
+  						<%= @user.keyid %>
+  					</div>
+  				</div>
+  				<div class="control-group">
+  					<label class="control-label" for="form-field-1">Fakultas</label>
+  					<div class="controls description">
+  						<%= @user.faculty.name %>
+  					</div>
+  				</div>
+  				<div class="control-group">
+  					<label class="control-label" for="form-field-1">No telephone</label>
+  					<div class="controls description">
+  						<%= @user.phone %>
+  					</div>
+  				</div>
+  				<div class="control-group">
+  					<label class="control-label" for="form-field-1">Alamat</label>
+  					<div class="controls description">
+  						<%= @user.address %>
+  					</div>
+  				</div>
+  			</div><!-- span -->
+      </div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->
