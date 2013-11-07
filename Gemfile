@@ -26,6 +26,7 @@ gem 'kaminari'
 gem "squeel"
 gem "truncate_html"
 gem "powder"
+gem "roo", "~> 1.12.2"
 
 
 # Gems used only for assets and not required

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   friendly_id :username, use: :slugged
   
   #relation
+  belongs_to :faculty
   belongs_to :user_role
   has_many :topics, :dependent => :destroy
   has_one :proposal
@@ -28,9 +29,11 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :authentication_keys => [:keyid]
 
+  attr_accessor :birthday
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :password, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes
+  attr_accessible :password,:birthday, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes, :faculty_id
   # attr_accessible :title, :body
+  
   
   #upload image
   mount_uploader :avatar, AvatarUploader
@@ -41,14 +44,21 @@ class User < ActiveRecord::Base
   scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
   scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
   
-  #validating before save
+  #validates
+  validates_presence_of :username
+  validates :keyid, :presence => true, :uniqueness => true
+  #validate key id with different role
+  validates :keyid, :format => {:with => /\A[0-9]{9}/, message: "invalid key id"}, :if => :is_student?
+  validates :keyid, :format => {:with => /\A[0-9]{8}-[0-9]{1}/, message: "invalid key id"}, :unless => :is_student?
+  
+  validates :password, :confirmation => true, :presence => true,:on => :create, :if => :birtday_need?
+  validates :birthday, :presence => true, :format => {:with => /\A[0-9]{2}-[0-9]{2}-[0-9]{4}/, message: "invalid birthday"}, :unless => :birtday_need?
+  validates :faculty_id, :presence => true
+  
+  #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }
   after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.user_role_id == 1}
   after_create :build_advisors_status, :if => Proc.new{ self.user_role_id == 2}
-  
-  def set_password
-    self.password = "Passw0rd"
-  end
   
   def build_students_status
     StudentsStatus.create(:user_id => self.id)
@@ -60,6 +70,20 @@ class User < ActiveRecord::Base
   
     
   protected
+    
+    def is_student?
+      self.user_role_id == 1
+    end
+    
+    def birtday_need?
+      !self.birthday.present?
+    end
+    
+    def set_password
+      password_generate = Date.strptime(self.birthday, '%d-%m-%Y').strftime('%d%m%Y')
+      self.password = password_generate
+      self.password_confirmation = password_generate
+    end
   
     def email_required?
       false

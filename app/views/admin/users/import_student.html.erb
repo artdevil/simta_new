@@ -1,0 +1,15 @@
+<% if @import_student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@import_student.errors.count, "error") %> prohibited this import from completing:</h2>
+      <ul>
+      <% @import_student.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= simple_form_for @import_student, :url => create_import_student_admin_users_path  do |f| %>
+  <%= f.input :file, :as => :file %>
+  <br>
+  <%= f.submit "Import" %>
+<% end %>
