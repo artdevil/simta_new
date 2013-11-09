@@ -60,6 +60,9 @@ $(document).ready(function(){
   $('#tag_show').click(function(){
     $('#tag_init_show').show();
     $(this).hide();
+    $('html, body').animate({
+            scrollTop: $('#tag_init_show').offset().top
+    }, 'slow');
   });
   
   $(document).on('hover','.btn-tooltip',function(){

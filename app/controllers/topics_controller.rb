@@ -36,5 +36,6 @@ class TopicsController < ApplicationController
 
   def show
     @topic = Topic.find(params[:id])
+    @topic_tag = current_user.topic_tags.new(:topic_id => @topic.id)
   end
 end

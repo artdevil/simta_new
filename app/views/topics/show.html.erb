@@ -30,7 +30,7 @@
             </div>
           </div><!-- end row -->
           <br>
-          <div class="row-fluid item_body" style="font-size: 11px;">
+          <div class="row-fluid">
             <%#= raw "#{topic.description.truncate(600)} #{}" %>
             <%# = truncate(topic.description) %>
             <%= raw @topic.description %>
@@ -39,30 +39,13 @@
             <p>Kata Kunci: <%= raw @topic.tag_list.map { |t| link_to t, topics_path(:keyword => t) }.join(', ') %></p>
           </div><!-- end row -->
           <div class="row-fluid">
-            <% if can? :create, TopicTag and @topic.status %>
-              <% if current_user.topic_tags.blank? == false %>
-                <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
-                  <i class="icon-ok"></i>
-                  Anda Sudah Mengambil Topik TA. Silahkan Tunggu Konfirmasi
-                <% end %>
-              <% elsif @topic.advisor_limit_quota %>
-                <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
-                  <i class="icon-ok"></i>
-                  Quota Bimbingan Dosen Penuh
-                <% end %>
-              <% else %>
-                <%= link_to "#tag_init_show", :id => "tag_show", :class => "btn btn-mini btn-success" do %>
-                  <i class="icon-ok"></i>
-                  Jadikan topik TA
-                <% end %>
-              <% end %>
-            <% end %>
+            <%= render 'topics/partials/confirm_button' %>
           </div>
         </div>
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
-      <% if can? :create, TopicTag and @topic.status and current_user.topic_tags.blank? %>
-        <%= render :partial => "topics/partials/topic_tag", :locals => {:topic => @topic} %>
+      <% if can? :create, TopicTag and @topic.status and @topic_tag.new_record? %>
+        <%= render "topics/partials/topic_tag" %>
       <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
@@ -70,4 +53,11 @@
 </div><!--/#main-content-->
 <% if can? :edit, @topic %>
   <%= render :partial => "topics/partials/config_show_button", :locals => {:topic => @topic} %>
+<% end %>
+<% if controller_name == "topic_tags" %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#tag_show').click();
+    });
+  </script>
 <% end %>

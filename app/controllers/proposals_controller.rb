@@ -6,7 +6,7 @@ class ProposalsController < ApplicationController
   def create
     @proposal = current_user.advisor_1_proposals.new(params[:proposal])
     if @proposal.save
-      if !params[:topic_tag_id].blank?
+      if params[:topic_tag_id].present?
         topic_tag = TopicTag.find(params[:topic_tag_id])
         topic_tag.update_status_true
         redirect_to dashboards_path, :notice => "#{I18n.t('proposal.create.success')}"
@@ -14,7 +14,7 @@ class ProposalsController < ApplicationController
         redirect_to dashboards_path, :notice => "#{I18n.t('proposal.create.success')}"
       end
     else
-      if !params[:topic_tag_id].blank?
+      if params[:topic_tag_id].present?
         @topic_tag = current_user.advisor_topic_tag.find(params[:topic_tag_id])
         flash[:alert] = "#{I18n.t('proposal.create.failed')}"
         render "topic_tags/show"

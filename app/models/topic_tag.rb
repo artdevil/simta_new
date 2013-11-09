@@ -9,8 +9,8 @@ class TopicTag < ActiveRecord::Base
   attr_accessible :status, :topic_id, :user_id, :title_recommended, :description_recommended, :advisor_id
   
   #validate
-  validates_presence_of :topic_id, :user_id, :title_recommended, :description_recommended
-  validate :checking_topic_status, :check_advisor_status
+  validates_presence_of :topic_id, :title_recommended, :description_recommended
+  validate :checking_topic_status, :check_advisor_status, :check_student_status, :on => :create
   
   #callback
   before_create :checking_user_tag, :if => Proc.new{ self.user.user_role_id == 1 }
@@ -33,7 +33,14 @@ class TopicTag < ActiveRecord::Base
   def check_advisor_status
     advisor_status = Topic.find(self.topic_id).user.advisors_status
     if advisor_status.coordinator >= advisor_status.max_coordinator
-      errors.add(:status, "Advisor reach max quota")
+      errors.add(:base, "Advisor reach max quota")
+    end
+  end
+  
+  def check_student_status
+    student = User.find(self.user_id)
+    if student.students_status.status != 0 and !student.topic_tags.blank?
+      errors.add(:base, "student has topic tag or not on proposal status")
     end
   end
   
@@ -44,7 +51,7 @@ class TopicTag < ActiveRecord::Base
     
     def checking_topic_status
       unless self.topic.status
-        errors.add(:status, "not authorized for tag topic")
+        errors.add(:base, "not authorized for tag topic")
       end
     end
     

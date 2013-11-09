@@ -53,9 +53,16 @@
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
       <% if can? :create, Proposal %>
-        <%= render :partial => "topic_tags/partials/proposal", :locals => {:proposal => @proposal, :topic_tag_id => @topic_tag.id} %>
+        <%= render "topic_tags/partials/proposal" %>
       <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
+<% if controller_name == "proposals" %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#tag_show').click();
+    });
+  </script>
+<% end %>

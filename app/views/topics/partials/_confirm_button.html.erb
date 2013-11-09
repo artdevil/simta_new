@@ -1,0 +1,18 @@
+<% if can? :create, TopicTag and @topic.status %>
+  <% if !current_user.topic_tags.blank? and !@topic_tag.new_record? %>
+    <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
+      <i class="icon-ok"></i>
+      Anda Sudah Mengambil Topik TA. Silahkan Tunggu Konfirmasi
+    <% end %>
+  <% elsif @topic.advisor_limit_quota %>
+    <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
+      <i class="icon-ok"></i>
+      Quota Bimbingan Dosen Penuh
+    <% end %>
+  <% else %>
+    <%= link_to "#tag_init_show", :id => "tag_show", :class => "btn btn-mini btn-success" do %>
+      <i class="icon-ok"></i>
+      Jadikan topik TA
+    <% end %>
+  <% end %>
+<% end %>

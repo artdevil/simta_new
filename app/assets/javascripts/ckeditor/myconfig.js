@@ -2,11 +2,11 @@ CKEDITOR.editorConfig = function( config )
 {
   config.toolbar =
    [
-     { name: 'document', items: [ 'Source'] },
-     { name: 'links', items: [ 'Link', 'Unlink'] },
+     // { name: 'document', items: [ 'Source'] },
+//      { name: 'links', items: [ 'Link', 'Unlink'] },
      { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] },
      { name: 'paragraph', groups: [ 'list', 'align' ], items: [ 'NumberedList', 'BulletedList','JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-     { name: 'styles', items: [ 'FontSize' ] }
+     // { name: 'styles', items: [ 'FontSize' ] }
    ];
   
   // config.toolbar = 'Basic';

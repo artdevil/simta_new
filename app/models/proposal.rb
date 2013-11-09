@@ -7,11 +7,11 @@ class Proposal < ActiveRecord::Base
   has_one :final_project
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
-  attr_accessible :user_name, :advisor_1_id, :advisor_2_id,:advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
-  attr_accessor :user_name
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
+
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
-  validates_presence_of :user_name, :advisor_1_id, :advisor_2_name, :title, :on => :create
+  validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   # validates_presence_of :finished, :unless: Proc.new { |a| a.exam.blank? and a.events.blank? and a.proposal.blank? and a.progress < 100}
   
@@ -31,13 +31,13 @@ class Proposal < ActiveRecord::Base
   private
     def cek_user_id
       if self.user_id.blank?
-        errors.add(:user_name, "User can't found")
+        errors.add(:base, "User can't found")
       end
     end 
     
     def cek_status_user
-      if self.user_id.blank? == false
-        user_status = User.select_student(self.user_id).first.students_status
+      if self.user_id.present?
+        user_status = User.select_student(self.user_id).first.try(:students_status)
         unless user_status.status != 0 or user_status.status != 1
           errors.add(:user_name, "user not in search topic status")
         end
@@ -45,17 +45,25 @@ class Proposal < ActiveRecord::Base
     end
     
     def cek_advisor_1_quota
-      advisor_1_status = User.select_lecture(self.advisor_1_id).first.advisors_status
-      if advisor_1_status.coordinator >= advisor_1_status.max_coordinator
-        errors.add(:advisor_1_id, "Your quota is full")
+      advisor_1_status = User.select_lecture(self.advisor_1_id).first.try(:advisors_status)
+      if advisor_1_status.present?
+        if advisor_1_status.coordinator >= advisor_1_status.max_coordinator
+          errors.add(:advisor_1_id, "Your quota is full")
+        end
+      else
+        errors.add(:base, "can't find advisor 1")
       end
     end
     
     def cek_advisor_2_quota
-      if self.advisor_2_id.blank? == false
-        advisor_2_status = User.select_lecture(self.advisor_2_id).first.advisors_status
-        if advisor_2_status.coordinator >= advisor_2_status.max_coordinator
-          errors.add(:advisor_2_name, "Advisor quota is full")
+      if self.advisor_2_id.present?
+        advisor_2_status = User.select_lecture(self.advisor_2_id).first.try(:advisors_status)
+        if advisor_2_status.present?
+          if advisor_2_status.coordinator >= advisor_2_status.max_coordinator
+            errors.add(:advisor_2_name, "Advisor quota is full")
+          end
+        else
+          errors.add(:advisor_2_name, "can't find advisor 2")
         end
       end
     end

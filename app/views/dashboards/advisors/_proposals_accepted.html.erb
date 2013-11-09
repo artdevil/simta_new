@@ -27,7 +27,7 @@
 								</tr>
 							</thead>
 							<tbody>
-                <% current_user.advisor_topic_tag.each do |f| %>
+                <% current_user.advisor_topic_tag.includes(:user).includes(:topic).each do |f| %>
                   <tr id="topic_tag_<%= f.id %>">
                     <td><%= link_to f.user.username, user_profile_path(f.user) %></td>
                     <td>

@@ -1,17 +1,17 @@
-<%= simple_nested_form_for current_user.topic_tags.new(:topic_id => topic.id), :url => topic_tags_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "tag_init_show"} do |f| %>
+<%= simple_nested_form_for @topic_tag, :url => topic_tags_path, :validate => true, :html => {:method => "post", :class => "client_side_validation",:multipart => true, :id => "tag_init_show"} do |f| %>
   <div class="row-fluid">
 		<blockquote>
 			<p>Pastikan Anda Yakin Untuk Mengambil Topik Tugas Akhir Ini. Anda Hanya Bisa Mengajukan Satu Topik Tugas Akhir</p>
-
 			<small style="color: red">
 				Penting
 				<cite title="Source Title">Harap Dibaca</cite>
 			</small>
 		</blockquote>
   </div>
+  <%= render :partial => "shared/error_messages", :locals => {:context => @topic_tag} %>
   <div class="row-fluid">
     <div class="span12">
-      <%= f.input :title_recommended, :label => "Judul Rekomendasi", :input_html => {:value => topic.title} %>
+      <%= f.input :title_recommended, :label => "Judul Rekomendasi", :input_html => {:value => @topic.title} %>
       <%= f.input :topic_id, :as => :hidden %>
       <%= f.input :description_recommended, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
     </div>
