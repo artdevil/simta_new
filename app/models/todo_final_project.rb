@@ -25,9 +25,9 @@ class TodoFinalProject < ActiveRecord::Base
   
   private
     def check_user_status
-      if self.user.user_role_id == 1 and self.user.students_status != 3
+      if self.user.is_student? and self.user.students_status != 3
         errors.add(:user, "Not Authorized")
-      elsif self.user.user_role_id == 2 and (self.final_project.advisor_1_id != self.user_id or self.final_project.advisor_2_id != self.user_id)
+      elsif self.user.is_advisor? and (self.final_project.advisor_1_id != self.user_id or self.final_project.advisor_2_id != self.user_id)
         errors.add(:user, "Not Authorized")
       end
     end
@@ -37,15 +37,15 @@ class TodoFinalProject < ActiveRecord::Base
     end
   
     def set_notification
-      if self.user.user_role_id == 1
+      if self.user.is_student?
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.final_project.advisor_1_id, :message => "Membuat to do baru")
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.final_project.advisor_2_id, :message => "Membuat to do baru")
-      elsif self.user.user_role_id == 2 and self.user_id == self.final_project.advisor_1_id
+      elsif self.user.is_advisor? and self.user_id == self.final_project.advisor_1_id
         #for student
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.final_project.user_id, :message => "Membuat to do baru")
         #for advisor 2
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.final_project.advisor_2_id, :message => "Membuat to do baru")
-      elsif self.user.user_role_id == 2 and self.user_id == self.final_project.advisor_2_id
+      elsif self.user.is_advisor? and self.user_id == self.final_project.advisor_2_id
         #for student
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.final_project.user_id, :message => "Membuat to do baru")
         #for advisor 2

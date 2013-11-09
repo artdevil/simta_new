@@ -12,7 +12,7 @@
 		</li>
 		<li>
 			<i class="icon-profile"></i>
-			<%= link_to todo_proposals_path do %>
+			<%= link_to params[:redirect_link] || request.headers["Referer"] do %>
         To Do Proposals
       <% end %>
 

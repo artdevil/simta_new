@@ -5,7 +5,7 @@ class AdvisorsStatus < ActiveRecord::Base
   
   private
     def check_user_status
-      unless self.user.user_role_id == 2
+      unless self.user.is_advisor?
         errors.add(:user_id, "not authorized user")
       end
     end 

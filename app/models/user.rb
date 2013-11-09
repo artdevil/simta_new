@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
-  scope :search_lecture, lambda{|user, current_user| where{(user_role_id == 2) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
-  scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
-  scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
-  scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
+  scope :search_lecture, lambda{|user, current_user| where{(is_advisor?) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
+  scope :search_student, lambda{|user, current_user| where{(is_student?) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
+  scope :select_student, lambda{|user| where{(id == user) & (is_student?)}}
+  scope :select_lecture, lambda{|user| where{(id == user) & (is_advisor?)}}
   
   #validates
   validates_presence_of :username
@@ -59,8 +59,8 @@ class User < ActiveRecord::Base
   
   #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }
-  after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.user_role_id == 1}
-  after_create :build_advisors_status, :if => Proc.new{ self.user_role_id == 2}
+  after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.is_student?}
+  after_create :build_advisors_status, :if => Proc.new{ self.is_advisor?}
   
   def build_students_status
     StudentsStatus.create(:user_id => self.id)
@@ -70,12 +70,15 @@ class User < ActiveRecord::Base
     AdvisorsStatus.create(:user_id => self.id)
   end
   
+  def is_student?
+    user_role_id == 1
+  end
+  
+  def is_advisor?
+    user_role_id == 2
+  end
     
   protected
-    
-    def is_student?
-      self.user_role_id == 1
-    end
     
     def birtday_need?
       !self.birthday.present?

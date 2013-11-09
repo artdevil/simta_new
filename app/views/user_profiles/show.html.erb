@@ -28,7 +28,7 @@
   					</div>
   				</div>
   				<div class="control-group">
-  					<label class="control-label" for="form-field-1"><%= @user.user_role_id == 1 ? 'NIM' : 'NIP' %></label>
+  					<label class="control-label" for="form-field-1"><%= @user.is_student? ? 'NIM' : 'NIP' %></label>
   					<div class="controls description">
   						<%= @user.keyid %>
   					</div>

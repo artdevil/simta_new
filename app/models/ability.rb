@@ -7,14 +7,15 @@ class Ability
     if user
       can :read, Topic
       can :manage, Message
-      if user.user_role_id == 1
+      if user.is_student?
         can :manage, TopicTag
         can :edit, TopicTag do |topic_tag|
           topic_tag.try(:user) == user
         end
-        can [:open,:close, :check_user_advisor, :read], TodoProposal
+        can :update, Proposal
+        can [:open,:close, :check_user_advisor, :read, :create, :update], TodoProposal
         can :create, Comment
-      elsif user.user_role_id == 2
+      elsif user.is_advisor?
         can :create, Topic
         can :ud, Topic do |topic|
           topic.try(:user) == user
@@ -25,7 +26,7 @@ class Ability
         can :create, Comment
       end
     end
-    # if user.user_role_id == 1
+    # if user.is_student?
 #       can :read, Topic
 #       can :create, TopicTag
 #       cannot :update, TopicTag
@@ -39,7 +40,7 @@ class Ability
 #       can :create, TodoProposal
 #       cannot :finished, TodoProposal
 #       cannot :finished, Proposal
-#     elsif user.user_role_id == 2
+#     elsif user.is_advisor?
 #       can :read, Topic
 #       can :manage, Topic do |topic|
 #         topic.try(:user) == user

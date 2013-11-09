@@ -7,7 +7,7 @@
 
   		<div class="body">
   			<div class="name">
-  				<a href="#"><%= f.user.username %></a>
+          <%= link_to f.user.username, user_profile_path(f.user) %>
   			</div>
 
   			<div class="time">

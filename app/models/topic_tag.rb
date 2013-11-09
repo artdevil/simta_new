@@ -13,7 +13,7 @@ class TopicTag < ActiveRecord::Base
   validate :checking_topic_status, :check_advisor_status, :check_student_status, :on => :create
   
   #callback
-  before_create :checking_user_tag, :if => Proc.new{ self.user.user_role_id == 1 }
+  before_create :checking_user_tag, :if => Proc.new{ self.user.is_student? }
   after_update :set_notification_to_student, :if => Proc.new{ self.status == false || self.status == true}
   after_update :update_user_status_cancel, :if => Proc.new{ self.status == false}
   after_create :set_notification_for_lecture

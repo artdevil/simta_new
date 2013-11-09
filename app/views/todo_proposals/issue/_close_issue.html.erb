@@ -6,7 +6,7 @@
   		</div>
   		<div class="body">
   			<div class="name">
-  				<a href="#"><%= f.user.username %></a>
+  				<%= link_to f.user.username, user_profile_path(f.user) %>
   			</div>
   			<div class="time">
   				<i class="icon-time"></i>
@@ -14,7 +14,7 @@
   			</div>
   			<div class="text">
   				<i class="icon-quote-left"></i>
-  				<%= link_to f.title, "/todo_proposals/issue/#{f.user.slug}/#{f.slug}" %>
+  				<%= link_to f.title, "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}" %>
   			</div>
   		</div>
   	</div>

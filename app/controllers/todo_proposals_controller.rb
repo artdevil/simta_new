@@ -58,10 +58,10 @@ class TodoProposalsController < ApplicationController
     user = User.find(params[:user_id])
     @proposal = Proposal.where(:user_id => user.id).first
     @todo_proposals = @proposal.todo_proposals.includes(:user).open_issue
-    if current_user.user_role_id == 1
+    if current_user.is_student?
       open = render_to_string(:partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
-    elsif current_user.user_role_id == 2
+    elsif current_user.is_advisor?
       open = render_to_string(:partial => "todo_proposals/issue/open_issue", :locals => {:open_issue => @todo_proposals}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
     end
@@ -71,10 +71,10 @@ class TodoProposalsController < ApplicationController
     user = User.find(params[:user_id])
     @proposal = Proposal.where(:user_id => user.id).first
     @todo_proposals = @proposal.todo_proposals.includes(:user).close_issue
-    if current_user.user_role_id == 1
+    if current_user.is_student?
       close = render_to_string(:partial => "todo_proposals/partials/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
-    elsif current_user.user_role_id == 2
+    elsif current_user.is_advisor?
       close = render_to_string(:partial => "todo_proposals/issue/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
     end

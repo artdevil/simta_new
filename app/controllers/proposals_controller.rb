@@ -30,9 +30,9 @@ class ProposalsController < ApplicationController
   
   def update
     if @proposal.update_attributes(params[:proposal])
-      redirect_to todo_proposals_path, :notice => "#{I18n.t('proposal.update.success')}"
+      redirect_to params[:redirect_link], :notice => "#{I18n.t('proposal.update.success')}"
     else
-      flash[:alert] = "#{I18n.t('proposal.update.failed')}"
+      flash.now[:alert] = "#{I18n.t('proposal.update.failed')}"
       render 'edit'
     end
   end

@@ -17,9 +17,9 @@
 			<%= bootstrap_flash %>
       <!-- end bootstrap flash -->
       <div class="row-fluid">
-        <% if current_user.user_role_id == 1 %>
+        <% if current_user.is_student? %>
           <%= render :partial => "dashboards/students/dashboards" %>
-        <% elsif current_user.user_role_id == 2 %>
+        <% elsif current_user.is_advisor? %>
           <%= render :partial => "dashboards/advisors/dashboards" %>
         <% end %>
       </div>

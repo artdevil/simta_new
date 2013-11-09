@@ -6,7 +6,7 @@ class StudentsStatus < ActiveRecord::Base
   
   private
     def check_user_status
-      unless self.user.user_role_id == 1
+      unless self.user.is_student?
         errors.add(:user_id, "not authorized user")
       end
     end 

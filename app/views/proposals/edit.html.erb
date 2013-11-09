@@ -14,11 +14,11 @@
 		<%= bootstrap_flash %>
     <!-- end bootstrap flash -->
     <%= simple_form_for @proposal, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+      <%= render :partial => "shared/error_messages", :locals => {:context => @proposal} %>
       <div class="row-fluid">
-        <div class="span12">
-          <%= f.input :title, :label => "Judul Proposal Tugas Akhir" %>
-          <%= f.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
-        </div>
+        <%= f.input :title, :label => "Judul Proposal Tugas Akhir", :input_html => {:class => "span12"} %>
+        <%= f.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+        <%= hidden_field_tag :redirect_link, params[:redirect_link] || request.headers["Referer"] %>
       </div><!-- end row -->
       <div class="row-fluid">
         <div class="span12"></div>

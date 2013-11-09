@@ -39,6 +39,7 @@ SimtaNew::Application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
+    Bullet.add_whitelist :type => :n_plus_one_query, :class_name => "Notification", :association => :notifiable
   end
   
 end

@@ -24,9 +24,9 @@ class UserProfilesController < ApplicationController
   end
   
   def search
-    if current_user.user_role_id == 1
+    if current_user.is_student?
       @user = User.search_lecture(params[:term], current_user.id)
-    elsif current_user.user_role_id == 2
+    elsif current_user.is_advisor?
       @user = User.search_student(params[:term], current_user.id)
     end
   end

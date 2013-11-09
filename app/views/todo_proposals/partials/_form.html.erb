@@ -1,4 +1,5 @@
 <%= simple_nested_form_for @todo_proposal, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <%= render :partial => "shared/error_messages", :locals => {:context => @todo_proposal} %>
   <div class="row-fluid">
     <div class="span12">
       <%= f.input :title, :label => "Judul" %>

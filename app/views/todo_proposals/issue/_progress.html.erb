@@ -5,9 +5,11 @@
 			Proposal Data
 		</h4>
 		<span class="widget-toolbar">
-			<a href="#" data-action="settings">
-				<i class="icon-cog"></i>
-			</a>
+      <% if can? :update_progress, Proposal %>
+        <%= link_to edit_proposal_path(proposal), :data => {:action => "setting"} do %>
+          <i class="icon-cog"></i>
+        <% end %>
+      <% end %>
 			<a href="#" data-action="collapse">
 				<i class="icon-chevron-up"></i>
 			</a>

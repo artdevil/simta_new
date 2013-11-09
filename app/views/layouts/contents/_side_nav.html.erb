@@ -9,17 +9,19 @@
         <i class="icon-envelope"></i>
       <% end %>
       
-      <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
-        <i class="icon-pencil"></i>
+      <% if current_user.is_advisor? %>
+        <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
+          <i class="icon-pencil"></i>
+        <% end %>
       <% end %>
 
 			<button class="btn btn-small btn-warning">
-				<i class="icon-group"></i>
+				<i class="icon-user"></i>
 			</button>
 
-			<button class="btn btn-small btn-danger">
-				<i class="icon-cogs"></i>
-			</button>
+			<%= link_to edit_user_profile_path(current_user), :class => "btn btn-small btn-danger" do %>
+        <i class="icon-cogs"></i>
+      <% end %>
 		</div>
 
 		<div id="sidebar-shortcuts-mini">
@@ -51,14 +53,14 @@
         <% end %>
   		</li>
     <% end %>
-    <% if current_user.user_role_id == 1 and current_user.topic_tags.present? and current_user.students_status.status == 1 %>
+    <% if current_user.is_student? and current_user.topic_tags.present? and current_user.students_status.status == 1 %>
 		<li class="<%= 'active' if controller_name == 'topic_tags' %>">
       <%= link_to topic_tag_path(current_user.topic_tags.first) do %>
 			  <i class="icon-tasks"></i><span>Topic Tag</span>
       <% end %>
 		</li>
     <% end %>
-		<% if current_user.user_role_id == 1 and current_user.proposal.present? and current_user.students_status.status == 2 %>
+		<% if current_user.is_student? and current_user.proposal.present? and current_user.students_status.status == 2 %>
 			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
 	      <%= link_to todo_proposals_path do %>
 				  <i class="icon-tasks"></i><span>Todo Proposal</span>

@@ -45,9 +45,9 @@ class TopicTagsController < ApplicationController
   end
   
   def set_user_in_controller
-    if current_user.user_role_id == 1
+    if current_user.is_student?
       @user_set = current_user.topic_tags
-    elsif current_user.user_role_id == 2
+    elsif current_user.is_advisor?
       @user_set = current_user.advisor_topic_tag
     end
   end
