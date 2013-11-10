@@ -28,6 +28,18 @@ class Proposal < ActiveRecord::Base
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
+  def current_user_is_advisor_1?(user)
+    advisor_1 == user
+  end
+  
+  def current_user_is_advisor_2?(user)
+    advisor_2 == user
+  end
+  
+  def complete?
+    progress == 100
+  end
+  
   private
     def cek_user_id
       if self.user_id.blank?

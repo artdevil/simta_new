@@ -40,8 +40,8 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
-  scope :search_lecture, lambda{|user, current_user| where{(is_advisor?) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
-  scope :search_student, lambda{|user, current_user| where{(is_student?) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
+  scope :search_lecture, lambda{|user, current_user| where{(user_role_id == 2) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
+  scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
   scope :select_student, lambda{|user| where{(id == user) & (is_student?)}}
   scope :select_lecture, lambda{|user| where{(id == user) & (is_advisor?)}}
   

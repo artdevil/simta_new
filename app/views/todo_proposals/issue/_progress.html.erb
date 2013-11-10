@@ -38,14 +38,14 @@
   				<div class="progress" data-percent="<%= proposal.progress %>%" id="progress_bar">
   					<div class="bar" style="width: <%= proposal.progress %>%;" id="progress_bar_count"></div>
   				</div>
-          <% if can? :update_progress, Proposal %>
+          <% if can? :update_progress, Proposal and proposal.current_user_is_advisor_1?(current_user) %>
             <div id="update_progress_form">
               <%= render :partial => 'todo_proposals/partials/update_progress_form', :locals => {:proposal => proposal} %>
             </div>
           <% end %>
         </div>
       </div><!-- row fluid end -->
-      <% if proposal.progress == 100 %>
+      <% if proposal.complete? %>
         <%= render :partial => "todo_proposals/issue/finished_layout", :locals => {:proposal => proposal} %>
       <% end %>
 		</div>

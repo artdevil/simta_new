@@ -5,7 +5,7 @@
       <%= f.input :recipient_name, :label => "To :", :placeholder => "#{current_user.is_student? ? 'masukkan nama atau NIP' : 'masukkan nama atau NIM'}", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_user_profiles_path, :input => "recipient_id"}} %>
       <%= f.input :recipient_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
       <%= f.input :subject, :label => "Subject :" %>
-      <%= f.input :body, :label => "Message :", :as => :ckeditor %>
+      <%= f.input :body, :label => "Message :", :as => :ckeditor,:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
       <%= f.simple_fields_for :attachments do |n| %>
         <div class="row-fluid">
           <div class="span6"><%= n.input :file, :input_html => {:class => "upload_file"} %></div>
