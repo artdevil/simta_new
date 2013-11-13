@@ -18,13 +18,13 @@
   		<div class="widget-main">
         <div class="row-fluid">
           <div class="span12">
-            <% if current_user.students_status.status == 0 %>
+            <% if current_user.students_status.is_no_status? %>
               Anda belum memilih topik. Silahkan mencari topik tugas akhir anda <%= link_to "di sini", topics_path %>
-            <% elsif current_user.students_status.status == 1 %>
+            <% elsif current_user.students_status.is_tag_topic? %>
               Menunggu konfirmasi dari dosen. Klik <%= link_to "di sini", messages_path(:recipient_key_id => current_user.topic_tags.get_empty_topic_with_key_id) %> untuk mengirim pesan ke dosen atau klik <%= link_to 'di sini', topic_tag_path(current_user.topic_tags.first) %> untuk melihat topik yang diajukan
-            <% elsif current_user.students_status.status == 2 %>
+            <% elsif current_user.students_status.is_working_proposal? %>
               <%= render :partial => "dashboards/students/progress_proposal", :locals => {:proposal_status => current_user.proposal} %>
-            <% elsif current_user.students_status.status == 3 %>
+            <% elsif current_user.students_status.is_working_final_project? %>
               <%= render :partial => "dashboards/students/progress_final_project", :locals => {:final_project_status => current_user.final_project} %>
             <% end %>
           </div>

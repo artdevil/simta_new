@@ -4,6 +4,35 @@ class StudentsStatus < ActiveRecord::Base
   validate :check_user_status
   before_save :check_user_status
   
+  def is_no_status?
+    status == 0
+  end
+  
+  def is_tag_topic?
+    status == 1
+  end
+  
+  def is_working_proposal?
+    status == 2
+  end
+  
+  def is_working_final_project?
+    status == 3
+  end
+  
+  def for_now
+    case status
+    when 0
+      "no status"
+    when 1
+      "tag topik"
+    when 2
+      "proposal"
+    when 3
+      "final project"
+    end
+  end
+  
   private
     def check_user_status
       unless self.user.is_student?

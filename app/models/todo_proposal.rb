@@ -25,7 +25,7 @@ class TodoProposal < ActiveRecord::Base
   
   private
     def check_user_status
-      if self.user.is_student? and self.user.students_status != 2
+      if self.user.is_student? and !self.user.students_status.is_working_proposal?
         errors.add(:user, "Not Authorized")
       elsif self.user.is_advisor? and (self.proposal.advisor_1_id != self.user_id or self.proposal.advisor_2_id != self.user_id)
         errors.add(:user, "Not Authorized")

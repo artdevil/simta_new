@@ -28,6 +28,11 @@ class Proposal < ActiveRecord::Base
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
+  #for active admin
+  scope :in_progress, where("progress < ? and finished = ? ", 100, false)
+  scope :completed, where(:progress => 100, :finished => false)
+  scope :archieved, where(:finished => true)
+  
   def current_user_is_advisor_1?(user)
     advisor_1 == user
   end

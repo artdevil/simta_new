@@ -25,7 +25,7 @@ class TodoFinalProject < ActiveRecord::Base
   
   private
     def check_user_status
-      if self.user.is_student? and self.user.students_status != 3
+      if self.user.is_student? and !self.user.students_status.is_working_final_project?
         errors.add(:user, "Not Authorized")
       elsif self.user.is_advisor? and (self.final_project.advisor_1_id != self.user_id or self.final_project.advisor_2_id != self.user_id)
         errors.add(:user, "Not Authorized")

@@ -171,15 +171,15 @@ ActiveAdmin.setup do |config|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
   #     end
   #   end
-  # config.namespace :admin do |admin|
-  #   admin.build_menu do |menu|
-  #     menu.add :label => "Users" do |sites|
-  #       sites.add :label => "All", :url => '/admin/users'
-  #       sites.add :label => "Advisor", :url => "/admin/users/advisors"
-  #       sites.add :label => "Student", :url => "/admin/users/students"
-  #     end
-  #   end
-  # end
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add :label => "Users" do |sites|
+        sites.add :label => "All", :url => '/admin/users?order=id_desc&page=1&scope=all', :priority => 0
+        sites.add :label => "Advisor", :url => "/admin/users?order=id_desc&page=1&scope=advisor"
+        sites.add :label => "Student", :url => "/admin/users?order=id_desc&page=1&scope=student"
+      end
+    end
+  end
 
   # == Download Links
   #

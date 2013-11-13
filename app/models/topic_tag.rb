@@ -39,7 +39,7 @@ class TopicTag < ActiveRecord::Base
   
   def check_student_status
     student = User.find(self.user_id)
-    if student.students_status.status != 0 and !student.topic_tags.blank?
+    if !student.students_status.is_no_status? and !student.topic_tags.blank?
       errors.add(:base, "student has topic tag or not on proposal status")
     end
   end

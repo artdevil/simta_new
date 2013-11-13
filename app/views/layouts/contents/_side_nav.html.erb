@@ -53,14 +53,14 @@
         <% end %>
   		</li>
     <% end %>
-    <% if current_user.is_student? and current_user.topic_tags.present? and current_user.students_status.status == 1 %>
+    <% if current_user.is_student? and current_user.topic_tags.present? and current_user.students_status.is_tag_topic? %>
 		<li class="<%= 'active' if controller_name == 'topic_tags' %>">
       <%= link_to topic_tag_path(current_user.topic_tags.first) do %>
 			  <i class="icon-tasks"></i><span>Topic Tag</span>
       <% end %>
 		</li>
     <% end %>
-		<% if current_user.is_student? and current_user.proposal.present? and current_user.students_status.status == 2 %>
+		<% if current_user.is_student? and current_user.proposal.present? and current_user.students_status.is_working_proposal? %>
 			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
 	      <%= link_to todo_proposals_path do %>
 				  <i class="icon-tasks"></i><span>Todo Proposal</span>

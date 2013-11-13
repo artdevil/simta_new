@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="name">
-			<a href="#"><%= comment.user.username %></a>
+			<%= link_to comment_status.user.username, user_profile_path(comment_status.user) %>
 		</div>
 		<div class="text">
 		  <%= raw comment.comment %>
