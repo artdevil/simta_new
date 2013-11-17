@@ -12,6 +12,10 @@ class StudentsStatus < ActiveRecord::Base
     status == 1
   end
   
+  def is_waiting_for_create_proposal?
+    status == 0 or status == 1
+  end
+  
   def is_working_proposal?
     status == 2
   end

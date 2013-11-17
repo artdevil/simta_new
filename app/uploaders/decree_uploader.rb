@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class ProposalUploader < CarrierWave::Uploader::Base
+class DecreeUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick

@@ -13,7 +13,7 @@
     <div class="span12">
       <%= f.input :title_recommended, :label => "Judul Rekomendasi", :input_html => {:value => @topic.title} %>
       <%= f.input :topic_id, :as => :hidden %>
-      <%= f.input :description_recommended, :as => :ckeditor, :label => "Deskripsi" %>
+      <%= f.input :description_recommended, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
     </div>
   </div><!-- end row -->
   <%= f.simple_fields_for :attachments do |n| %>

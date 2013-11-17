@@ -44,7 +44,7 @@
         </div>
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
-      <% if can? :create, TopicTag and @topic.status and @topic_tag.new_record? %>
+      <% if can? :create, TopicTag and @topic.status and @topic_tag.new_record? and current_user.is_student? and current_user.students_status.is_no_status? %>
         <%= render "topics/partials/topic_tag" %>
       <% end %>
 			<!--PAGE CONTENT ENDS HERE-->

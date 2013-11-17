@@ -58,7 +58,7 @@ class ProposalsController < ApplicationController
   end
   
   def finished
-    if !@proposal.exam.blank? and !@proposal.events.blank? and !@proposal.proposal.blank? and @proposal.update_attributes(:finished => true)
+    if @proposal.update_attributes(:finished => true)
       redirect_to dashboards_path, :notice => "#{I18n.t('proposal.finished.success')}"
     else
       redirect_to "/todo_proposals/issue/#{@proposal.user.slug}", :alert => "#{I18n.t('proposal.finished.failed')}"
@@ -68,7 +68,7 @@ class ProposalsController < ApplicationController
   #check validation
   def check_user
     @proposal = Proposal.find(params[:id])
-    unless @proposal.user_id == current_user.id or @proposal.advisor_1_id = current_user.id or @proposal.advisor_2_id == current_user.id
+    unless @proposal.user == current_user or @proposal.advisor_1 = current_user or @proposal.advisor_2 == current_user
       redirect_to dashboards_path, :alert => "You are not authorized"
     end
   end

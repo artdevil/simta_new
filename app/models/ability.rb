@@ -12,7 +12,7 @@ class Ability
         can :edit, TopicTag do |topic_tag|
           topic_tag.try(:user) == user
         end
-        can :update, Proposal
+        can [:update, :update_document, :check_user], Proposal
         can [:open,:close, :check_user_advisor, :read, :create, :update], TodoProposal
         can :create, Comment
       elsif user.is_advisor?

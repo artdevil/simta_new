@@ -1,5 +1,5 @@
-<% if can? :create, TopicTag and @topic.status %>
-  <% if !current_user.topic_tags.blank? and !@topic_tag.new_record? %>
+<% if can? :create, TopicTag and @topic.status and current_user.is_student? %>
+  <% if !current_user.topic_tags.blank? and !current_user.students_status.is_no_status? %>
     <%= link_to "#", :class => "btn btn-mini btn-warning" do %>
       <i class="icon-ok"></i>
       Anda Sudah Mengambil Topik TA. Silahkan Tunggu Konfirmasi

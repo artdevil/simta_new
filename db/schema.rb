@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20131107042430) do
     t.string   "exam"
     t.string   "events"
     t.string   "proposal"
+    t.string   "decree"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
   end

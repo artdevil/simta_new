@@ -5,7 +5,7 @@ class TodoProposalsController < ApplicationController
   
   def index
     @proposal = current_user.proposal
-    if @proposal.progress == 100
+    if @proposal.progress == 100 and !@proposal.finished?
       flash[:notice] = "#{I18n.t('proposal.completed')}"
     end
     @todo_proposals_open = @proposal.todo_proposals.includes(:user).open_issue

@@ -7,18 +7,22 @@ class Proposal < ActiveRecord::Base
   has_one :final_project
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
-  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :finished
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :decree, :finished
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
+  validate :protected_for_update_if_finished, :on => :update
   validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
+  validate :cek_user_documents, :if => :finished?
+  # validates_presence_of :exam, :events, :proposal, :decree, :on => :update, :if => :complete?
   # validates_presence_of :finished, :unless: Proc.new { |a| a.exam.blank? and a.events.blank? and a.proposal.blank? and a.progress < 100}
   
   #upload image
   mount_uploader :exam, ExamUploader
   mount_uploader :events, EventsUploader
   mount_uploader :proposal, ProposalUploader
+  mount_uploader :decree, DecreeUploader
   
   #callback
   after_create :send_message_to_student_and_advisor_2, :set_quota, :update_student_status
@@ -45,7 +49,24 @@ class Proposal < ActiveRecord::Base
     progress == 100
   end
   
+  def finished?
+    finished == true
+  end
+  
   private
+    
+    def protected_for_update_if_finished
+      if self.finished?
+        errors.add(:base, "proposal has been finished. You can't update progress")
+      end
+    end
+    
+    def cek_user_documents
+      if self.exam.blank? and self.events.blank? and self.proposal.blank? and self.decree.blank?
+        errors.add(:base, "the document is not finished")
+      end
+    end
+    
     def cek_user_id
       if self.user_id.blank?
         errors.add(:base, "User can't found")
@@ -55,8 +76,8 @@ class Proposal < ActiveRecord::Base
     def cek_status_user
       if self.user_id.present?
         user_status = User.select_student(self.user_id).first.try(:students_status)
-        unless user_status.status != 0 or user_status.status != 1
-          errors.add(:user_name, "user not in search topic status")
+        unless !user_status.is_waiting_for_create_proposal?
+          errors.add(:base, "user not in create proposal status")
         end
       end
     end

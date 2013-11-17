@@ -42,10 +42,10 @@
           <% end %>
         </div>
       </div><!-- row fluid end -->
-      <% if proposal.progress == 100 and current_user.is_student? %>
+      <% if proposal.complete? and current_user.is_student? %>
         <div class="row-fluid">
           <div class="span12" id="upload_file_proposal">
-            <%= render :partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal_form => proposal} %>
+            <%= render :partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => proposal} %>
           </div>
         </div><!-- row fluid end -->
       <% end %>

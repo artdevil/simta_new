@@ -55,5 +55,7 @@
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
-  <%= render :partial => "todo_proposals/partials/config_button" %>
+  <% unless @proposal.finished? %>
+    <%= render :partial => "todo_proposals/partials/config_button" %>
+  <% end %>
 </div><!--/#main-content-->

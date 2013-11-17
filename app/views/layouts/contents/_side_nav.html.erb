@@ -67,6 +67,13 @@
 	      <% end %>
 			</li>
 		<% end %>
+		<% if current_user.is_student? and current_user.final_project.present? and current_user.students_status.is_working_final_project? %>
+			<li class="<%= 'active' if controller_name == 'todo_final_projects' || controller_name == 'final_projects' %>">
+	      <%= link_to todo_final_projects_path do %>
+				  <i class="icon-tasks"></i><span>Todo Final Projects</span>
+	      <% end %>
+			</li>
+		<% end %>
 		<li class="<%= 'active' if controller_name == 'news' %>">
       <%= link_to news_index_path do %>
 			  <i class="icon-list-alt"></i><span>News</span>

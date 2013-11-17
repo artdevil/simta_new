@@ -11,6 +11,7 @@ class FinalProject < ActiveRecord::Base
   attr_accessible :advisor_1_id, :advisor_2_id, :description, :finished, :progress, :proposal_id, :title, :user_id
   
   #validation
+  validate :check_user_status, :on => :create
   validates_presence_of :advisor_1_id, :advisor_2_id, :description, :proposal_id, :title, :user_id
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   
@@ -21,6 +22,13 @@ class FinalProject < ActiveRecord::Base
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
   private
+  
+    def check_user_status
+      if !self.user.students_status.is_working_proposal? and !self.user.proposal.present? and !self.user.proposal.finished? 
+        errors.add(:base, "user can't create final project")
+      end
+    end
+    
     def set_notification_100
       notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Final Project anda telah selesai. Silahkan mengajukan diri untuk sidang TA")
       notification.save
