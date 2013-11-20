@@ -1,0 +1,37 @@
+<div class="user">
+	<%= image_tag comment_status.user.avatar.thumb.url %>
+</div>
+<div class="body">
+	<div class="time">
+		<i class="icon-time"></i>
+		<span class="timeago green" title="<%= comment_status.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+	</div>
+	<div class="name">
+    <%= link_to comment_status.user.username, user_profile_path(comment_status.user) %>
+	</div>
+	<div class="text">
+	  <%= raw comment_status.comment %>
+    <br>
+    <% unless comment_status.attachments.blank? %>
+      <div class="row-fluid">
+        <div class="span12">
+          <h5 style="color: #d15b47;">Attachments</h5>
+        </div>
+      </div>
+      <% comment_status.attachments.each do |f| %>
+        <div class="row-fluid">
+          <div class="span12">
+            <%= link_to File.basename(f.file.path), f.file.url.to_s, :target => f.id %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+	</div>
+	<% if can? :update, comment_status %>
+  	<div class="tools">
+      <div class="btn btn-minier btn-info">
+        <%= link_to "", edit_comment_path(comment_status), :class => "icon-only icon-pencil", :remote => true, :data => {:toggle => "modal", :target => "#commentModal"} %>
+      </div>
+  	</div>
+  <% end %>
+</div>

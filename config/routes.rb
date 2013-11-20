@@ -59,6 +59,11 @@ SimtaNew::Application.routes.draw do
       get 'open'
       get 'close'
     end
+    
+    member do
+      get 'issue/:user_id/edit', :action => "edit_todo"
+      put 'issue/:user_id/update', :action => "update_todo"
+    end
   end
   
   resources :todo_final_projects do

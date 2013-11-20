@@ -39,10 +39,10 @@ class ProposalsController < ApplicationController
   
   def update_document
     if @proposal.update_attributes(params[:proposal])
-      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal_form => @proposal}).to_json
+      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
       render :js => "$('#upload_file_proposal').html(#{form});"
     else
-      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal_form => @proposal}).to_json
+      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
       render :js => "$('#upload_file_proposal').html(#{form});"
     end
   end

@@ -1,6 +1,6 @@
 class TodoProposalsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :check_user_advisor, :only => ['issue','issue_todo', 'finished', 'new_todo','create_todo']
+  before_filter :check_user_advisor, :only => ['issue','issue_todo', 'finished', 'new_todo','create_todo','edit_todo','update_todo']
   load_and_authorize_resource
   
   def index
@@ -20,6 +20,20 @@ class TodoProposalsController < ApplicationController
     @todo_proposal = current_user.todo_proposals.new(:proposal_id => current_user.proposal.id)
   end
   
+  def edit
+    @todo_proposal = current_user.todo_proposals.find(params[:id])
+  end
+  
+  def update
+    @todo_proposal = current_user.todo_proposals.find(params[:id])
+    if @todo_proposal.update_attributes(params[:todo_proposal])
+      redirect_to todo_proposal_path(@todo_proposal), :notice => "#{I18n.t('todo_proposals.update.success')}"
+    else
+      flash[:alert] = "#{I18n.t('todo_proposals.update.failed')}"
+      render :edit
+    end
+  end
+  
   def new_todo
     @todo_proposal = @proposal.todo_proposals.new
   end
@@ -32,6 +46,20 @@ class TodoProposalsController < ApplicationController
     else
       flash[:alert] = "#{I18n.t('todo_proposals.create.failed')}"
       render 'new_todo'
+    end
+  end
+  
+  def edit_todo
+    @todo_proposal = @proposal.todo_proposals.find(params[:id])
+  end
+  
+  def update_todo
+    @todo_proposal = @proposal.todo_proposals.find(params[:id])
+    if @todo_proposal.update_attributes(params[:todo_proposal])
+      redirect_to "/todo_proposals/issue/#{@proposal.user.slug}/#{@todo_proposal.slug}", :notice => "#{I18n.t('todo_proposals.update.success')}"
+    else
+      flash[:alert] = "#{I18n.t('todo_proposals.update.failed')}"
+      render 'edit_todo'
     end
   end
   

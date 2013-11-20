@@ -15,6 +15,7 @@
 			<!--PAGE CONTENT BEGINS HERE-->
       <!-- bootstrap flash -->
 			<%= bootstrap_flash %>
+      <%= render :partial => "shared/error_messages", :locals => { :context => @proposal} %>
       <!-- end bootstrap flash -->
       <div class="row-fluid">
         <div class="span4">

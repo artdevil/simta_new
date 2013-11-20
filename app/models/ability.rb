@@ -13,7 +13,13 @@ class Ability
           topic_tag.try(:user) == user
         end
         can [:update, :update_document, :check_user], Proposal
-        can [:open,:close, :check_user_advisor, :read, :create, :update], TodoProposal
+        can [:open,:close, :check_user_advisor, :read, :create], TodoProposal
+        can :update, TodoProposal do |todo_proposal|
+          todo_proposal.try(:user) == user
+        end
+        can :update, Comment do |comment|
+          comment.try(:user) == user
+        end
         can :create, Comment
       elsif user.is_advisor?
         can :create, Topic
@@ -24,6 +30,9 @@ class Ability
         can :update, TopicTag
         can :manage, [Proposal, TodoProposal]
         can :create, Comment
+        can :update, Comment do |comment|
+          comment.try(:user) == user
+        end
       end
     end
     # if user.is_student?

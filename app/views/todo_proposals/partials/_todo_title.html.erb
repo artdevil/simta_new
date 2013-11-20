@@ -15,5 +15,18 @@
         <%= raw @todo_proposal.message %>
 			</div>
     </div>
+		<div class="tools">
+      <% if can? :update, @todo_proposal %>
+        <% if current_user.is_student? %>
+          <%= link_to edit_todo_proposal_path(@todo_proposal), :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% elsif current_user.is_advisor? %>
+          <%= link_to "/todo_proposals/#{@todo_proposal.slug}/issue/#{@todo_proposal.user.slug}/edit", :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+		</div>
   </div>
 </div>

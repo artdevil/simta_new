@@ -56,7 +56,8 @@ class Proposal < ActiveRecord::Base
   private
     
     def protected_for_update_if_finished
-      if self.finished?
+      proposal = Proposal.find self
+      if proposal.finished?
         errors.add(:base, "proposal has been finished. You can't update progress")
       end
     end
@@ -76,7 +77,7 @@ class Proposal < ActiveRecord::Base
     def cek_status_user
       if self.user_id.present?
         user_status = User.select_student(self.user_id).first.try(:students_status)
-        unless !user_status.is_waiting_for_create_proposal?
+        if !user_status.is_waiting_for_create_proposal?
           errors.add(:base, "user not in create proposal status")
         end
       end
