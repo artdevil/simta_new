@@ -52,3 +52,6 @@ en:
     create:
       success: "Your to do final project has been create"
       failed: "Your to do final project Can't Save"
+    update:
+      success: "Your to do final project has been update"
+      failed: "Your to do final project Can't Update"

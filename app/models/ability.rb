@@ -17,6 +17,10 @@ class Ability
         can :update, TodoProposal do |todo_proposal|
           todo_proposal.try(:user) == user
         end
+        can [:open,:close, :check_user_advisor, :read, :create], TodoFinalProject
+        can :update, TodoFinalProject do |todo_final_project|
+          todo_final_project.try(:user) == user
+        end
         can :update, Comment do |comment|
           comment.try(:user) == user
         end
@@ -28,7 +32,7 @@ class Ability
         end
         can :read, TopicTag
         can :update, TopicTag
-        can :manage, [Proposal, TodoProposal]
+        can :manage, [Proposal, TodoProposal, FinalProject, TodoFinalProject]
         can :create, Comment
         can :update, Comment do |comment|
           comment.try(:user) == user

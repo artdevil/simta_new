@@ -16,6 +16,14 @@ class Comment < ActiveRecord::Base
   #callback
   after_create :set_notification
   
+  def is_proposal?
+    self.commentable.todo_final_project.present?
+  end
+  
+  def self.is_final_project?
+    self.commentable.todo_final_project.present?
+  end
+  
   private
     def set_notification
       if self.commentable_type == "TodoProposal"

@@ -10,7 +10,7 @@
     <%= link_to comment_status.user.username, user_profile_path(comment_status.user) %>
 	</div>
 	<div class="text">
-	  <%= Sanitize.clean(comment_status.comment) %>
+	  <%= raw comment_status.comment %>
     <br>
     <% unless comment_status.attachments.blank? %>
       <div class="row-fluid">

@@ -1,5 +1,5 @@
 <div class="comments">
-  <% open_issue.each do |f| %>
+  <% open_issue.includes(:final_project).each do |f| %>
   	<div class="itemdiv commentdiv open" id="issue_open_<%= f.id %>">
   		<div class="user">
   			<%= image_tag f.user.avatar.thumb.url %>

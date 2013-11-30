@@ -1,19 +1,32 @@
 <div class="comments">
   <div class="itemdiv commentdiv">
     <div class="user">
-      <%= image_tag todo_final_project.user.avatar.thumb.url %>
+      <%= image_tag @todo_final_project.user.avatar.thumb.url %>
     </div>
     <div class="body">
       <div class="name">
-        <a href="#"><%= todo_final_project.user.username %></a>
+        <a href="#"><%= @todo_final_project.user.username %></a>
       </div>
 			<div class="time">
 				<i class="icon-time"></i>
-				<span class="timeago blue" title="<%= todo_final_project.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+				<span class="timeago blue" title="<%= @todo_final_project.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
 			</div>
 			<div class="text">
-        <%= raw todo_final_project.message %>
+        <%= raw @todo_final_project.message %>
 			</div>
     </div>
+		<div class="tools">
+      <% if can? :update, @todo_final_project %>
+        <% if current_user.is_student? %>
+          <%= link_to edit_todo_final_project_path(@todo_final_project), :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% elsif current_user.is_advisor? %>
+          <%= link_to "/todo_final_projects/#{@todo_final_project.slug}/issue/#{@final_project.user.slug}/edit", :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+		</div>
   </div>
 </div>

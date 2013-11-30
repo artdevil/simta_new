@@ -27,6 +27,7 @@ gem "squeel"
 gem "truncate_html"
 gem "powder"
 gem "roo", "~> 1.12.2"
+gem "sanitize"
 
 
 # Gems used only for assets and not required

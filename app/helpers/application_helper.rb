@@ -11,10 +11,19 @@ module ApplicationHelper
     elsif notification.notifiable.class.name == "Message"
       "#{messages_path}"
     elsif notification.notifiable.class.name == "Comment"
-      if current_user.is_student?
-        "#{todo_proposal_path(notification.notifiable.commentable.slug)}"
-      elsif current_user.is_advisor?
-        "/todo_proposals/issue/#{notification.notifiable.commentable.proposal.user.slug}/#{notification.notifiable.commentable.slug}"
+      comment = notification.notifiable
+      if comment.commentable.class.name == "TodoProposal"
+        if current_user.is_student?
+          "#{todo_proposal_path(comment.commentable.slug)}"
+        elsif current_user.is_advisor?
+          "/todo_proposals/issue/#{comment.commentable.proposal.user.slug}/#{comment.commentable.slug}"
+        end
+      elsif comment.commentable.class.name == "TodoFinalProject"
+        if current_user.is_student?
+          "#{todo_final_project_path(comment.commentable.slug)}"
+        elsif current_user.is_advisor?
+          "/todo_final_projects/issue/#{comment.commentable.final_project.user.slug}/#{comment.commentable.slug}"
+        end
       end
     elsif notification.notifiable.class.name == "TodoProposal"
       if current_user.is_student?

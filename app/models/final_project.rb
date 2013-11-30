@@ -21,6 +21,14 @@ class FinalProject < ActiveRecord::Base
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
+  def check_user_access(user_id)
+    if self.user_id != user_id and self.advisor_1_id != user_id and self.advisor_2_id != user_id
+      return true
+    else
+      return false
+    end
+  end
+  
   private
   
     def check_user_status
