@@ -1,0 +1,33 @@
+<div id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to dashboards_path do %>
+        Dashboard
+      <% end %>
+
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to "/todo_final_projects/issue/#{@final_project.user.slug}" do %>
+        To Do Final Project
+      <% end %>
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li class="active">Edit Final Project</li>
+	</ul><!--.breadcrumb-->
+
+	<div id="nav-search">
+		<form class="form-search">
+			<span class="input-icon">
+				<input type="text" placeholder="Search ..." class="input-small search-query" id="nav-search-input" autocomplete="off" />
+				<i class="icon-search" id="nav-search-icon"></i>
+			</span>
+		</form>
+	</div><!--#nav-search-->
+</div>

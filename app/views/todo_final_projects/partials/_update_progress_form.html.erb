@@ -8,3 +8,8 @@
     <%= f.submit 'update progress', :class => "btn btn-success"%>
   <% end %>
 <% end %>
+<% if error_report.present? %>
+<script type="text/javascript">
+  alert("<%= error_report %>");
+</script>
+<% end %>

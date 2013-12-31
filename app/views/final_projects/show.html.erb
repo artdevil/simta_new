@@ -1,0 +1,44 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "final_projects/breadcrumbs/show" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Final Project
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @final_project.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+        <div class="span12">
+          <div class="row-fluid item_header">
+            <div class="span12">
+          		<h4>
+                <%= @final_project.title %>
+              </h4>
+              <h6>Mahasiswa : <%= @final_project.user.username %></h6>
+              <h6>Pembimbing I : <%= @final_project.advisor_1.username %></h6>
+              <h6>Pembimbing II : <%= @final_project.try(:advisor_2).present? ? @final_project.advisor_2.username : @final_project.advisor_2_name %></h6>
+            </div>
+          </div><!-- end row -->
+          <br>
+          <div class="row-fluid">
+            <%= raw @final_project.description %>
+          </div><!-- end row -->
+        </div>
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->
+<% if @final_project.is_advisor_1?(current_user) %>
+  <%= render :partial => "final_projects/issue/config_show_button", :locals => {:final_project => @final_project} %>
+<% end %>

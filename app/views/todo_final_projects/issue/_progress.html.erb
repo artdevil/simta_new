@@ -5,9 +5,11 @@
 			Final Project Data
 		</h4>
 		<span class="widget-toolbar">
-			<a href="#" data-action="settings">
-				<i class="icon-cog"></i>
-			</a>
+      <% if final_project.is_advisor_1?(current_user) %>
+        <%= link_to edit_final_project_path(final_project) do %>
+          <i class="icon-cog"></i>
+        <% end %>
+      <% end %>
 			<a href="#" data-action="collapse">
 				<i class="icon-chevron-up"></i>
 			</a>
@@ -23,11 +25,17 @@
 				<div class="span12">
 				  <dl>
 				    <dt>Judul Tugas Akhir</dt>
-            <dd><%= final_project.title %></dt>
+            <dd>
+              <%= link_to final_project_path(final_project) do %>
+                <%= final_project.title %>
+              <% end %>
+            </dd>
+            <dt>Mahasiswa</dt>
+            <dd><%= final_project.user.username %></dd>
   				  <dt>Pembimbing 1</dt>
-            <dd><%= final_project.advisor_1.username %></dt>
+            <dd><%= final_project.advisor_1.username %></dd>
     				<dt>Pembimbing 2</dt>
-            <dd><%= final_project.advisor_2.username %></dt>
+            <dd><%= final_project.advisor_2.username %></dd>
 				  </dl>
 				</div>
 			</div><!-- row fluid end -->
@@ -36,9 +44,9 @@
   				<div class="progress" data-percent="<%= final_project.progress %>%" id="progress_bar">
   					<div class="bar" style="width: <%= final_project.progress %>%;" id="progress_bar_count"></div>
   				</div>
-          <% if can? :update_progress, final_project %>
+          <% if can? :update_progress, final_project and final_project.is_advisor_1?(current_user) %>
             <div id="update_progress_form">
-              <%= render :partial => 'todo_final_projects/partials/update_progress_form', :locals => {:final_project => final_project} %>
+              <%= render :partial => 'todo_final_projects/partials/update_progress_form', :locals => {:final_project => final_project, :error_report => ""} %>
             </div>
           <% end %>
         </div>

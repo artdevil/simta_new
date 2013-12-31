@@ -1,5 +1,6 @@
 class TodoFinalProjectsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_user_advisor, :only => [:issue, :issue_todo, :new_todo, :create_todo, :edit_todo, :update_todo, :finished]
   
   def index
     @final_project = current_user.final_project
@@ -17,14 +18,12 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def issue
-    @final_project = check_user_advisor(params[:user_id])
     @report_final_projects = @final_project.report_final_projects
     @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
     @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
   end
   
   def issue_todo
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
   end
   
@@ -62,12 +61,10 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def new_todo
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.new
   end
   
   def create_todo
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.new(params[:todo_final_project])
     @todo_final_project.user_id = current_user.id
     if @todo_final_project.save
@@ -79,12 +76,10 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def edit_todo
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
   end
   
   def update_todo
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
     if @todo_final_project.update_attributes(params[:todo_final_project])
       redirect_to "/todo_final_projects/issue/#{@final_project.user.slug}/#{@todo_final_project.slug}", :notice => "#{I18n.t('todo_final_projects.update.success')}"
@@ -95,7 +90,8 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def open
-    @final_project = check_user_advisor(params[:user_id])
+    user = User.find(params[:user_id])
+    @final_project = FinalProject.where(:user_id => user.id).first
     @todo_final_projects = @final_project.todo_final_projects.includes(:user).open_issue
     if current_user.is_student?
       open = render_to_string(:partial => "todo_final_projects/partials/open_issue", :locals => {:open_issue => @todo_final_projects}).to_json
@@ -107,7 +103,8 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def close
-    @final_project = check_user_advisor(params[:user_id])
+    user = User.find(params[:user_id])
+    @final_project = FinalProject.where(:user_id => user.id).first
     @todo_final_projects = @final_project.todo_final_projects.includes(:user).close_issue
     if current_user.is_student?
       close = render_to_string(:partial => "todo_final_projects/partials/close_issue", :locals => {:close_issue => @todo_final_projects}).to_json
@@ -119,7 +116,6 @@ class TodoFinalProjectsController < ApplicationController
   end
   
   def finished
-    @final_project = check_user_advisor(params[:user_id])
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
     if @todo_final_project.update_column(:status, true)
       render :js => "$('#issue_open_#{@todo_final_project.id}').remove();$('#open_count').html('#{@final_project.todo_final_projects.open_issue.size}');$('#close_count').html('#{@final_project.todo_final_projects.close_issue.size}')"
@@ -128,12 +124,15 @@ class TodoFinalProjectsController < ApplicationController
   
   #before-validate
   
-  def check_user_advisor(user_id)
-    user = User.find(user_id)
-    final_project = FinalProject.where(:user_id => user.id).first
-    unless final_project.user == current_user or final_project.advisor_1_id == current_user.id or final_project.advisor_2_id == current_user.id
-      redirect_to dashboards_path, :alert => "You are not authorized to access this page"
+  def check_user_advisor
+    user = User.find(params[:user_id])
+    @final_project = FinalProject.where(:user_id => user.id).first
+    if @final_project.present?
+      unless @final_project.user == current_user or @final_project.advisor_1_id == current_user.id or @final_project.advisor_2_id == current_user.id
+        redirect_to dashboards_path, :alert => "You are not authorized to access this page"
+      end
+    else
+      redirect_to dashboards_path, :alert => "User can't find or not on final project status"
     end
-    return final_project
   end
 end

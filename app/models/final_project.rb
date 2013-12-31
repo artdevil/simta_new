@@ -1,4 +1,6 @@
 class FinalProject < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   #relation
   belongs_to :user
   belongs_to :proposal
@@ -13,6 +15,7 @@ class FinalProject < ActiveRecord::Base
   #validation
   validate :check_user_status, :on => :create
   validates_presence_of :advisor_1_id, :advisor_2_id, :description, :proposal_id, :title, :user_id
+  validate :check_advisor_report, :on => :update, :if => Proc.new{ self.progress == 100 }
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   
   #callback
@@ -29,7 +32,19 @@ class FinalProject < ActiveRecord::Base
     end
   end
   
+  def is_advisor_1?(user_id)
+    self.advisor_1 == user_id
+  end
+  
   private
+    
+    def check_advisor_report
+      if self.report_final_projects.advisor_progress(self.proposal.advisor_1_id).count < 8
+        errors.add(:base, "Pembimbing pertama belum memenuhi final project report (masih kurang dari 8)")
+      elsif self.proposal.advisor_2_id.present? and self.report_final_projects.advisor_progress(self.proposal.advisor_2_id).count < 8 
+        errors.add(:base, "Pembimbing kedua belum memenuhi final project report (masih kurang dari 8)")
+      end
+    end
   
     def check_user_status
       if !self.user.students_status.is_working_proposal? and !self.user.proposal.present? and !self.user.proposal.finished? 

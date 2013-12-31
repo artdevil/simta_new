@@ -25,6 +25,7 @@ class Ability
           comment.try(:user) == user
         end
         can :create, Comment
+        can [:check_user_for_report, :show], FinalProject
       elsif user.is_advisor?
         can :create, Topic
         can :ud, Topic do |topic|

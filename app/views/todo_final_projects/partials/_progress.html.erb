@@ -5,9 +5,6 @@
 			Final Project Data
 		</h4>
 		<span class="widget-toolbar">
-			<a href="#" data-action="settings">
-				<i class="icon-cog"></i>
-			</a>
 			<a href="#" data-action="collapse">
 				<i class="icon-chevron-up"></i>
 			</a>
@@ -23,11 +20,17 @@
 				<div class="span12">
 				  <dl>
 				    <dt>Judul Tugas Akhir</dt>
-            <dd><%= final_project.title %></dt>
+            <dd>
+              <%= link_to final_project_path(final_project) do %>
+                <%= final_project.title %>
+              <% end %>
+            </dd>
+            <dt>Mahasiswa</dt>
+            <dd><%= final_project.user.username %></dd>
   				  <dt>Pembimbing 1</dt>
-            <dd><%= final_project.advisor_1.username %></dt>
+            <dd><%= final_project.advisor_1.username %></dd>
     				<dt>Pembimbing 2</dt>
-            <dd><%= final_project.advisor_2.username %></dt>
+            <dd><%= final_project.advisor_2.username %></dd>
 				  </dl>
 				</div>
 			</div><!-- row fluid end -->

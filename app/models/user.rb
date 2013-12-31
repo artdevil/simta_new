@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :todo_proposals
   has_many :todo_final_projects
   has_many :attachments
+  has_many :report_final_projects
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
