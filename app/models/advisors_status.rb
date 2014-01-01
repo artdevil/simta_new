@@ -1,6 +1,7 @@
 class AdvisorsStatus < ActiveRecord::Base
+  acts_as_taggable_on :skills
   belongs_to :user
-  attr_accessible :max_coordinator, :user_id
+  attr_accessible :max_coordinator, :user_id, :skills
   validate :check_user_status
   
   private

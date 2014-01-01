@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201002417) do
+ActiveRecord::Schema.define(:version => 20131201012127) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20131201002417) do
     t.integer  "user_id",                        :null => false
     t.integer  "max_coordinator", :default => 5, :null => false
     t.integer  "coordinator",     :default => 0, :null => false
+    t.string   "skills"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
@@ -121,11 +122,13 @@ ActiveRecord::Schema.define(:version => 20131201002417) do
     t.string   "advisor_2_name"
     t.string   "title"
     t.text     "description"
-    t.integer  "progress",       :default => 0,     :null => false
-    t.boolean  "finished",       :default => false, :null => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.integer  "progress",                 :default => 0,     :null => false
+    t.boolean  "finished",                 :default => false, :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "slug"
+    t.string   "document_final_project"
+    t.string   "document_advisor_testers"
   end
 
   create_table "messages", :force => true do |t|
