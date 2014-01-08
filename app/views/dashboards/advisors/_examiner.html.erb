@@ -1,0 +1,62 @@
+<div class="span6">
+	<div class="widget-box transparent">
+		<div class="widget-header widget-header-flat">
+			<h4 class="lighter">
+				<i class="icon-edit orange"></i>
+				Permintaan Penguji
+			</h4>
+
+			<div class="widget-toolbar">
+				<a href="#" data-action="collapse">
+					<i class="icon-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+      <div class="clearfix"></div>
+			<div class="widget-main no-padding">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>
+								Name
+							</th>
+							<th style="width: 150px">
+								Waktu dan Tempat
+							</th>
+							<th class="hidden-phone">
+								Location
+							</th>
+							<th>
+								Status
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+            <% current_user.examiners.each do |f| %>
+              <% if f.accepted == nil %>
+    						<tr>
+    							<td>
+                    <%= link_to f.final_project.title, examiner_path(f.final_project) %>
+                  </td>
+    							<td class="<%= f.passed? ? 'red' : 'green' %>">
+                    <%= f.datetime.strftime('%d %B %Y') %><br>
+                    <%= f.datetime.strftime('%H:%M')%>
+    							</td>
+    							<td class="hidden-phone">
+                    <%= f.location %>
+    							</td>
+    							<td>
+                    <%= f.working_revision? ? 'revisi' : 'pengujian' %>
+    							</td>
+    						</tr>
+              <% end %>
+            <% end %>
+					</tbody>
+				</table>
+			</div><!--/widget-main-->
+		</div><!--/widget-body-->
+	</div><!--/widget-box-->
+</div><!-- end span-->

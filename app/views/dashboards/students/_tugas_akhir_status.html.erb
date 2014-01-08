@@ -26,6 +26,8 @@
               <%= render :partial => "dashboards/students/progress_proposal", :locals => {:proposal_status => current_user.proposal} %>
             <% elsif current_user.students_status.is_working_final_project? %>
               <%= render :partial => "dashboards/students/progress_final_project", :locals => {:final_project_status => current_user.final_project} %>
+            <% elsif current_user.students_status.is_finished? %>
+              Tugas akhir anda telah selesai
             <% end %>
           </div>
         </div>

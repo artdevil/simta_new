@@ -38,6 +38,18 @@ class Ability
         can :update, Comment do |comment|
           comment.try(:user) == user
         end
+        
+        can :read, Examiner do |examiner|
+          examiner.try(:examiner_1) == user || examiner.try(:examiner_2) == user || examiner.try(:examiner_3) == user || examiner.final_project.try(:advisor_1) == user || examiner.final_project.try(:advisor_2) == user
+        end
+        
+        can :update, Examiner do |examiner|
+          examiner.try(:examiner_2) == user
+        end
+        
+        can :revision_status, Examiner do |examiner|
+          examiner.try(:examiner_2) == user
+        end
       end
     end
     # if user.is_student?

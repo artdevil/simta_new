@@ -4,7 +4,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :topic, :counter_cache => true
   belongs_to :advisor_1, :class_name => "User", :foreign_key => "advisor_1_id"
   belongs_to :advisor_2, :class_name => "User", :foreign_key => "advisor_2_id"
-  has_one :final_project
+  has_one :final_project, :dependent => :destroy
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
   attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :decree, :finished

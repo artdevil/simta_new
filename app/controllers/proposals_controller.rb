@@ -65,6 +65,10 @@ class ProposalsController < ApplicationController
     end
   end
   
+  def delete
+    
+  end
+  
   #check validation
   def check_user
     @proposal = Proposal.find(params[:id])

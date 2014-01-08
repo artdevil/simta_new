@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201012127) do
+ActiveRecord::Schema.define(:version => 20140103124948) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -108,6 +108,22 @@ ActiveRecord::Schema.define(:version => 20131201012127) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "examiners", :force => true do |t|
+    t.datetime "datetime"
+    t.string   "location"
+    t.text     "note"
+    t.integer  "final_project_id"
+    t.integer  "examiner_1_id"
+    t.integer  "examiner_2_id"
+    t.integer  "examiner_3_id"
+    t.boolean  "accepted"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.boolean  "finished"
+    t.boolean  "revision"
+    t.date     "revision_date"
+  end
+
   create_table "faculties", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -122,13 +138,13 @@ ActiveRecord::Schema.define(:version => 20131201012127) do
     t.string   "advisor_2_name"
     t.string   "title"
     t.text     "description"
-    t.integer  "progress",                 :default => 0,     :null => false
-    t.boolean  "finished",                 :default => false, :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.integer  "progress",                        :default => 0,     :null => false
+    t.boolean  "finished",                        :default => false, :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "slug"
     t.string   "document_final_project"
-    t.string   "document_advisor_testers"
+    t.string   "document_revision_final_project"
   end
 
   create_table "messages", :force => true do |t|

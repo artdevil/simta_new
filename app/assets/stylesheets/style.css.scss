@@ -194,3 +194,21 @@ input.disabled{
 a.icon-only.icon-pencil{
   color: white;
 }
+
+.dl-horizontal{
+  dt{
+    text-align: left;
+    width: 120px;
+  }
+  dd{
+    margin-left: 10px;
+  }
+}
+
+.red{
+  color: red;
+}
+
+.green{
+  color: green;
+}

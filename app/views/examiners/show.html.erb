@@ -1,0 +1,40 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "examiners/breadcrumbs/show", :locals => {:examiner_title => @examiner.final_project.title} %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				<%= @examiner.final_project.title %>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<div id="alert-data">
+			  <%= bootstrap_flash %>
+			</div>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+				<div class="span3">
+					<%= render 'examiners/show_components/examiner_scheduler' %>
+          <% if can? :update, @examiner %>
+            <%= render 'examiners/show_components/update_examiner'%>
+          <% end %>
+          <%= render 'examiners/show_components/documents' %>
+				</div>
+        <div class="span9">
+          <%= render 'examiners/show_components/name_of_audient' %>
+          </div>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= render 'examiners/show_components/description' %>
+              <hr class="hidden-phone">
+              <%= render :partial => 'examiners/show_components/reports', :locals => {:reports => @examiner.final_project.report_final_projects, :final_project => @examiner.final_project} %>
+            </div>
+          </div>
+        </div>
+      </div><!-- end row -->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

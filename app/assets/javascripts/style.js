@@ -1,3 +1,12 @@
+$(document).on('click','.examiner_status',function(){
+  if($(this).val() == "lulus dengan revisi"){
+    $('.date-picker').show();
+  }
+  else{
+    $('.date-picker').hide();
+  }
+});
+
 $(document).ready(function(){
   $("#browser").treeview();
   $(document).on('change','.ace-file-input label span',function(){
@@ -14,6 +23,12 @@ $(document).ready(function(){
         $("form[data-validate]").resetClientSideValidations();
       }
     });
+  });
+  var currentDate = new Date();
+  
+  $('.date-picker').datepicker({
+    format: "dd-mm-yyyy",
+    startDate: currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear()
   });
   
   $(document).on('click','.add_nested_fields',function(){

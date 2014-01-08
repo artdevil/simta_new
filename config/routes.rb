@@ -1,5 +1,4 @@
 SimtaNew::Application.routes.draw do
-
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -87,6 +86,11 @@ SimtaNew::Application.routes.draw do
   resources :news
   resources :documents
   resources :archives
+  resources :examiners do
+    member do
+      get :revision_status
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

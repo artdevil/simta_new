@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   belongs_to :faculty
   belongs_to :user_role
   has_many :topics, :dependent => :destroy
-  has_one :proposal
-  has_one :final_project
+  has_one :proposal, :dependent => :destroy
+  has_one :final_project, :dependent => :destroy
   has_many :topic_tags, :dependent => :destroy
   has_many :advisor_1_proposals, :class_name => "Proposal", :foreign_key => "advisor_1_id"
   accepts_nested_attributes_for :advisor_1_proposals, :allow_destroy => true
@@ -19,11 +19,12 @@ class User < ActiveRecord::Base
   has_one :students_status, :dependent => :destroy
   has_one :advisors_status, :dependent => :destroy
   has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
-  accepts_nested_attributes_for :students_status
-  has_many :todo_proposals
-  has_many :todo_final_projects
-  has_many :attachments
-  has_many :report_final_projects
+  accepts_nested_attributes_for :students_status, :allow_destroy => true
+  has_many :todo_proposals, :dependent => :destroy
+  has_many :todo_final_projects, :dependent => :destroy
+  has_many :attachments, :dependent => :destroy
+  has_many :report_final_projects, :dependent => :destroy
+  has_many :examiners, :finder_sql => proc{"SELECT * FROM Examiners where (examiner_1_id = #{id} or examiner_2_id = #{id} or examiner_3_id = #{id})"}, :dependent => :destroy
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -45,6 +46,7 @@ class User < ActiveRecord::Base
   scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
   scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
   scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
+  scope :search_examiner, lambda{|user, users| where('(username like ? or keyid like ? ) and user_role_id = 2 and id not in (?)', "%#{user}%","%#{user}%", users)}
   
   #validates
   validates_presence_of :username

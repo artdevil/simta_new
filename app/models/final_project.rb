@@ -7,10 +7,15 @@ class FinalProject < ActiveRecord::Base
   belongs_to :advisor_1, :class_name => "User", :foreign_key => "advisor_1_id"
   belongs_to :advisor_2, :class_name => "User", :foreign_key => "advisor_2_id"
   has_many :notifications, :as => :notifiable, :dependent => :destroy
-  has_many :todo_final_projects
-  has_many :report_final_projects
+  has_many :todo_final_projects, :dependent => :destroy
+  has_many :report_final_projects, :dependent => :destroy
+  has_many :examiners, :dependent => :destroy
   
-  attr_accessible :advisor_1_id, :advisor_2_id, :description, :finished, :progress, :proposal_id, :title, :user_id
+  attr_accessible :advisor_1_id, :advisor_2_id, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project
+  
+  #upload image
+  mount_uploader :document_final_project, DocumentFinalProjectUploader
+  mount_uploader :document_revision_final_project, DocumentRevisionFinalProjectUploader
   
   #validation
   validate :check_user_status, :on => :create
@@ -22,7 +27,7 @@ class FinalProject < ActiveRecord::Base
   after_update :update_user_status_to_finished, :if => Proc.new{ self.finished }
   after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished }
   
-  scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
+  scope :advisor_student, lambda{|f| where("finished = false and (advisor_1_id = ? or advisor_2_id = ? )",f.id,f.id)}
   
   def check_user_access(user_id)
     if self.user_id != user_id and self.advisor_1_id != user_id and self.advisor_2_id != user_id
@@ -53,13 +58,23 @@ class FinalProject < ActiveRecord::Base
     end
     
     def set_notification_100
-      notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Final Project anda telah selesai. Silahkan mengajukan diri untuk sidang TA")
+      notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Final Project anda telah selesai. Silahkan mengupload buku dan mengajukan diri untuk sidang TA")
       notification.save
+      self.user.students_status.update_column(:status, 4)
+      self.examiners.create
     end
     
     def update_user_status_to_finished
       notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Selamat! Final Project anda telah selesai")
       notification.save
-      self.user.students_status.update_column(:status, 4)
+      self.user.students_status.update_column(:status, 6)
+      update_advisor_decrease
+    end
+    
+    def update_advisor_decrease
+      self.advisor_1.advisors_status.update_column(:coordinator, self.advisor_1.advisors_status.coordinator - 1)
+      if self.advisor_2.present?
+        self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_1.advisors_status.coordinator - 1)
+      end
     end
 end

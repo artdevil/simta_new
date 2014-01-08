@@ -24,6 +24,18 @@ class StudentsStatus < ActiveRecord::Base
     status == 3
   end
   
+  def is_final_session?
+    status == 4
+  end
+  
+  def is_working_revision?
+    status == 5
+  end
+  
+  def is_finished?
+    status == 6
+  end
+  
   def for_now
     case status
     when 0

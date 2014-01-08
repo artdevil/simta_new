@@ -33,21 +33,36 @@ end
 #create users
 puts 'creating users'
 users = [
-  {:name => "adhiguna utama sabril", :keyid => "111128355", :password => "tes123456", :faculty_id => 2},
-  {:name => "ana riana", :keyid => "111128376", :password => "tes123456", :faculty_id => 2},
-  {:name => "Bambang Joko Widodo", :keyid => "111128383", :password => "tes123456", :faculty_id => 2},
-  {:name => "Mita Mushliha", :keyid => "111128386", :password => "tes123456", :faculty_id => 2},
-  {:name => "Rifky Sintami", :keyid => "111128365", :password => "tes123456", :faculty_id => 2},
-  {:name => "Santy Fauziyah", :keyid => "111128370", :password => "tes123456", :faculty_id => 2},
-  {:name => "Al Bukhari Pahlevi", :keyid => "111128369", :password => "tes123456", :faculty_id => 2},
-  {:name => "Nira Pebriani", :keyid => "111128382", :password => "tes123456", :faculty_id => 2},
-  {:name => "Burhanuddin Dirgantara,Ir,MT.", :keyid => "93680086-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:name => "Efri Suhartono, ST., MT.", :keyid => "99730171-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:name => "Istikmal,ST,MT.", :keyid => "08790474-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2}
+  {:username => "adhiguna utama sabril", :keyid => "111128355", :password => "tes123456", :faculty_id => 2},
+  {:username => "ana riana", :keyid => "111128376", :password => "tes123456", :faculty_id => 2},
+  {:username => "Bambang Joko Widodo", :keyid => "111128383", :password => "tes123456", :faculty_id => 2},
+  {:username => "Mita Mushliha", :keyid => "111128386", :password => "tes123456", :faculty_id => 2},
+  {:username => "Rifky Sintami", :keyid => "111128365", :password => "tes123456", :faculty_id => 2},
+  {:username => "Santy Fauziyah", :keyid => "111128370", :password => "tes123456", :faculty_id => 2},
+  {:username => "Al Bukhari Pahlevi", :keyid => "111128369", :password => "tes123456", :faculty_id => 2},
+  {:username => "Nira Pebriani", :keyid => "111128382", :password => "tes123456", :faculty_id => 2},
+  {:username => "Burhanuddin Dirgantara,Ir,MT.", :keyid => "93680086-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Efri Suhartono, ST., MT.", :keyid => "99730171-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Istikmal,ST,MT.", :keyid => "08790474-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Muhammad Iqbal,ST,MT.", :keyid => "10840586-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Tody Ariefianto Wibowo,ST ,MT.", :keyid => "10820584-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Rita Magdalena,Ir,MT.", :keyid => "99640168-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Leana Vidya Yovita,ST.,MT.", :keyid => "08830413-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Ridha Muldina, ST.", :keyid => "10850626-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Ida Wahidah,ST,MT.", :keyid => "99760186-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Sofia Naning H, Ir., MT.", :keyid => "99710170-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Ratna Mayasari, ST.", :keyid => "10850624-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Indrarini Dyah,ST,MT.", :keyid => "07780394-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "A Ali Muayyadi,Ir,MSc,PhD.", :keyid => "93660096-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Koredianto Usman,ST.,MSc.", :keyid => "02750290-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Rita Magdalena,Ir,MT.", :keyid => "99640168-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Tengku A. Riza, ST., MT.", :keyid => "10790594-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Denny Darlis, S.Si., M.T", :keyid => "10770726-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Ekki Kurniawan, ST., MSc.", :keyid => "10690733-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2}
 ]
 users.each do |f|
   User.find_or_initialize_by_keyid(f[:keyid]).tap do |t|
-    t.username = f[:name]
+    t.username = f[:username]
     t.password = f[:password]
     t.user_role_id = f[:user_role_id] || 1
     t.faculty_id = 2
