@@ -1,7 +1,7 @@
 class TodoProposalsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :check_user_advisor, :only => ['issue','issue_todo', 'finished', 'new_todo','create_todo','edit_todo','update_todo']
   load_and_authorize_resource
+  before_filter :check_user_advisor, :only => ['issue','issue_todo', 'finished', 'new_todo','create_todo','edit_todo','update_todo']
   
   def index
     @proposal = current_user.proposal
@@ -18,6 +18,16 @@ class TodoProposalsController < ApplicationController
   
   def new
     @todo_proposal = current_user.todo_proposals.new(:proposal_id => current_user.proposal.id)
+  end
+  
+  def create
+    @todo_proposal = current_user.todo_proposals.new(params[:todo_proposal])
+    if @todo_proposal.save
+      redirect_to todo_proposal_path(@todo_proposal), :notice => "#{I18n.t('todo_proposals.create.success')}"
+    else
+      flash[:alert] = "#{I18n.t('todo_proposals.create.failed')}"
+      render 'new'
+    end
   end
   
   def edit
@@ -60,16 +70,6 @@ class TodoProposalsController < ApplicationController
     else
       flash[:alert] = "#{I18n.t('todo_proposals.update.failed')}"
       render 'edit_todo'
-    end
-  end
-  
-  def create
-    @todo_proposal = current_user.todo_proposals.new(params[:todo_proposal])
-    if @todo_proposal.save
-      redirect_to todo_proposal_path(@todo_proposal), :notice => "#{I18n.t('todo_proposals.create.success')}"
-    else
-      flash[:alert] = "#{I18n.t('todo_proposals.create.failed')}"
-      render 'new'
     end
   end
   
@@ -120,8 +120,8 @@ class TodoProposalsController < ApplicationController
   def check_user_advisor
     user = User.find(params[:user_id])
     @proposal = Proposal.where(:user_id => user.id).first
-    unless @proposal.advisor_1_id == current_user.id or @proposal.advisor_2_id == current_user.id
-      redirect_to dashboards_path, :alert => "You are not authorized to access this page"
+    unless can? :access_todo_proposal, @proposal
+      redirect_to dashboards_path, :alert => "#{I18n.t('cancan.unauthorized')}"
     end
   end
 end

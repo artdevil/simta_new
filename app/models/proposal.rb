@@ -11,6 +11,7 @@ class Proposal < ActiveRecord::Base
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
+  validate :cek_advisor_2_quota, :on => :update
   validate :protected_for_update_if_finished, :on => :update
   validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
@@ -28,7 +29,8 @@ class Proposal < ActiveRecord::Base
   after_create :send_message_to_student_and_advisor_2, :set_quota, :update_student_status
   after_save :set_notification_finished, :if => Proc.new{ self.progress == 100 }
   after_save :create_final_project, :if => Proc.new{ self.finished == true }
-  before_destroy :set_quota_decrease
+  before_destroy :set_quota_decrease, :set_user_status_decrease, :send_message_destroy_student
+  before_update :check_change_advisor_2
   
   scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
   
@@ -54,6 +56,27 @@ class Proposal < ActiveRecord::Base
   end
   
   private
+    def check_change_advisor_2
+      if self.advisor_2_name_changed?
+        if self.advisor_2_id_changed?
+          decrease_advisor_2
+          increase_advisor_2
+        end
+      end
+    end
+    
+    def increase_advisor_2
+      unless self.advisor_2_id.blank?
+        self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_2.advisors_status.coordinator + 1)
+      end
+    end
+    
+    def decrease_advisor_2
+      proposal = Proposal.find(self)
+      unless proposal.advisor_2_id.blank?
+        proposal.advisor_2.advisors_status.update_column(:coordinator, proposal.advisor_2.advisors_status.coordinator - 1)
+      end
+    end
     
     def protected_for_update_if_finished
       proposal = Proposal.find self
@@ -126,6 +149,15 @@ class Proposal < ActiveRecord::Base
       unless self.advisor_2_id.blank?
         self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_2.advisors_status.coordinator - 1)
       end
+    end
+    
+    def set_user_status_decrease
+      self.user.students_status.update_column(:status, 0)
+    end
+    
+    def send_message_destroy_student
+      notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Proposal anda telah dihapus")
+      notification.save
     end
     
     def update_student_status

@@ -1,7 +1,6 @@
 class ProposalsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  before_filter :check_user, :only => ['edit','update', 'update_document', 'update_progress','finished']
   
   def create
     @proposal = current_user.advisor_1_proposals.new(params[:proposal])
@@ -24,8 +23,8 @@ class ProposalsController < ApplicationController
     end
   end
   
-  def edit
-   
+  def show
+    @proposal = Proposal.find(params[:id])
   end
   
   def update
@@ -65,15 +64,10 @@ class ProposalsController < ApplicationController
     end
   end
   
-  def delete
-    
-  end
-  
-  #check validation
-  def check_user
+  def destroy
     @proposal = Proposal.find(params[:id])
-    unless @proposal.user == current_user or @proposal.advisor_1 = current_user or @proposal.advisor_2 == current_user
-      redirect_to dashboards_path, :alert => "You are not authorized"
+    if @proposal.destroy
+      redirect_to dashboards_path, :notice => "#{I18n.t('proposal.delete.success')}"
     end
   end
 end

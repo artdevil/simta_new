@@ -32,6 +32,8 @@ en:
     update:
       success: "Your proposal Has Been Updated"
       failed: "You proposal Can't updated"
+    delete:
+      success: "Proposal has been removed"
     completed: "Please download and upload document for sidang proposal"
     finished: 
       success: "Proposal is finished."

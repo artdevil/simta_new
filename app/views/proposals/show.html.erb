@@ -1,0 +1,48 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "proposals/breadcrumbs/show" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Proposal Tugas Akhir
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @proposal.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid item_topic">
+        <div class="span12">
+          <div class="row-fluid item_header">
+            <div class="span12">
+              <dl class="dl-horizontal">
+                <dt>Mahasiswa : </dt>
+                <dd><%= link_to @proposal.user.username, user_profile_path(@proposal.user) %></dd>
+                <dt>Pembimbing 1 : </dt>
+                <dd><%= link_to @proposal.advisor_1.username, user_profile_path(@proposal.advisor_1) %></dd>
+                <dt>Pembimbing 2 : </dt>
+                <dd><%= @proposal.advisor_2.present? ? (link_to @proposal.advisor_2.username, user_profile_path(@proposal.advisor_2)) : @proposal.advisor_2_name %></dd>
+              </dl>
+            </div>
+          </div><!-- end row -->
+          <br>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= raw @proposal.description %>
+            </div>
+          </div><!-- end row -->
+        </div>
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+      <% if can? :update, @proposal %>
+        <%= link_to 'Update Proposal', edit_proposal_path(@proposal), :class => "btn btn-success"%>
+      <% end %>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

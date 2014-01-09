@@ -7,7 +7,7 @@
     <p>SK : <%= link_to File.basename(proposal.decree.path), proposal.decree.url unless proposal.decree.blank? %></p>
   </div>
   <% unless proposal.exam.blank? and proposal.events.blank? and proposal.proposal.blank? %>
-    <% if can? :finished, Proposal %>
+    <% if can? :finished, proposal %>
       <% if proposal.finished %>
         <btn class="btn btn-warning disabled">
           <i class="icon-ok"></i>
