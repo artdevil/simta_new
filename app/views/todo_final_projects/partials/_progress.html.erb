@@ -5,6 +5,11 @@
 			Final Project Data
 		</h4>
 		<span class="widget-toolbar">
+      <% if can? :show, final_project %>
+        <%= link_to final_project_path(final_project) do %>
+          <i class="icon-cog"></i>
+        <% end %>
+      <% end %>
 			<a href="#" data-action="collapse">
 				<i class="icon-chevron-up"></i>
 			</a>
@@ -26,11 +31,11 @@
               <% end %>
             </dd>
             <dt>Mahasiswa</dt>
-            <dd><%= final_project.user.username %></dd>
+            <dd><%= link_to final_project.user.username, user_profile_path(final_project.user) %></dd>
   				  <dt>Pembimbing 1</dt>
-            <dd><%= final_project.advisor_1.username %></dd>
+            <dd><%= link_to final_project.advisor_1.username, user_profile_path(final_project.advisor_1) %></dd>
     				<dt>Pembimbing 2</dt>
-            <dd><%= final_project.advisor_2.username %></dd>
+            <dd><%= link_to final_project.advisor_2.username, user_profile_path(final_project.advisor_2) %></dd>
 				  </dl>
 				</div>
 			</div><!-- row fluid end -->

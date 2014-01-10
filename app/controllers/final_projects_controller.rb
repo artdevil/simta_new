@@ -1,24 +1,23 @@
 class FinalProjectsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :check_user_for_update, :only => [:update_progress,:finished, :edit, :update]
-  before_filter :check_user_for_report, :only => [:new_report, :create_report, :show]
+  load_and_authorize_resource
   
   def show
   
   end
   
-  def edit
-    
-  end
-  
-  def update
-    if @final_project.update_attributes(params[:final_project])
-      redirect_to "/todo_final_projects/issue/#{@final_project.user.slug}", :notice => "#{I18n.t('final_project.update.success')}"
-    else
-      flash[:alert] = "#{I18n.t('final_project.update.failed')}"
-      render :edit
-    end
-  end
+  # def edit
+#     
+#   end
+#   
+#   def update
+#     if @final_project.update_attributes(params[:final_project])
+#       redirect_to "/todo_final_projects/issue/#{@final_project.user.slug}", :notice => "#{I18n.t('final_project.update.success')}"
+#     else
+#       flash[:alert] = "#{I18n.t('final_project.update.failed')}"
+#       render :edit
+#     end
+#   end
   
   def update_progress
     if @final_project.update_attributes(params[:final_project])
@@ -62,19 +61,9 @@ class FinalProjectsController < ApplicationController
     end
   end
   
-  private
-    #check validation
-    def check_user_for_update
-      @final_project = FinalProject.find(params[:id])
-      unless @final_project.advisor_1 == current_user
-        redirect_to dashboards_path, :alert => "You are not authorized"
-      end
-    end
-  
-    def check_user_for_report
-      @final_project = FinalProject.find(params[:id])
-      if @final_project.check_user_access(current_user.id)
-        redirect_to dashboards_path, :alert => "You are not authorized"
-      end
-    end
+  # def destroy
+  #   if @final_project.destroy
+  #     redirect_to dashboards_path, :notice => "#{I18n.t('final_project.delete.success')}"
+  #   end
+  # end
 end

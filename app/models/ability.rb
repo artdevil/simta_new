@@ -27,15 +27,23 @@ class Ability
           todo_proposal.try(:user) == user
         end
         
-        can [:open,:close, :check_user_advisor, :read, :create], TodoFinalProject
-        can :update, TodoFinalProject do |todo_final_project|
+        # FINAL PROJECT
+        can [:show], FinalProject do |final_project|
+          final_project.user == user
+        end
+        
+        #TODO FINAL PROJECT
+        can [:open, :close, :index, :create, :read, :new], TodoFinalProject
+        can [:update, :edit], TodoFinalProject do |todo_final_project|
           todo_final_project.try(:user) == user
         end
+        
+        # COMMENT
+        can :create, Comment
         can :update, Comment do |comment|
           comment.try(:user) == user
         end
-        can :create, Comment
-        can [:check_user_for_report, :show], FinalProject
+        
       elsif user.is_advisor?
         # TOPIC
         can :create, Topic
@@ -54,7 +62,7 @@ class Ability
           proposal.try(:advisor_1) == user
         end
         
-        #TODO PROPOSAL
+        # TODO PROPOSAL
         can [:issue, :new_todo, :create_todo, :issue_todo, :open, :close, :finished, :check_user_advisor], TodoProposal
         can [:edit_todo, :update_todo], TodoProposal do |todo_proposal|
           todo_proposal.user = user
@@ -64,13 +72,32 @@ class Ability
         end
         
         # FINAL PROJECT
+        # , :edit, :update
+        can [:update_progress, :finished], FinalProject do |final_project|
+          final_project.advisor_1 == user
+        end
         
-        can :manage, [FinalProject, TodoFinalProject]
+        can [:new_report, :create_report, :show], FinalProject do |final_project|
+          final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user
+        end
+        
+        # TODO FINAL PROJECT
+        # :issue, :issue_todo, :new_todo, :create_todo, :edit_todo, :update_todo, :finished
+        can [:open, :close, :issue, :issue_todo, :new_todo, :create_todo, :finished], TodoFinalProject
+        can [:edit_todo, :update_todo], TodoFinalProject do |todo_final_project|
+          todo_final_project.user == user
+        end
+        can [:access_todo_final_project], FinalProject do |final_project|
+          final_project.advisor_1 == user || proposal.advisor_2 == user
+        end
+        
+        # COMMENT
         can :create, Comment
         can :update, Comment do |comment|
           comment.try(:user) == user
         end
         
+        # EXAMINER
         can :read, Examiner do |examiner|
           examiner.try(:examiner_1) == user || examiner.try(:examiner_2) == user || examiner.try(:examiner_3) == user || examiner.final_project.try(:advisor_1) == user || examiner.final_project.try(:advisor_2) == user
         end

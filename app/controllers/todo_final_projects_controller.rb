@@ -1,5 +1,6 @@
 class TodoFinalProjectsController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
   before_filter :check_user_advisor, :only => [:issue, :issue_todo, :new_todo, :create_todo, :edit_todo, :update_todo, :finished]
   
   def index
@@ -128,8 +129,8 @@ class TodoFinalProjectsController < ApplicationController
     user = User.find(params[:user_id])
     @final_project = FinalProject.where(:user_id => user.id).first
     if @final_project.present?
-      unless @final_project.user == current_user or @final_project.advisor_1_id == current_user.id or @final_project.advisor_2_id == current_user.id
-        redirect_to dashboards_path, :alert => "You are not authorized to access this page"
+      unless can? :access_todo_final_project, @final_project
+        redirect_to dashboards_path, :alert => "#{I18n.t('cancan.unauthorized')}"
       end
     else
       redirect_to dashboards_path, :alert => "User can't find or not on final project status"

@@ -170,7 +170,7 @@ class Proposal < ActiveRecord::Base
     end
     
     def create_final_project
-      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :proposal_id => self.id, :title => self.title, :description => self.description)
+      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name, :proposal_id => self.id, :title => self.title, :description => self.description)
       if final_project.save
         notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Pengerjaan proposal telah selesai silahkan mengerjakan tugas akhir")
         notification.save

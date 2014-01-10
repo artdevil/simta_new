@@ -11,7 +11,7 @@ class FinalProject < ActiveRecord::Base
   has_many :report_final_projects, :dependent => :destroy
   has_many :examiners, :dependent => :destroy
   
-  attr_accessible :advisor_1_id, :advisor_2_id, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project
   
   #upload image
   mount_uploader :document_final_project, DocumentFinalProjectUploader
@@ -26,6 +26,7 @@ class FinalProject < ActiveRecord::Base
   #callback
   after_update :update_user_status_to_finished, :if => Proc.new{ self.finished }
   after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished }
+  before_update :check_change_advisor_2
   
   scope :advisor_student, lambda{|f| where("finished = false and (advisor_1_id = ? or advisor_2_id = ? )",f.id,f.id)}
   
@@ -42,6 +43,13 @@ class FinalProject < ActiveRecord::Base
   end
   
   private
+    def check_change_advisor_2
+      if self.advisor_2_name_changed?
+        if self.advisor_2_id_changed?
+          self.proposal.update_attributes(:advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name)
+        end
+      end
+    end
     
     def check_advisor_report
       if self.report_final_projects.advisor_progress(self.proposal.advisor_1_id).count < 8

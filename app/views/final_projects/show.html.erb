@@ -20,12 +20,14 @@
         <div class="span12">
           <div class="row-fluid item_header">
             <div class="span12">
-          		<h4>
-                <%= @final_project.title %>
-              </h4>
-              <h6>Mahasiswa : <%= @final_project.user.username %></h6>
-              <h6>Pembimbing I : <%= @final_project.advisor_1.username %></h6>
-              <h6>Pembimbing II : <%= @final_project.try(:advisor_2).present? ? @final_project.advisor_2.username : @final_project.advisor_2_name %></h6>
+              <dl class="dl-horizontal">
+                <dt>Mahasiswa : </dt>
+                <dd><%= link_to @final_project.user.username, user_profile_path(@final_project.user) %></dd>
+                <dt>Pembimbing 1 : </dt>
+                <dd><%= link_to @final_project.advisor_1.username, user_profile_path(@final_project.advisor_1) %></dd>
+                <dt>Pembimbing 2 : </dt>
+                <dd><%= @final_project.advisor_2.present? ? (link_to @final_project.advisor_2.username, user_profile_path(@final_project.advisor_2)) : @final_project.advisor_2_name %></dd>
+              </dl>
             </div>
           </div><!-- end row -->
           <br>
@@ -39,6 +41,6 @@
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
-<% if @final_project.is_advisor_1?(current_user) %>
-  <%= render :partial => "final_projects/issue/config_show_button", :locals => {:final_project => @final_project} %>
-<% end %>
+<%# if @final_project.is_advisor_1?(current_user) %>
+  <%#= render :partial => "final_projects/issue/config_show_button", :locals => {:final_project => @final_project} %>
+<%# end %>

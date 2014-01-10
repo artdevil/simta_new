@@ -13,9 +13,12 @@
     <!-- bootstrap flash -->
 		<%= bootstrap_flash %>
     <!-- end bootstrap flash -->
+    <%= @final_project.errors.full_messages %>
     <%= simple_form_for @final_project, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
       <%= render :partial => "shared/error_messages", :locals => {:context => @final_project} %>
       <div class="row-fluid">
+        <%= f.input :advisor_2_name, :label => "Nama Pembimbing 2", :placeholder => "masukkan nama atau NIP", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_advisor_user_profiles_path, :input => "recipient_id"}} %>
+        <%= f.input :advisor_2_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
         <%= f.input :title, :label => "Judul Proposal Tugas Akhir", :input_html => {:class => "span12"} %>
         <%= f.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
         <%= hidden_field_tag :redirect_link, params[:redirect_link] || request.headers["Referer"] %>

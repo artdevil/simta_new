@@ -39,10 +39,10 @@
         </div>
       </div><!-- end row -->
       <div class="hr hr32 hr-dotted"></div>
-      <% if can? :update, @proposal %>
-        <%= link_to 'Update Proposal', edit_proposal_path(@proposal), :class => "btn btn-success"%>
-      <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
+<% if can? :update, @proposal %>
+  <%= render :partial => "proposals/issue/config_show_button", :locals => {:proposal => @proposal} %>
+<% end %>

@@ -42,6 +42,8 @@ en:
     update:
       success: "Your Final Project Has Been Updated"
       failed: "You Final Project Can't updated"
+    delete:
+      success: "Final Project has been removed"
     completed: "Final Project anda telah selesai. Silahkan mengajukan diri untuk sidang TA"
     finished: 
       success: "Final Project is finished."
