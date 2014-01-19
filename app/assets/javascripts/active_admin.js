@@ -1,6 +1,7 @@
 //= require active_admin/base
 //= require jquery_nested_form
 //= require jquery.datetimepicker
+//= require rails-timeago-all
 //= require ckeditor/init
 //= require ckeditor/config
 

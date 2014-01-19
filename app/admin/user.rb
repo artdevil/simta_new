@@ -6,6 +6,14 @@ ActiveAdmin.register User do
     link_to "Import Student", import_student_admin_users_path
   end
   
+  action_item :only => :show do
+    link_to "Send SMS", send_sms_admin_user_path(user)
+  end
+  
+  action_item :only => :send_sms do
+    
+  end
+  
   scope :all
   
   scope :student do |user|
@@ -16,9 +24,15 @@ ActiveAdmin.register User do
     user.where(:user_role_id => 2)
   end
   
+  scope :final_project do |user|
+    user.final_project
+  end
+  
   index do
     column :username
-    column :user_role
+    if params['scope'].blank?
+      column :user_role
+    end
     if params['scope'] == 'student'
       column :students_status do |f|
         case f.students_status.for_now
@@ -35,6 +49,23 @@ ActiveAdmin.register User do
       end 
       column :max_coordinator do |f|
         f.advisors_status.coordinator
+      end
+    end
+    if params['scope'] == 'final_project'
+      column :nim do |f|
+        f.keyid
+      end
+      column :title do |f|
+        f.final_project.title
+      end
+      column :advisor_1 do |f|
+        f.final_project.advisor_1.username
+      end
+      column :advisor_2 do |f|
+        f.final_project.advisor_2.present? ? f.final_project.advisor_2.username : f.final_project.advisor_2_name
+      end
+      column :last_guidance, :sortable => :created_at do |f|
+        timeago_tag f.final_project.report_final_projects.last.created_at, :nojs => true, :limit => 20.days.ago
       end
     end
     default_actions
@@ -80,7 +111,7 @@ ActiveAdmin.register User do
     end
   end
   
-  sidebar "Student Proposal Status", :only => :show, :if => proc{ user.is_student? } do
+  sidebar "Student Proposal Status", :only => :show, :if => proc{ user.is_student?  and user.students_status.is_working_proposal? } do
     attributes_table_for user.proposal do
       row("Title") { |proposal| link_to proposal.title, admin_proposal_path(proposal) }
       row("Advisor 1") { |proposal| proposal.advisor_1 }
@@ -94,6 +125,25 @@ ActiveAdmin.register User do
   
   collection_action :import_student, :method => :get do
     @import_student = ImportStudent.new
+  end
+  
+  #action for response
+  
+  member_action :send_sms, :method => :get do
+    @user = User.find(params[:id])
+    @send_sms = SendSms.new(:number => @user.phone)
+  end
+  
+  member_action :send_sms_action, :method => :post do
+    @user = User.find(params[:id])
+    @send_sms = SendSms.new(params[:send_sms])
+    if @send_sms.save
+      flash.now[:success] = "SMS has been sent"
+      redirect_to admin_user_path(@user)
+    else
+      flash.now[:error] = "SMS can't sent"
+      render :send_sms, :id => @user.id
+    end
   end
   
   collection_action :create_import_student, :method => :post do 

@@ -88,7 +88,7 @@ class Ability
           todo_final_project.user == user
         end
         can [:access_todo_final_project], FinalProject do |final_project|
-          final_project.advisor_1 == user || proposal.advisor_2 == user
+          final_project.advisor_1 == user || final_project.advisor_2 == user
         end
         
         # COMMENT

@@ -1,0 +1,8 @@
+<%= semantic_form_for @send_sms, :url => send_sms_action_admin_user_path(@user)  do |f| %>
+  <%= f.inputs :name => "Contact and Message" do %>
+    <%= f.input :number, :as => :string %>
+    <%= f.input :message, :as => :text %>
+  <% end %>
+  <br>
+  <%= f.submit "Send SMS" %>
+<% end %>

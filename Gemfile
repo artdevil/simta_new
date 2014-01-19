@@ -28,6 +28,8 @@ gem "truncate_html"
 gem "powder"
 gem "roo", "~> 1.12.2"
 gem "sanitize"
+gem 'rails-timeago', '~> 2.0'
+gem 'public_activity'
 
 
 # Gems used only for assets and not required

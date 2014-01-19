@@ -11,7 +11,7 @@ class Proposal < ActiveRecord::Base
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
-  validate :cek_advisor_2_quota, :on => :update
+  validate :cek_advisor_2_quota, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
   validate :protected_for_update_if_finished, :on => :update
   validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"

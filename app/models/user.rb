@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
   scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
   scope :search_examiner, lambda{|user, users| where('(username like ? or keyid like ? ) and user_role_id = 2 and id not in (?)', "%#{user}%","%#{user}%", users)}
   
+  # active admin
+  scope :final_project, joins(:students_status).where(:students_status => { :status => 3})
+  
   #validates
   validates_presence_of :username
   validates :keyid, :presence => true, :uniqueness => true

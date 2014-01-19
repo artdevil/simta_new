@@ -19,7 +19,8 @@ class FinalProject < ActiveRecord::Base
   
   #validation
   validate :check_user_status, :on => :create
-  validates_presence_of :advisor_1_id, :advisor_2_id, :description, :proposal_id, :title, :user_id
+  validates_presence_of :advisor_1_id, :description, :proposal_id, :title, :user_id
+  validate :cek_advisor_2_quota, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
   validate :check_advisor_report, :on => :update, :if => Proc.new{ self.progress == 100 }
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   
@@ -43,11 +44,40 @@ class FinalProject < ActiveRecord::Base
   end
   
   private
+    def cek_advisor_2_quota
+      if self.advisor_2_id.present?
+        advisor_2_status = User.select_lecture(self.advisor_2_id).first.try(:advisors_status)
+        if advisor_2_status.present?
+          if advisor_2_status.coordinator >= advisor_2_status.max_coordinator
+            errors.add(:advisor_2_name, "Advisor quota is full")
+          end
+        else
+          errors.add(:advisor_2_name, "can't find advisor 2")
+        end
+      end
+    end
+  
     def check_change_advisor_2
       if self.advisor_2_name_changed?
+        self.proposal.update_column(:advisor_2_name, self.advisor_2_name)
         if self.advisor_2_id_changed?
-          self.proposal.update_attributes(:advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name)
+          self.proposal.update_column(:advisor_2_id, self.advisor_2_id)
+          increase_advisor_2
+          decrease_advisor_2
         end
+      end
+    end
+    
+    def increase_advisor_2
+      unless self.advisor_2_id.blank?
+        self.advisor_2.advisors_status.update_column(:coordinator, self.advisor_2.advisors_status.coordinator + 1)
+      end
+    end
+    
+    def decrease_advisor_2
+      final_project = FinalProject.find(self)
+      unless final_project.advisor_2_id.blank?
+        final_project.advisor_2.advisors_status.update_column(:coordinator, final_project.advisor_2.advisors_status.coordinator - 1)
       end
     end
     

@@ -13,7 +13,7 @@ class Examiner < ActiveRecord::Base
   default_scope where(:accepted => nil)
   scope :not_accepted_status, where(:accepted => nil)
   validates_presence_of :final_project_id, :on => :create
-  validate :unique_of_examiner
+  validate :unique_of_examiner, :on => :update
   
   attr_accessor :examiner_1_name, :examiner_2_name, :examiner_3_name, :pass, :revision_status
   attr_accessible :revision_status, :pass, :accepted, :examiner_1_name, :examiner_2_name, :examiner_3_name, :datetime, :examiner_1_id, :examiner_2_id, :examiner_3_id, :location, :note, :final_project_id, :finished, :revision, :revision_date
@@ -29,22 +29,22 @@ class Examiner < ActiveRecord::Base
   end
   
   def check_pass_status
-    if pass.present?
+    if self.pass.present?
       case pass
       when 'lulus'
-        finished = true
-        accepted = true
-        final_project.update_attributes(:finished => true)
+        self.finished = true
+        self.accepted = true
+        self.final_project.update_attributes(:finished => true)
       when 'tidak lulus'
-        finished = true
-        accepted = false
-        final_project.update_attributes(:progress => 0)
-        final_project.user.students_status.update_column(:status, 3)
+        self.finished = true
+        self.accepted = false
+        self.final_project.update_attributes(:progress => 0)
+        self.final_project.user.students_status.update_column(:status, 3)
       when 'lulus dengan revisi'
-        revision = true
-        finished = true
-        notifications.create(:sender_id => self.examiner_2_id, :recipient_id => self.final_project.user_id, :message => "Final Project anda dalam masa revisi yang ditentukan. Silahkan mengupload revisi tugas akhir")
-        final_project.user.students_status.update_column(:status, 5)
+        self.revision = true
+        self.finished = true
+        self.notifications.create(:sender_id => self.examiner_2_id, :recipient_id => self.final_project.user_id, :message => "Final Project anda dalam masa revisi yang ditentukan. Silahkan mengupload revisi tugas akhir")
+        self.final_project.user.students_status.update_column(:status, 5)
       end
     end
   end
