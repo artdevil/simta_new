@@ -43,6 +43,8 @@ SimtaNew::Application.routes.draw do
       get 'new_report'
       post 'create_report'
       put 'finished'
+      get 'show_history'
+      get 'activities'
     end
   end
   resources :todo_proposals do

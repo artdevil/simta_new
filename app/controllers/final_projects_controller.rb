@@ -18,6 +18,20 @@ class FinalProjectsController < ApplicationController
 #       render :edit
 #     end
 #   end
+
+  def show_history
+    @activities = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").page(params[:page]).per(20)
+    @activities_graph = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").group_by{|f| f.created_at.to_date}.map do |k,v|
+      {
+        :created_at => k.to_date,
+        :count => v.size
+      }
+    end
+  end
+  
+  def activities
+    @activities = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").page(params[:page]).per(20)
+  end
   
   def update_progress
     if @final_project.update_attributes(params[:final_project])

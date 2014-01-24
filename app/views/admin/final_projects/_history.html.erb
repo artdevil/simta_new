@@ -1,0 +1,11 @@
+<div class="in_panel_wrap">
+  <div class="paging_tab">
+    <%= paginate activities, :remote => true, :params => { :controller => 'admin/final_projects', :action => 'get_history', :id => final_project.id} %>
+  </div>
+  <div id="paging_body">
+    <%= render_activities(activities) %>
+  </div>
+  <div class="paging_tab">
+    <%= paginate activities, :remote => true, :params => { :controller => 'admin/final_projects', :action => 'get_history', :id => final_project.id} %>
+  </div>
+</div>

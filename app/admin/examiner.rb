@@ -1,4 +1,5 @@
 ActiveAdmin.register Examiner do
+  menu false
   index do
     column :final_project_title do |f|
       f.final_project.title

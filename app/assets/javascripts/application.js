@@ -42,4 +42,7 @@
 //= require rails.validations.simple_form
 //= require rails.validations.nested_form
 //= require jquery.treeview
+//= require raphael
+//= require morris
 //= require style
+//= require style_coffe

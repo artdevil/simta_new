@@ -1,7 +1,10 @@
 //= require active_admin/base
-//= require jquery_nested_form
 //= require jquery.datetimepicker
 //= require rails-timeago-all
+//= require jquery.timeago
+//= require raphael
+//= require morris
+//= require style_coffe
 //= require ckeditor/init
 //= require ckeditor/config
 
@@ -17,4 +20,8 @@ $(document).on('click','.user_find_ajax',function(){
 });
 $(document).on('click','.datetimepicker', function(){
   $('.datetimepicker').datetimepicker();
+});
+
+$(document).ready(function(){
+  $('.timeago').timeago();
 });

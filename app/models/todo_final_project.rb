@@ -2,6 +2,11 @@ class TodoFinalProject < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
   
+  # public activity
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }
+  tracked recipient: ->(controller, model) { model.final_project }
+  
   #relation
   belongs_to :final_project
   belongs_to :user

@@ -22,6 +22,8 @@
  *= require ace-responsive
  *= require ace-skins
  *= require jquery.treeview
+ *= require morris
+ *= require prettify
  *= require style
  *= require_self
  */

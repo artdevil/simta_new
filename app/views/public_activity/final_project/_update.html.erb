@@ -1,0 +1,37 @@
+<% if current_user %>
+  <div class="itemdiv dialogdiv">
+  	<div class="user">
+  		<%= image_tag activity.owner.avatar.thumb.url %>
+  	</div>
+
+  	<div class="body">
+  		<div class="time">
+  			<i class="icon-time"></i>
+  			<span class="timeago" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  		</div>
+
+  		<div class="name">
+        <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
+  		</div>
+  		<div class="text">Membuat final project dengan judul <%= link_to activity.trackable.title, (current_user.is_student? ? todo_final_projects_path : "/todo_final_projects/issue/#{activity.trackable.user.slug}")%></div>
+  	</div>
+  </div>
+<% elsif current_admin_user %>
+  <div class="itemdiv dialogdiv">
+  	<div class="user">
+  		<%= image_tag activity.owner.avatar.thumb.url %>
+  	</div>
+
+  	<div class="body">
+  		<div class="time">
+  			<i class="icon-time"></i>
+  			<span class="timeago" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  		</div>
+
+  		<div class="name">
+        <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
+  		</div>
+  		<div class="text">Membuat final project dengan judul <%#= link_to activity.trackable.title, (current_user.is_student? ? todo_final_projects_path : "/todo_final_projects/issue/#{activity.trackable.user.slug}")%></div>
+  	</div>
+  </div>
+<% end %>

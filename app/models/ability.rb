@@ -28,7 +28,7 @@ class Ability
         end
         
         # FINAL PROJECT
-        can [:show], FinalProject do |final_project|
+        can [:show, :show_history, :activities], FinalProject do |final_project|
           final_project.user == user
         end
         
@@ -77,7 +77,7 @@ class Ability
           final_project.advisor_1 == user
         end
         
-        can [:new_report, :create_report, :show], FinalProject do |final_project|
+        can [:new_report, :create_report, :show, :show_history, :activities], FinalProject do |final_project|
           final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user
         end
         

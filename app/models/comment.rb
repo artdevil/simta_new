@@ -1,4 +1,9 @@
 class Comment < ActiveRecord::Base
+  # public activity
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }
+  tracked recipient: ->(controller, model) { model.commentable.final_project if model.commentable.class.name == "TodoFinalProject" }
+  
   #relation
   belongs_to :user
   belongs_to :commentable, :polymorphic => true

@@ -6,6 +6,7 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Simta New"
+  config.allow_comments = false
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -177,6 +178,11 @@ ActiveAdmin.setup do |config|
         sites.add :label => "All", :url => '/admin/users?order=id_desc&page=1&scope=all', :priority => 0
         sites.add :label => "Advisor", :url => "/admin/users?order=id_desc&page=1&scope=advisor"
         sites.add :label => "Student", :url => "/admin/users?order=id_desc&page=1&scope=student"
+      end
+      menu.add :label => "FinalProjects" do |sites|
+        sites.add :label => "Final Projects", :url => '/admin/final_projects', :priority => 0
+        sites.add :label => "Todo Final Projects", :url => '/admin/todo_final_projects', :priority => 1
+        sites.add :label => "Examiners", :url => '/admin/examiners'
       end
     end
   end

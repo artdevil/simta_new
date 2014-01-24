@@ -1,6 +1,11 @@
 class FinalProject < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
+  # public activity
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }
+  tracked recipient: ->(controller, model) { model }
+  
   #relation
   belongs_to :user
   belongs_to :proposal
@@ -41,6 +46,10 @@ class FinalProject < ActiveRecord::Base
   
   def is_advisor_1?(user_id)
     self.advisor_1 == user_id
+  end
+  
+  def collection_advisor
+    [self.advisor_1, (self.advisor_2 unless self.advisor_2_id.nil?)]
   end
   
   private

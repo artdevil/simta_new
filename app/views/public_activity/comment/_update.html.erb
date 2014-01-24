@@ -1,0 +1,37 @@
+<% if current_user %>
+  <div class="itemdiv dialogdiv">
+  	<div class="user">
+  		<%= image_tag activity.owner.avatar.thumb.url %>
+  	</div>
+
+  	<div class="body">
+  		<div class="time">
+  			<i class="icon-time"></i>
+  			<span class="timeago blue" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  		</div>
+
+  		<div class="name">
+        <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
+  		</div>
+  		<div class="text">Mengubah komentar pada Todo <%= link_to activity.trackable.commentable.title, (current_user.is_student? ? "#{todo_final_project_path(activity.trackable.commentable)}#comment_#{activity.trackable_id}" : "/todo_final_projects/issue/#{activity.trackable.commentable.final_project.user.slug}/#{activity.trackable.commentable.slug}#comment_#{activity.trackable_id}")  %></div>
+  	</div>
+  </div>
+<% elsif current_admin_user %>
+  <div class="itemdiv dialogdiv">
+  	<div class="user">
+  		<%= image_tag activity.owner.avatar.thumb.url %>
+  	</div>
+
+  	<div class="body">
+  		<div class="time">
+  			<i class="icon-time"></i>
+  			<span class="timeago blue" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  		</div>
+
+  		<div class="name">
+        <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
+  		</div>
+  		<div class="text">Mengubah komentar pada Todo <%#= link_to activity.trackable.commentable.title, (current_user.is_student? ? "#{todo_final_project_path(activity.trackable.commentable)}#comment_#{activity.trackable_id}" : "/todo_final_projects/issue/#{activity.trackable.commentable.final_project.user.slug}/#{activity.trackable.commentable.slug}#comment_#{activity.trackable_id}")  %></div>
+  	</div>
+  </div>
+<% end %>

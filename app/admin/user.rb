@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
-  config.batch_actions = false
+  batch_action :destroy, false
+  batch_action :send_sms do |selection|
+    redirect_to send_sms_admin_users_path(:collection_selection => params[:collection_selection])
+  end
   #action item
   
   action_item :only => :index do
@@ -7,7 +10,7 @@ ActiveAdmin.register User do
   end
   
   action_item :only => :show do
-    link_to "Send SMS", send_sms_admin_user_path(user)
+    link_to "Send SMS", send_sms_admin_users_path(:contact_phone => user.phone)
   end
   
   action_item :only => :send_sms do
@@ -29,6 +32,7 @@ ActiveAdmin.register User do
   end
   
   index do
+    selectable_column
     column :username
     if params['scope'].blank?
       column :user_role
@@ -129,20 +133,20 @@ ActiveAdmin.register User do
   
   #action for response
   
-  member_action :send_sms, :method => :get do
-    @user = User.find(params[:id])
-    @send_sms = SendSms.new(:number => @user.phone)
+  collection_action :send_sms do
+    contact = params[:contact_phone] || params[:collection_selection]
+    @user = User.search_for_sms(contact).map(&:phone).reject(&:nil?)*","
+    @send_sms = SendSms.new(:all_number => @user)
   end
   
-  member_action :send_sms_action, :method => :post do
-    @user = User.find(params[:id])
+  collection_action :send_sms_action, :method => :post do
     @send_sms = SendSms.new(params[:send_sms])
-    if @send_sms.save
-      flash.now[:success] = "SMS has been sent"
-      redirect_to admin_user_path(@user)
+    if @send_sms.save_all
+      flash[:notice] = "SMS has been sent"
+      redirect_to admin_users_path
     else
-      flash.now[:error] = "SMS can't sent"
-      render :send_sms, :id => @user.id
+      flash[:error] = "SMS can't sent"
+      render :send_sms
     end
   end
   

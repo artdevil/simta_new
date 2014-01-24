@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include PublicActivity::StoreController
   protect_from_forgery
   
   rescue_from CanCan::AccessDenied do |exception|
@@ -16,6 +17,7 @@ class ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Ability.new(current_user)
   end
+  hide_action :current_user
   
   def authorize
     if current_user.is_advisor? 

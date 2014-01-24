@@ -51,6 +51,9 @@ class User < ActiveRecord::Base
   # active admin
   scope :final_project, joins(:students_status).where(:students_status => { :status => 3})
   
+  # SMS
+  scope :search_for_sms, lambda{|users| where("id IN (?)", users)}
+  
   #validates
   validates_presence_of :username
   validates :keyid, :presence => true, :uniqueness => true

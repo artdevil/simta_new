@@ -1,4 +1,9 @@
 class ReportFinalProject < ActiveRecord::Base
+  # public activity
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { (controller && controller.current_user) || model.user }
+  tracked recipient: ->(controller, model) { model.final_project }
+  
   belongs_to :final_project
   belongs_to :user
   attr_accessible :final_project_id, :note, :user_id
@@ -8,8 +13,10 @@ class ReportFinalProject < ActiveRecord::Base
   scope :advisor_progress, lambda{|user| where{(user_id == user)}}
   
   def check_minimal_time
-    if DateTime.now <= last_report_final(self).created_at + AdminSetting.time.days
-      errors.add(:note, "Waktu Minimal Bimbingan Tidak Memenuhi (minimal #{AdminSetting.time.to_s} hari)")
+    if last_report_final(self).present?
+      if DateTime.now <= last_report_final(self).created_at + AdminSetting.time.days
+        errors.add(:note, "Waktu Minimal Bimbingan Tidak Memenuhi (minimal #{AdminSetting.time.to_s} hari)")
+      end
     end
   end
   

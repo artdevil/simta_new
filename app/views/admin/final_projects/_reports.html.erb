@@ -1,0 +1,37 @@
+<div class="right">
+  <div class="action_items">
+    <span class="action_item"><%= link_to 'New Report', report_final_project_admin_final_project_path(final_project) %></span>
+  </div>
+</div>
+<div class="in_panel_wrap">
+  <div class="in_panel">
+    <h4>Pembimbing 1</h4>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Note</th>
+      </tr>
+  		<% reports.advisor_progress(final_project.advisor_1_id).each_with_index do |f, index| %>
+      <tr>
+      	<td><%= f.created_at.strftime('%d %B %Y') %></td>
+        <td><%= raw f.note %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="in_panel">
+    <h4>Pembimbing 2</h4>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Note</th>
+      </tr>
+  		<% reports.advisor_progress(final_project.advisor_2_id).each_with_index do |f, index| %>
+      <tr>
+      	<td><%= f.created_at.strftime('%d %B %Y') %></td>
+        <td><%= raw f.note %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
