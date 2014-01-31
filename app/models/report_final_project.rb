@@ -13,8 +13,9 @@ class ReportFinalProject < ActiveRecord::Base
   scope :advisor_progress, lambda{|user| where{(user_id == user)}}
   
   def check_minimal_time
-    if last_report_final(self).present?
-      if DateTime.now <= last_report_final(self).created_at + AdminSetting.time.days
+    last_report = last_report_final(self)
+    if last_report.present?
+      if DateTime.now <= last_report.created_at + AdminSetting.time.days
         errors.add(:note, "Waktu Minimal Bimbingan Tidak Memenuhi (minimal #{AdminSetting.time.to_s} hari)")
       end
     end

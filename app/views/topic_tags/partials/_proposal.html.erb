@@ -16,6 +16,7 @@
       <%= f.input :advisor_1_id, :as => :hidden %>
       <%= f.input :advisor_2_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
       <%= f.input :topic_id, :as => :hidden %>
+      <%= f.input :field, :as => :select, :collection => AdvisorsStatus.skill_all %>
       <%= hidden_field_tag :topic_tag_id, @topic_tag.id %>
     </div>
   </div><!-- end row -->

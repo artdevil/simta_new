@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140119131851) do
+ActiveRecord::Schema.define(:version => 20140128030729) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -70,6 +70,17 @@ ActiveRecord::Schema.define(:version => 20140119131851) do
 
   add_index "admin_users", ["keyid"], :name => "index_admin_users_on_keyid", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "advisors_schedules", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "monday"
+    t.string   "tuesday"
+    t.string   "wednesday"
+    t.string   "thursday"
+    t.string   "friday"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "advisors_statuses", :force => true do |t|
     t.integer  "user_id",                        :null => false
@@ -140,11 +151,12 @@ ActiveRecord::Schema.define(:version => 20140119131851) do
     t.integer  "examiner_2_id"
     t.integer  "examiner_3_id"
     t.boolean  "accepted"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.boolean  "finished"
     t.boolean  "revision"
     t.date     "revision_date"
+    t.boolean  "can_session",      :default => false
   end
 
   create_table "faculties", :force => true do |t|
@@ -163,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20140119131851) do
     t.text     "description"
     t.integer  "progress",                        :default => 0,     :null => false
     t.boolean  "finished",                        :default => false, :null => false
+    t.string   "field"
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
     t.string   "slug"
@@ -216,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20140119131851) do
     t.string   "events"
     t.string   "proposal"
     t.string   "decree"
+    t.string   "field"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.string   "slug"

@@ -4,7 +4,6 @@
 //= require jquery.timeago
 //= require raphael
 //= require morris
-//= require style_coffe
 //= require ckeditor/init
 //= require ckeditor/config
 

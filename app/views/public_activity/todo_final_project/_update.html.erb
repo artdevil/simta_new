@@ -7,13 +7,13 @@
   	<div class="body">
   		<div class="time">
   			<i class="icon-time"></i>
-  			<span class="timeago" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  			<span class="timeago green" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
   		</div>
 
   		<div class="name">
         <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
   		</div>
-  		<div class="text">Membuat final project dengan judul <%= link_to activity.trackable.title, (current_user.is_student? ? todo_final_projects_path : "/todo_final_projects/issue/#{activity.trackable.user.slug}")%></div>
+  		<div class="text">Mengupdate Todo <%= link_to activity.trackable.title, (current_user.is_student? ? todo_final_project_path(activity.trackable) : "/todo_final_projects/issue/#{activity.trackable.final_project.user.slug}/#{activity.trackable.slug}") %></div>
   	</div>
   </div>
 <% elsif current_admin_user %>
@@ -25,13 +25,13 @@
   	<div class="body">
   		<div class="time">
   			<i class="icon-time"></i>
-  			<span class="timeago" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  			<span class="timeago green" title="<%= activity.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
   		</div>
 
   		<div class="name">
         <%= link_to activity.owner.username, user_profile_path(activity.owner) %>
   		</div>
-  		<div class="text">Membuat final project dengan judul <%= link_to activity.trackable.title, admin_final_project_path(activity.recipient) %></div>
+  		<div class="text">Mengupdate Todo <%= link_to activity.trackable.title,admin_todo_final_project_path(activity.trackable) %></div>
   	</div>
   </div>
 <% end %>

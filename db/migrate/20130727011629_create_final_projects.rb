@@ -10,6 +10,7 @@ class CreateFinalProjects < ActiveRecord::Migration
       t.text :description
       t.integer :progress, :null => false, :default => 0
       t.boolean :finished, :null => false, :default => false
+      t.string :field
       t.timestamps
     end
   end

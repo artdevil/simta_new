@@ -119,6 +119,7 @@ class TodoFinalProjectsController < ApplicationController
   def finished
     @todo_final_project = @final_project.todo_final_projects.find(params[:id])
     if @todo_final_project.update_column(:status, true)
+      @todo_final_project.create_activity key: 'todo_final_project.close', :owner => current_user, :recipient => @todo_final_project.final_project
       render :js => "$('#issue_open_#{@todo_final_project.id}').remove();$('#open_count').html('#{@final_project.todo_final_projects.open_issue.size}');$('#close_count').html('#{@final_project.todo_final_projects.close_issue.size}')"
     end
   end

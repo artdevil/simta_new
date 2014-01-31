@@ -3,7 +3,7 @@ class FinalProject < ActiveRecord::Base
   friendly_id :title, use: :slugged
   # public activity
   include PublicActivity::Model
-  tracked owner: ->(controller, model) { controller && controller.current_user }
+  tracked owner: ->(controller, model) { controller && controller.current_user || model.advisor_1}
   tracked recipient: ->(controller, model) { model }
   
   #relation
@@ -16,7 +16,7 @@ class FinalProject < ActiveRecord::Base
   has_many :report_final_projects, :dependent => :destroy
   has_many :examiners, :dependent => :destroy
   
-  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project, :field
   
   #upload image
   mount_uploader :document_final_project, DocumentFinalProjectUploader
@@ -24,7 +24,7 @@ class FinalProject < ActiveRecord::Base
   
   #validation
   validate :check_user_status, :on => :create
-  validates_presence_of :advisor_1_id, :description, :proposal_id, :title, :user_id
+  validates_presence_of :advisor_1_id, :description, :proposal_id, :title, :user_id, :field
   validate :cek_advisor_2_quota, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
   validate :check_advisor_report, :on => :update, :if => Proc.new{ self.progress == 100 }
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"

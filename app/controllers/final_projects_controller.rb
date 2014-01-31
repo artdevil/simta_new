@@ -18,6 +18,16 @@ class FinalProjectsController < ApplicationController
 #       render :edit
 #     end
 #   end
+  
+  def update_document
+    if @final_project.update_attributes(params[:final_project])
+      form = render_to_string(:partial => "todo_proposals/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
+      render :js => "$('#document_final_project').html(#{form});"
+    else
+      form = render_to_string(:partial => "todo_proposals/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
+      render :js => "$('#document_final_project').html(#{form});"
+    end
+  end
 
   def show_history
     @activities = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").page(params[:page]).per(20)
@@ -35,6 +45,9 @@ class FinalProjectsController < ApplicationController
   
   def update_progress
     if @final_project.update_attributes(params[:final_project])
+      if @final_project.progress == 100
+        @final_project.create_activity key: 'final_project.has_completed', :owner => current_user, :recipient => @final_project
+      end
       form = render_to_string(:partial => "todo_final_projects/partials/update_progress_form", :locals => {:final_project => @final_project, :error_report => ""}).to_json
       render :js => "$('#progress_bar').attr('data-percent','#{@final_project.progress}%');$('#progress_bar_count').css('width','#{@final_project.progress}%');$('#update_progress_form').html(#{form});"
     else

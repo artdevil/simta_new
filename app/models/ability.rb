@@ -28,7 +28,7 @@ class Ability
         end
         
         # FINAL PROJECT
-        can [:show, :show_history, :activities], FinalProject do |final_project|
+        can [:show, :show_history, :activities, :update_document], FinalProject do |final_project|
           final_project.user == user
         end
         

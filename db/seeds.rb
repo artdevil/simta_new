@@ -33,9 +33,10 @@ end
 #create users
 puts 'creating users'
 users = [
-  {:username => "adhiguna utama sabril", :keyid => "111128355", :password => "tes123456", :faculty_id => 2},
-  {:username => "ana riana", :keyid => "111128376", :password => "tes123456", :faculty_id => 2},
+  {:username => "Adhiguna Utama Sabril", :keyid => "111128355", :password => "tes123456", :faculty_id => 2},
+  {:username => "Ana Riana Januardini", :keyid => "111128376", :password => "tes123456", :faculty_id => 2},
   {:username => "Bambang Joko Widodo", :keyid => "111128383", :password => "tes123456", :faculty_id => 2},
+  {:username => "Al Bukhari Pahlevi", :keyid => "111128369", :password => "tes123456", :faculty_id => 2},
   {:username => "Mita Mushliha", :keyid => "111128386", :password => "tes123456", :faculty_id => 2},
   {:username => "Rifky Sintami", :keyid => "111128365", :password => "tes123456", :faculty_id => 2},
   {:username => "Santy Fauziyah", :keyid => "111128370", :password => "tes123456", :faculty_id => 2},
@@ -64,10 +65,12 @@ users.each do |f|
   User.find_or_initialize_by_keyid(f[:keyid]).tap do |t|
     t.username = f[:username]
     t.password = f[:password]
+    t.password_confirmation = f[:password]
     t.user_role_id = f[:user_role_id] || 1
     t.faculty_id = 2
-    t.save!
+    t.save
   end
+  # User.create(:username => f[:username], :password => f[:password], :password_confirmation => f[:password], :user_role_id => (f[:user_role_id] || 1), :faculty_id => 2)
 end
 
 puts 'creating topic'

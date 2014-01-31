@@ -7,15 +7,16 @@ class Proposal < ActiveRecord::Base
   has_one :final_project, :dependent => :destroy
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
-  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :decree, :finished
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :decree, :finished, :field
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
   validate :cek_advisor_2_quota, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
   validate :protected_for_update_if_finished, :on => :update
-  validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description
+  validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description, :field
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
   validate :cek_user_documents, :if => :finished?
+  validate :cek_user_account, :if => :finished?
   # validates_presence_of :exam, :events, :proposal, :decree, :on => :update, :if => :complete?
   # validates_presence_of :finished, :unless: Proc.new { |a| a.exam.blank? and a.events.blank? and a.proposal.blank? and a.progress < 100}
   
@@ -56,6 +57,12 @@ class Proposal < ActiveRecord::Base
   end
   
   private
+    def cek_user_account
+      unless self.user.valid?
+        errors.add(:progress, "Biodata Mahasiswa bimbingan belum lengkap.")
+      end
+    end
+    
     def check_change_advisor_2
       if self.advisor_2_name_changed?
         if self.advisor_2_id_changed?
@@ -170,7 +177,7 @@ class Proposal < ActiveRecord::Base
     end
     
     def create_final_project
-      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name, :proposal_id => self.id, :title => self.title, :description => self.description)
+      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name, :proposal_id => self.id, :title => self.title, :description => self.description, :field => self.field)
       if final_project.save
         notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Pengerjaan proposal telah selesai silahkan mengerjakan tugas akhir")
         notification.save

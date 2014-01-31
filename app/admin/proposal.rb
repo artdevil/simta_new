@@ -7,7 +7,7 @@ ActiveAdmin.register Proposal do
       f.advisor_1.username
     end
     column :advisor_2 do |f|
-      f.advisor_2.username
+      f.advisor_2.present? ? f.advisor_2.username : f.advisor_2_name
     end
     column :progress do |f|
       "#{f.progress}%"

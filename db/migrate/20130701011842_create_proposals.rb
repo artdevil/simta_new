@@ -14,6 +14,7 @@ class CreateProposals < ActiveRecord::Migration
       t.string :events
       t.string :proposal
       t.string :decree
+      t.string :field
       t.timestamps
     end
   end

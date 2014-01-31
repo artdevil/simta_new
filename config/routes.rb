@@ -45,6 +45,7 @@ SimtaNew::Application.routes.draw do
       put 'finished'
       get 'show_history'
       get 'activities'
+      put 'update_document'
     end
   end
   resources :todo_proposals do

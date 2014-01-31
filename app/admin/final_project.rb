@@ -33,7 +33,7 @@ ActiveAdmin.register FinalProject do
   form do |f|
     f.inputs "#{f.object.title}" do
       f.input :title
-      f.input :advisor_2_name, :as => :string, :input_html => {:class => "user_find_ajax", :data => {'autocomplete-source' => search_admin_examiner_path(f.object), :input => 'final_project_advisor_2_id'}}
+      f.input :advisor_2_name, :as => :string, :input_html => {:class => "user_find_ajax", :data => {'autocomplete-source' => search_only_advisor_admin_user_path(f.object.advisor_1_id), :input => 'final_project_advisor_2_id'}}
       f.input :advisor_2_id, :as => :hidden
       f.input :description, :as => :ckeditor, :input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}}
       f.input :progress

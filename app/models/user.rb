@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :advisor_2_final_projects, :class_name => "FinalProject", :foreign_key => "advisor_2_id"
   has_one :students_status, :dependent => :destroy
   has_one :advisors_status, :dependent => :destroy
+  has_one :advisors_schedule, :dependent => :destroy
   has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
   accepts_nested_attributes_for :students_status, :allow_destroy => true
   has_many :todo_proposals, :dependent => :destroy
@@ -60,11 +61,12 @@ class User < ActiveRecord::Base
   #validate key id with different role
   validates :keyid, :format => {:with => /\A[0-9]{9}/, message: "invalid key id"}, :if => :is_student?
   validates :keyid, :format => {:with => /\A[0-9]{8}-[0-9]{1}/, message: "invalid key id"}, :unless => :is_student?
-  
   validates :password, :confirmation => true, :presence => true,:on => :create, :if => :birtday_need?
   validates :birthday, :presence => true, :format => {:with => /\A[0-9]{2}-[0-9]{2}-[0-9]{4}/, message: "invalid birthday"}, :unless => :birtday_need?
   validates :faculty_id, :presence => true
-  validates :phone, :allow_blank => true, :numericality => {:only_integer => true}, :length => {:minimum => 10, :maximum => 12}
+  validates :address, :presence => true, :on => :update
+  validates :phone, :presence => true, :on => :update
+  validates_format_of :phone, :with => /0[0-9]{10,12}\z/, :allow_blank => true
   
   #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }
@@ -77,6 +79,7 @@ class User < ActiveRecord::Base
   
   def build_advisors_status
     AdvisorsStatus.create(:user_id => self.id)
+    AdvisorsSchedule.create(:user_id => self.id)
   end
   
   def is_student?
@@ -85,6 +88,10 @@ class User < ActiveRecord::Base
   
   def is_advisor?
     user_role_id == 2
+  end
+  
+  def is_profile_complete?
+    user.valid?
   end
     
   protected

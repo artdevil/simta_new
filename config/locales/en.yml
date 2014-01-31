@@ -44,7 +44,7 @@ en:
       failed: "You Final Project Can't updated"
     delete:
       success: "Final Project has been removed"
-    completed: "Final Project anda telah selesai. Silahkan mengajukan diri untuk sidang TA"
+    completed: "Final Project anda telah selesai. Silahkan mengupload buku TA dan mengajukan diri untuk sidang TA"
     finished: 
       success: "Final Project is finished."
       failed: "Final Project can't be finished. Please check it again"

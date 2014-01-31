@@ -6,15 +6,19 @@ ActiveAdmin.register User do
   #action item
   
   action_item :only => :index do
-    link_to "Import Student", import_student_admin_users_path
+    if params['scope'] == 'student'
+      link_to "Import Student", import_student_admin_users_path
+    end
+  end
+  
+  action_item :only => :index do
+    if params['scope'] == 'advisor'
+      link_to "Import Schedule", import_schedule_admin_users_path
+    end
   end
   
   action_item :only => :show do
     link_to "Send SMS", send_sms_admin_users_path(:contact_phone => user.phone)
-  end
-  
-  action_item :only => :send_sms do
-    
   end
   
   scope :all
@@ -127,6 +131,21 @@ ActiveAdmin.register User do
   
   #action for response
   
+  collection_action :import_schedule, :method => :get do
+    @import_schedule = ImportSchedule.new
+  end
+  
+  collection_action :create_import_schedule, :method => :post do 
+    @import_schedule = ImportSchedule.new(params[:import_schedule])
+    if @import_schedule.save
+      flash[:notice] = "Schedule Import has been finished"
+      redirect_to admin_users_path
+    else
+      flash[:error] = "Schedule Import failure"
+      render :import_schedule
+    end
+  end
+  
   collection_action :import_student, :method => :get do
     @import_student = ImportStudent.new
   end
@@ -159,7 +178,12 @@ ActiveAdmin.register User do
       flash.now[:error] = "Student Import failure"
       render :import_student
     end
-  end 
+  end
+  
+  member_action :search_only_advisor, :method => :get do
+    @user = User.search_lecture(params[:term], params[:id])
+    @user = @user.reject{|x| x.advisors_status.try(:coordinator) > x.advisors_status.try(:max_coordinator) }
+  end
   
   controller do
     def scoped_collection

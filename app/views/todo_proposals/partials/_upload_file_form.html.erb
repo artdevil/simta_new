@@ -2,10 +2,10 @@
   <div class="row-fluid">
     <div class="span12">
       <h3>Upload File</h3>
-      <p>lembar pemeriksa : <%= link_to File.basename(proposal.exam.path), proposal.exam.url unless proposal.exam.blank? %></p>
-      <p>lembar berita acara : <%= link_to File.basename(proposal.events.path), proposal.events.url unless proposal.events.blank? %></p>
-      <p>Proposal : <%= link_to File.basename(proposal.proposal.path), proposal.proposal.url unless proposal.proposal.blank? %></p>
-      <p>SK : <%= link_to File.basename(proposal.decree.path), proposal.decree.url unless proposal.decree.blank? %></p>
+      <p><%= link_to 'lembar pemeriksa', proposal.exam.url unless proposal.exam.blank? %></p>
+      <p><%= link_to 'lembar berita acara', proposal.events.url unless proposal.events.blank? %></p>
+      <p><%= link_to 'Proposal', proposal.proposal.url unless proposal.proposal.blank? %></p>
+      <p><%= link_to 'SK', proposal.decree.url unless proposal.decree.blank? %></p>
     </div>
   </div>
 <% else %>

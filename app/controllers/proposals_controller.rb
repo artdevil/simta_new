@@ -60,7 +60,11 @@ class ProposalsController < ApplicationController
     if @proposal.update_attributes(:finished => true)
       redirect_to dashboards_path, :notice => "#{I18n.t('proposal.finished.success')}"
     else
-      redirect_to "/todo_proposals/issue/#{@proposal.user.slug}", :alert => "#{I18n.t('proposal.finished.failed')}"
+      @todo_proposals_open = @proposal.todo_proposals.includes(:user).includes(:proposal).open_issue
+      @todo_proposals_close = @proposal.todo_proposals.includes(:user).includes(:proposal).close_issue
+      @proposal.finished = false
+      flash[:alert] = "#{I18n.t('proposal.finished.failed')}"
+      render "/todo_proposals/issue"
     end
   end
   

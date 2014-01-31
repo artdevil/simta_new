@@ -45,4 +45,3 @@
 //= require raphael
 //= require morris
 //= require style
-//= require style_coffe
