@@ -31,7 +31,7 @@ class FinalProject < ActiveRecord::Base
   
   #callback
   after_update :update_user_status_to_finished, :if => Proc.new{ self.finished }
-  after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished }
+  after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished and !self.examiners.not_accepted_status.present?}
   before_update :check_change_advisor_2
   
   scope :advisor_student, lambda{|f| where("finished = false and (advisor_1_id = ? or advisor_2_id = ? )",f.id,f.id)}

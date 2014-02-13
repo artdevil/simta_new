@@ -6,7 +6,7 @@ class TopicTag < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   
-  attr_accessible :status, :topic_id, :user_id, :title_recommended, :description_recommended, :advisor_id
+  attr_accessible :status, :topic_id, :user_id, :title_recommended, :description_recommended, :advisor_id, :attachments_attributes
   
   #validate
   validates_presence_of :topic_id, :title_recommended, :description_recommended

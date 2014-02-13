@@ -43,11 +43,14 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
+  scope :lecture, where(:user_role_id => 2)
   scope :search_lecture, lambda{|user, current_user| where{(user_role_id == 2) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
   scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
   scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
   scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
   scope :search_examiner, lambda{|user, users| where('(username like ? or keyid like ? ) and user_role_id = 2 and id not in (?)', "%#{user}%","%#{user}%", users)}
+  scope :search_examiner_with_skill, lambda{|skill, users, day, size| joins(:advisors_status, :advisors_schedule).where("users.id not in (?) and advisors_statuses.skills like ? and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0", users, "%#{skill}%", "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%").sample(size)}
+  scope :search_examiner_without_skill, lambda{|users, day, size| joins(:advisors_status,:advisors_schedule).where("users.id not in (?)  and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0", users, "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%").sample(size)}
   
   # active admin
   scope :final_project, joins(:students_status).where(:students_status => { :status => 3})
@@ -88,6 +91,14 @@ class User < ActiveRecord::Base
   
   def is_advisor?
     user_role_id == 2
+  end
+  
+  def is_admin?
+    user_role_id == 3
+  end
+  
+  def is_kaprodi?
+    user_role_id == 4
   end
   
   def is_profile_complete?

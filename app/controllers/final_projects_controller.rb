@@ -21,10 +21,10 @@ class FinalProjectsController < ApplicationController
   
   def update_document
     if @final_project.update_attributes(params[:final_project])
-      form = render_to_string(:partial => "todo_proposals/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
+      form = render_to_string(:partial => "todo_final_projects/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
       render :js => "$('#document_final_project').html(#{form});"
     else
-      form = render_to_string(:partial => "todo_proposals/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
+      form = render_to_string(:partial => "todo_final_projects/partials/upload_document_final_project_form", :locals => {:final_project => @final_project}).to_json
       render :js => "$('#document_final_project').html(#{form});"
     end
   end

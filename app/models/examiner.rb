@@ -10,14 +10,16 @@ class Examiner < ActiveRecord::Base
   #penguji 3
   belongs_to :examiner_3, :class_name => "User", :foreign_key => "examiner_3_id"
   
-  default_scope where(:accepted => nil)
+  default_scope where(:accepted => nil, :finished => nil)
   scope :not_accepted_status, where(:accepted => nil)
+  scope :can_go_session, where(:can_session => true)
   validates_presence_of :final_project_id, :on => :create
-  validate :unique_of_examiner, :on => :update
+  validate :unique_of_examiner, :on => :update, :if => Proc.new{ examiner_1_id or examiner_2_id or examiner_3_id }
   
   attr_accessor :examiner_1_name, :examiner_2_name, :examiner_3_name, :pass, :revision_status
-  attr_accessible :revision_status, :pass, :accepted, :examiner_1_name, :examiner_2_name, :examiner_3_name, :datetime, :examiner_1_id, :examiner_2_id, :examiner_3_id, :location, :note, :final_project_id, :finished, :revision, :revision_date
+  attr_accessible :revision_status, :pass, :accepted, :examiner_1_name, :examiner_2_name, :examiner_3_name, :datetime, :examiner_1_id, :examiner_2_id, :examiner_3_id, :location, :note, :final_project_id, :finished, :revision, :revision_date, :can_session
   validate :check_revision_date
+  validate :check_book_final_project, :on => :update, :if => Proc.new{ can_session }
   
   before_update :check_pass_status
   before_update :check_revision_status
@@ -71,6 +73,38 @@ class Examiner < ActiveRecord::Base
     datetime < DateTime.now + 2.hours
   end
   
+  def status_examiner
+    if !can_session and finished.nil? and accepted.nil?
+      "Periksa berkas sidang"
+    end
+  end
+  
+  def self.search_random_schedule
+    AdvisorsStatus.update_all(:quota_examiner => 5)
+    Examiner.can_go_session.map do |exam|
+      {"mahasiswa" => exam.final_project.user.username, "pembimbing" => exam.search_advisor, "penguji" => exam.search_examiner_with_skill}
+    end
+  end
+  
+  def search_advisor
+    [final_project.advisor_1.username, (final_project.advisor_2.present? ? final_project.advisor_2.username : final_project.advisor_2_name)]
+  end
+  
+  def search_examiner_with_skill
+    dont_include = [final_project.advisor_1_id, (final_project.advisor_2.present? ? final_project.advisor_2_id : 0)]
+    first_level = User.search_examiner_with_skill(final_project.field, dont_include, self, 3)
+    first_level.map{|f| f.advisors_status.decrement!(:quota_examiner) }
+    if first_level.length == 3
+      return first_level.collect(&:username)
+    else
+      length_first_level = first_level.length
+      dont_include + first_level.map(&:id)
+      second_level = User.search_examiner_without_skill(dont_include, self, 3-length_first_level)
+      second_level.map{|f| f.advisors_status.decrement!(:quota_examiner) }
+      return first_level.collect(&:username) + second_level.collect(&:username)
+    end
+  end
+  
   protected
     def unique_of_examiner
       examiners = [self.examiner_1_id, self.examiner_2_id, self.examiner_3_id]
@@ -80,4 +114,11 @@ class Examiner < ActiveRecord::Base
         errors.add(:examiner_3_name, "Pemeriksa tidak boleh sama")
       end
     end
+    
+    def check_book_final_project
+      unless final_project.document_final_project.present?
+        errors.add(:base, "Buku tugas akhir belum di upload")
+        can_session = false
+      end
+    end 
 end

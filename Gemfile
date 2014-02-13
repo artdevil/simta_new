@@ -30,6 +30,8 @@ gem "roo", "~> 1.12.2"
 gem "sanitize"
 gem 'rails-timeago', '~> 2.0'
 gem 'public_activity'
+gem 'chronic'
+gem 'prawn'
 
 
 # Gems used only for assets and not required
@@ -58,6 +60,7 @@ group :development do
   gem "binding_of_caller"
   gem 'rack-mini-profiler'
   gem 'quiet_assets'
+  gem "rails-erd"
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -18,7 +18,12 @@ $(document).on('click','.user_find_ajax',function(){
   });
 });
 $(document).on('click','.datetimepicker', function(){
-  $('.datetimepicker').datetimepicker();
+  $('.datetimepicker').datetimepicker({
+    minDate:'-1970/01/01',
+    allowTimes:[
+      '08:30', '10:30', '12:30', '14:30', '16.30'
+    ]
+  });
 });
 
 $(document).ready(function(){

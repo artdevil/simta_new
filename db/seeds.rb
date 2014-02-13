@@ -6,23 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#create admin roles
-puts 'creating admin roles'
-role_admins = [
-  {:name => "kaprodi"},
-  {:name => "admin"}
-]
-role_admins.each do |f|
-  UserAdminRole.find_or_initialize_by_name(f[:name]).tap do |t|
-    t.save!
-  end
-end
-
 #create user role
 puts 'creating user roles'
 role_users = [
   {:name => "student"},
-  {:name => "lecture"}
+  {:name => "lecture"},
+  {:name => "admin"},
+  {:name => "kaprodi"}
 ]
 role_users.each do |f|
   UserRole.find_or_initialize_by_name(f[:name]).tap do |t|
@@ -59,7 +49,9 @@ users = [
   {:username => "Rita Magdalena,Ir,MT.", :keyid => "99640168-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Tengku A. Riza, ST., MT.", :keyid => "10790594-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Denny Darlis, S.Si., M.T", :keyid => "10770726-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:username => "Ekki Kurniawan, ST., MSc.", :keyid => "10690733-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2}
+  {:username => "Ekki Kurniawan, ST., MSc.", :keyid => "10690733-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => 'mohammad ramdhani',:keyid => "02730260-1", :password => 'tes123456', :user_role_id => 4, :faculty_id => 2},
+  {:username => 'admin',:keyid => "02730261-1", :password => 'tes123456', :user_role_id => 3, :faculty_id => 2},
 ]
 users.each do |f|
   User.find_or_initialize_by_keyid(f[:keyid]).tap do |t|

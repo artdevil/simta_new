@@ -23,7 +23,7 @@ class ImportSchedule
       else
         imported_schedules.each_with_index do |schedule, index|
           unless schedule.present?
-            errors.add :base, "Row #{index+1} Tidak bisa terbaca"
+            errors.add :base, "Row #{index+3} Tidak bisa terbaca"
           end
         end
         false

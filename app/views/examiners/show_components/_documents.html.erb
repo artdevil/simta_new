@@ -18,21 +18,15 @@
   			<div class="widget-main">
           <dl>
             <% if @examiner.final_project.document_revision_final_project.present? %>
-              <dt>Buku Revisi Tugas Akhir : </dt>
-              <dd><%= link_to File.basename(@examiner.final_project.document_revision_final_project.path), @examiner.final_project.document_revision_final_project.url %></dd>
+              <dd><%= link_to "Buku Revisi Tugas Akhir", @examiner.final_project.document_revision_final_project.url, :target => "_BLANK" %></dd>
             <% end %>
             <% if @examiner.final_project.document_final_project.present? %>
-              <dt>Buku Tugas Akhir : </dt>
-              <dd><%= link_to File.basename(@examiner.final_project.document_final_project.path), @examiner.final_project.document_final_project.url %></dd>
+              <dd><%= link_to "Buku Tugas Akhir", @examiner.final_project.document_final_project.url, :target => "_BLANK" %></dd>
             <% end %>
-            <dt>Lembar Pemeriksa : </dt>
-            <dd><%= link_to File.basename(@examiner.proposal.exam.path), @examiner.proposal.exam.url %></dd>
-            <dt>Berita Acara : </dt>
-            <dd><%= link_to File.basename(@examiner.proposal.events.path), @examiner.proposal.events.url %></dd>
-            <dt>Proposal : </dt>
-            <dd><%= link_to File.basename(@examiner.proposal.proposal.path), @examiner.proposal.proposal.url %></dd>
-            <dt>SK : </dt>
-            <dd><%= link_to File.basename(@examiner.proposal.decree.path), @examiner.proposal.decree.url %></dd>
+            <dd><%= link_to "Lembar Pemeriksa", @examiner.proposal.exam.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Lembar Berita Acara", @examiner.proposal.events.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Proposal", @examiner.proposal.proposal.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Lembar SK", @examiner.proposal.decree.url, :target => "_BLANK" %></dd>
           </dl>
   			</div>
   		</div>

@@ -15,8 +15,9 @@ class ReportFinalProject < ActiveRecord::Base
   def check_minimal_time
     last_report = last_report_final(self)
     if last_report.present?
-      if DateTime.now <= last_report.created_at + AdminSetting.time.days
-        errors.add(:note, "Waktu Minimal Bimbingan Tidak Memenuhi (minimal #{AdminSetting.time.to_s} hari)")
+      timing = AdminSetting.time(self.final_project.user.faculty)
+      if DateTime.now <= last_report.created_at + timing.days
+        errors.add(:note, "Waktu Minimal Bimbingan Tidak Memenuhi (minimal #{timing.to_s} hari)")
       end
     end
   end

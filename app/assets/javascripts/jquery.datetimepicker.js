@@ -45,7 +45,7 @@
 		format:'Y/m/d H:i',
 		formatTime:'H:i',
 		formatDate:'Y/m/d',
-		step:60,
+		step:30,
 		closeOnDateSelect:0,
 		closeOnWithoutClick:true,
 		timepicker:true,

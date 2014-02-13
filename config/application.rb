@@ -4,6 +4,7 @@ require 'csv'
 require 'iconv'
 require 'rails/all'
 require 'sanitize'
+require 'chronic'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line

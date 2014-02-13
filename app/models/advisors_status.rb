@@ -5,7 +5,7 @@ class AdvisorsStatus < ActiveRecord::Base
   validate :check_user_status
   
   def self.skill_all
-    ['Jaringan', 'Transmisi', 'Pensinyalan', 'Mikro', 'Web']
+    ['Jaringan', 'Transmisi', 'Pensinyalan', 'Mikro', 'Pemrograman']
   end
   
   private
