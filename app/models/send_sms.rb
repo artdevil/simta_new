@@ -4,6 +4,7 @@ class SendSms
   include ActiveModel::Conversion
   
   attr_accessor :number, :message, :all_number, :from_form
+  
   validates :message, :presence => true
   validates :number, :presence => true, :unless => :is_from_form?
   validates :all_number, :presence => true, :if => :is_from_form?

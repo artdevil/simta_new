@@ -2,6 +2,10 @@ class ProposalsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   
+  def index
+    
+  end
+  
   def create
     @proposal = current_user.advisor_1_proposals.new(params[:proposal])
     if @proposal.save

@@ -41,6 +41,55 @@
 			  <i class="icon-dashboard"></i><span>Dashboard</span>
       <% end %>
 		</li>
+    <% if can? :index, User %>
+  		<li class="<%= 'active' if controller_name == 'users' %>">
+  			<a href="#" class="dropdown-toggle">
+  				<i class="icon-edit"></i>
+  				<span>User</span>
+
+  				<b class="arrow icon-angle-down"></b>
+  			</a>
+
+  			<ul class="submenu">
+  				<li class="<%= 'active' if action_name == 'advisors' %>">
+  					<%= link_to advisors_users_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Dosen
+            <% end %>
+  				</li>
+          
+  				<li class="<%= 'active' if action_name == 'students' %>">
+  					<%= link_to students_users_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Mahasiswa
+            <% end %>
+  				</li>
+          
+  				<% if can? :import_students, User %>
+    				<li class="<%= 'active' if action_name == 'import_advisors_schedule' %>">
+    					<%= link_to import_advisors_schedule_users_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Jadwal Dosen
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'import_students' %>">
+    					<%= link_to import_students_users_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Import Mahasiswa
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'send_sms' %>">
+    					<%= link_to send_sms_users_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Kirim SMS
+              <% end %>
+    				</li>
+          <% end %>
+  			</ul>
+  		</li>
+    <% end %>
 		<li class="<%= 'active' if controller_name == 'messages' %>">
       <%= link_to messages_path do %>
 			  <i class="icon-envelope"></i><span>Messages</span>

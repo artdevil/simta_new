@@ -217,3 +217,15 @@ a.icon-only.icon-pencil{
   width: 1000px;
   height: 250px;
 }
+
+table{
+  .progress{
+    margin-bottom: 0px;
+  }
+}
+
+.dataTables_wrapper{
+  .selected{
+    padding-left: 5px;
+  }
+}

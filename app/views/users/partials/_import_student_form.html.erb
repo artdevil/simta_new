@@ -1,0 +1,20 @@
+<%= simple_nested_form_for @import_student, :url => import_students_users_path, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <% if @import_student.errors.any? %>
+    <%= render :partial => "shared/error_messages", :locals => {:context => @import_student } %>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class='row-fluid'>
+        <div class='span6'><%= f.input :file, :as => :file, :input_html => {:class => "upload_file"} %></div>
+      </div>
+    </div>
+  </div><!-- end row -->
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-info" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Submit
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

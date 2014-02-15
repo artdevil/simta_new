@@ -1,16 +1,6 @@
 <div id="breadcrumbs">
 	<ul class="breadcrumb">
-		<li>
-			<i class="icon-profile"></i>
-			<%= link_to news_index_path do %>
-        News
-      <% end %>
-
-			<span class="divider">
-				<i class="icon-angle-right"></i>
-			</span>
-		</li>
-		<li class="active"><%= news_title %></li>
+    <%= render_breadcrumbs :tag => :li, :separator => ' <span class="divider"><i class="icon-angle-right"></i></span> ' %>
 	</ul><!--.breadcrumb-->
 
 	<div id="nav-search">

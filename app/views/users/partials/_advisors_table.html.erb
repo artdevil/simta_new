@@ -1,0 +1,26 @@
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Data Dosen
+	</div>
+
+	<table id="table_report" class="data_advisor_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="hidden-phone">NIP</th>
+				<th>Nama</th>
+        <th>Jumlah bimbingan </th>
+			</tr>
+		</thead>
+		<tbody>
+      <% @users.each do |f| %>
+        <tr>
+          <td><%= f.keyid %></td>
+          <td><%= link_to f.username, user_profile_path(f) %></td>
+          <td><%= f.advisors_status.coordinator %>/<%= f.advisors_status.max_coordinator %></td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->

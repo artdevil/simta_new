@@ -1,0 +1,64 @@
+<%= form_tag '/users/send_sms', :method => :post, :id => "send_sms_table" do %>
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Data Mahasiswa
+	</div>
+	<table id="table_report" class="data_student_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="center">
+					<label>
+						<input type="checkbox" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th class="hidden-phone">NIM</th>
+				<th>Nama</th>
+        <th>Status</th>
+        <th class="hidden-phone">Progress</th>
+        <th></th>
+			</tr>
+		</thead>
+		<tbody>
+      <% @users.each do |f| %>
+        <tr>
+  				<td class="center">
+  					<label>
+              <%= check_box_tag 'collection_selection[]', f.id %>
+  						<span class="lbl"></span>
+  					</label>
+  				</td>
+          <td><%= f.keyid %></td>
+          <td>
+            <%= link_to f.username, user_profile_path(f) %>
+          </td>
+          <td>
+            <%= f.students_status.for_now %>
+          </td>
+          <td>
+            <% if f.students_status.is_working_proposal? %>
+  						<div class="progress" data-percent="<%= f.proposal.progress %>%">
+  							<div class="bar bar-success" style="width: <%= f.proposal.progress %>%;"></div>
+  						</div>
+            <% elsif f.students_status.is_working_final_project? %>
+  						<div class="progress" data-percent="<%= f.final_project.progress %>%">
+  							<div class="bar" style="width: <%= f.final_project.progress %>%;"></div>
+  						</div>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to messages_path(:recipient_key_id => f.keyid), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Kirim Pesan ke mahasiswa", :data => {:placement => "bottom"} do %>
+              <i class="icon-envelope"></i>
+            <% end %>
+            <%= link_to send_sms_users_path(:contact_phone => f.id), :class => "btn btn-minier btn-success btn-tooltip", :title => "Kirim SMS ke mahasiswa", :data => {:placement => "bottom"} do %>
+              <i class="icon-external-link"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->
+<% end %>

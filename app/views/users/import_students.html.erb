@@ -1,0 +1,18 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "shared/breadcrumbs" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Import Mahasiswa
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <%= render :partial => "users/partials/import_student_form" %>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_one :proposal, :dependent => :destroy
   has_one :final_project, :dependent => :destroy
   has_many :topic_tags, :dependent => :destroy
+  has_many :news, :dependent => :destroy
   has_many :advisor_1_proposals, :class_name => "Proposal", :foreign_key => "advisor_1_id"
   accepts_nested_attributes_for :advisor_1_proposals, :allow_destroy => true
   has_many :advisor_2_proposals, :class_name => "Proposal", :foreign_key => "advisor_2_id"
@@ -43,7 +44,8 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   
   #scope definition
-  scope :lecture, where(:user_role_id => 2)
+  scope :lecture, where("user_role_id = 2 or user_role_id = 4")
+  scope :student, where(:user_role_id => 1)
   scope :search_lecture, lambda{|user, current_user| where{(user_role_id == 2) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) & 'user.' }}
   scope :search_student, lambda{|user, current_user| where{(user_role_id == 1) & ((username =~ "%#{user}%") & (id != current_user)) | ((keyid =~ "%#{user}%") & (id != current_user)) }}
   scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
@@ -74,7 +76,7 @@ class User < ActiveRecord::Base
   #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }
   after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.is_student?}
-  after_create :build_advisors_status, :if => Proc.new{ self.is_advisor?}
+  after_create :build_advisors_status, :if => Proc.new{ self.is_advisor? or self.is_kaprodi?}
   
   def build_students_status
     StudentsStatus.create(:user_id => self.id)

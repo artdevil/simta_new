@@ -32,6 +32,8 @@ gem 'rails-timeago', '~> 2.0'
 gem 'public_activity'
 gem 'chronic'
 gem 'prawn'
+gem 'inherited_resources'
+gem 'breadcrumbs_on_rails'
 
 
 # Gems used only for assets and not required

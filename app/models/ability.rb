@@ -4,10 +4,26 @@ class Ability
   def initialize(user)
     alias_action :destroy, :edit, :update, :to => :ud
     alias_action :edit, :update, :to => :updated
+    alias_action :new, :create, :to => :created
     if user
       #global
       can :read, Topic
       can :manage, Message
+      can :read, News
+      
+      # NEWS
+      can [:created, :updated, :destroy], News do |news|
+        user.is_admin? or user.is_kaprodi? or news.user == user
+      end
+      
+      # USERS
+      can [:index, :advisors, :students], User do |user|
+        user.is_admin? or user.is_kaprodi?
+      end
+      
+      can [:import_advisors_schedule, :import_students, :send_sms], User do |user|
+        user.is_admin?
+      end
       
       if user.is_student?
         # TOPIC TAG

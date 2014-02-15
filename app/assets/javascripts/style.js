@@ -46,24 +46,50 @@ $(document).ready(function(){
     });
   });
   
-  // $('.upload_file').ace_file_input({
-  // 	no_file:'No File',
-  // 	btn_choose:'Choose',
-  // 	btn_change:'Change',
-  // 	droppable:false,
-  // 	onchange:null,
-  // 	thumbnail:true, //| true | large
-  // 	whitelist: 'png|jpg|jpeg|pdf|JPG'
-  // 	//blacklist:'exe|php'
-  // 	//onchange:''
-  // 	//
-  // });
+  $('.upload_file').ace_file_input({
+  	no_file:'No File',
+  	btn_choose:'Choose',
+  	btn_change:'Change',
+  	droppable:false,
+  	onchange:null,
+  	thumbnail:true, //| true | large
+  	whitelist: 'png|jpg|jpeg|pdf|JPG'
+  	//blacklist:'exe|php'
+  	//onchange:''
+  	//
+  });
   
   $(document).on('click','.client_side_validation', function(){
     $("form[data-validate]").validate();
   });
+  
+	$('table th input:checkbox').on('click' , function(){
+		var that = this;
+		$(this).closest('table').find('tr > td:first-child input:checkbox')
+		.each(function(){
+			this.checked = that.checked;
+			$(this).closest('tr').toggleClass('selected');
+		});
+			
+	});
+  
   $('.data_tables').dataTable({
 	  "aoColumns": [null, null,null, null, { "bSortable": false }] 
+  });
+  
+  $('.data_advisor_tables').dataTable();
+  $('.data_student_tables').dataTable({
+    "sDom": "<'row-fluid'<'span1 selected'><'span7'l><'span4'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+    "aoColumns": [{ "bSortable": false },null, null,null, { "bSortable": false }, { "bSortable": false }]
+  });
+  $('.data_advisor_schedule_tables').dataTable({
+    "aoColumns": [null, null,{ "bSortable": false }, { "bSortable": false }, { "bSortable": false },{ "bSortable": false },{ "bSortable": false }]
+  });
+  
+  $(".span1.selected").html('<input type="submit" value="send sms" id="send_sms">');
+  
+  $(document).on('click','#send_sms', function(){
+    $('#send_sms_table').submit();
   });
   
   if($(document).length > 0) {

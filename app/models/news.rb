@@ -3,12 +3,12 @@ class News < ActiveRecord::Base
   friendly_id :title, use: :slugged
   
   #relation
-  belongs_to :admin_user
-  has_many :attachment_admins, :as => :attachment_adminable, :dependent => :destroy
-  accepts_nested_attributes_for :attachment_admins, allow_destroy: true
+  belongs_to :user
+  has_many :attachments, :as => :attachmentable, :dependent => :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
   
   
-  attr_accessible :admin_user_id, :description, :title, :attachment_admins_attributes
+  attr_accessible :description, :title, :attachments_attributes, :user_id
   
   #validation
   validates_presence_of :description, :title

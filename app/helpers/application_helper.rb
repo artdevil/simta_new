@@ -33,4 +33,23 @@ module ApplicationHelper
       end
     end
   end
+  
+  def set_timing timing
+    shift_now = timing.split(',').map do |f|
+      case f
+      when "06.30-08.30"
+        "<span class='label'>shift_1</span>"
+      when "08.30-10.30"
+        "<span class='label label-success'>shift_2</span>"
+      when "10.30-12.30"
+        "<span class='label label-warning'>shift_3</span>"
+      when "12.30-14.30"
+        "<span class='label label-important'>shift_4</span>"
+      when "14.30-16.30"
+        "<span class='label label-info'>shift_5</span>"
+      end
+    end
+    return shift_now.join(' ')
+  end
+  
 end

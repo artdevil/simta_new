@@ -1,0 +1,14 @@
+<div id="ace-settings-container">
+	<div class="btn btn-app btn-mini btn-warning" id="ace-settings-btn">
+		<i class="icon-cog"></i>
+	</div>
+	<div id="ace-settings-box">
+		<div>
+      <%= link_to (action_name == "index" ? new_news_path : edit_news_path(@news)), :class => "btn btn-small btn-info" do  %>
+        <i class="icon-edit"></i>
+        <%= action_name == "index" ? "New" : "Edit" %> News
+      <% end %>
+		</div>
+	</div>
+  <br><br>
+</div><!--/#ace-settings-container-->

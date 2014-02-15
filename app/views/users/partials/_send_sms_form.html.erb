@@ -1,0 +1,20 @@
+<%= simple_nested_form_for @send_sms, :url => send_sms_users_path, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <% if @send_sms.errors.any? %>
+    <%= render :partial => "shared/error_messages", :locals => {:context => @send_sms } %>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span12">
+      <%= f.input :all_number, :as => :string, :hint => "pisahkan dengan koma" %>
+      <%= f.input :message, :as => :text %>
+      <%= f.input :from_form, :as => :hidden, :input_html => {:value => true} %>
+    </div>
+  </div><!-- end row -->
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-info" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Submit
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

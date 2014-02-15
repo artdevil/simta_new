@@ -7,7 +7,7 @@
             <%= news.title %>
           </h4>
         <% end %>
-        <h6>Di posting oleh : <%= news.admin_user.username %></h6>
+        <h6>Di posting oleh : <%= news.user.username %></h6>
         <h6>pada tanggal <%= news.created_at.strftime('%d %B %Y')%></h6>
       </div>
     </div><!-- end row -->

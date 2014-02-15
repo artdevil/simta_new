@@ -1,0 +1,34 @@
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Jadwal Dosen
+	</div>
+
+	<table id="table_report" class="data_advisor_schedule_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="hidden-phone">NIP</th>
+				<th>Nama</th>
+        <th>Senin</th>
+        <th>Selasa</th>
+        <th>Rabu</th>
+        <th>Kamis</th>
+        <th>Jumat</th>
+			</tr>
+		</thead>
+		<tbody>
+      <% @advisors_schedule.each do |f| %>
+        <tr>
+          <td><%= f.user.keyid %></td>
+          <td><%= f.user.username %></td>
+          <td><%= raw set_timing(f.monday) if f.monday.present? %></td>
+          <td><%= raw set_timing(f.tuesday) if f.tuesday.present? %></td>
+          <td><%= raw set_timing(f.wednesday) if f.wednesday.present? %></td>
+          <td><%= raw set_timing(f.thursday) if f.thursday.present?%></td>
+          <td><%= raw set_timing(f.friday) if f.friday.present?%></td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->

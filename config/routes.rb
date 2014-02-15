@@ -12,6 +12,18 @@ SimtaNew::Application.routes.draw do
   
   mount Ckeditor::Engine => '/ckeditor'
   
+  resources :users do
+    collection do
+      get :advisors
+      get :students
+      post :send_sms
+      get :send_sms
+      post :import_students
+      get :import_students
+      post :import_advisors_schedule
+      get :import_advisors_schedule
+    end
+  end
   resources :dashboards
   resources :user_profiles do
     collection do

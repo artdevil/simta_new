@@ -23,6 +23,8 @@ end
 #create users
 puts 'creating users'
 users = [
+  {:username => 'mohammad ramdhani',:keyid => "02730260-1", :password => 'tes123456', :user_role_id => 4, :faculty_id => 2},
+  {:username => 'admin',:keyid => "02730261-1", :password => 'tes123456', :user_role_id => 3, :faculty_id => 2},
   {:username => "Adhiguna Utama Sabril", :keyid => "111128355", :password => "tes123456", :faculty_id => 2},
   {:username => "Ana Riana Januardini", :keyid => "111128376", :password => "tes123456", :faculty_id => 2},
   {:username => "Bambang Joko Widodo", :keyid => "111128383", :password => "tes123456", :faculty_id => 2},
@@ -49,9 +51,7 @@ users = [
   {:username => "Rita Magdalena,Ir,MT.", :keyid => "99640168-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Tengku A. Riza, ST., MT.", :keyid => "10790594-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Denny Darlis, S.Si., M.T", :keyid => "10770726-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:username => "Ekki Kurniawan, ST., MSc.", :keyid => "10690733-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:username => 'mohammad ramdhani',:keyid => "02730260-1", :password => 'tes123456', :user_role_id => 4, :faculty_id => 2},
-  {:username => 'admin',:keyid => "02730261-1", :password => 'tes123456', :user_role_id => 3, :faculty_id => 2},
+  {:username => "Ekki Kurniawan, ST., MSc.", :keyid => "10690733-3", :password => "tes123456", :user_role_id => 2, :faculty_id => 2}
 ]
 users.each do |f|
   User.find_or_initialize_by_keyid(f[:keyid]).tap do |t|
@@ -59,7 +59,7 @@ users.each do |f|
     t.password = f[:password]
     t.password_confirmation = f[:password]
     t.user_role_id = f[:user_role_id] || 1
-    t.faculty_id = 2
+    t.faculty_id = f[:faculty_id]
     t.save
   end
   # User.create(:username => f[:username], :password => f[:password], :password_confirmation => f[:password], :user_role_id => (f[:user_role_id] || 1), :faculty_id => 2)
@@ -108,5 +108,5 @@ news_description = "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 #bikin news
 puts 'creating news'
 (1..6).each do |f|
-  News.create(:title => "berita tes #{f}", :description => news_description, :admin_user_id => 1)
+  News.create(:title => "berita tes #{f}", :description => news_description, :user_id => 1)
 end

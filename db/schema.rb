@@ -60,14 +60,6 @@ ActiveRecord::Schema.define(:version => 20140202163623) do
     t.integer  "quota_examiner"
   end
 
-  create_table "attachment_admins", :force => true do |t|
-    t.integer  "attachment_adminable_id"
-    t.string   "attachment_adminable_type"
-    t.string   "file"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
-
   create_table "attachments", :force => true do |t|
     t.integer  "attachmentable_id"
     t.string   "attachmentable_type"
@@ -165,12 +157,12 @@ ActiveRecord::Schema.define(:version => 20140202163623) do
   end
 
   create_table "news", :force => true do |t|
-    t.integer  "admin_user_id"
+    t.integer  "user_id"
     t.string   "title"
     t.text     "description"
     t.string   "slug"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "notifications", :force => true do |t|

@@ -1,5 +1,5 @@
 <div id="main-content" class="clearfix">
-	<%= render :partial => "news/breadcrumbs/show", :locals => {:news_title => @news.title} %>
+	<%= render :partial => "shared/breadcrumbs" %>
 	<div id="page-content" class="clearfix">
 		<div class="page-header position-relative">
 			<h1>
@@ -21,17 +21,23 @@
           <div class="row-fluid item_header">
             <div class="span12">
           		<%= link_to news_path(@news) do %>
-            		<h4>
+            		<h5>
                   <%= @news.title %>
-                </h4>
+                </h5>
               <% end %>
-              <h6>Di posting oleh : <%= @news.admin_user.username %></h6>
+              <h6>Di posting oleh : <%= @news.user.username %></h6>
               <h6>pada tanggal <%= @news.created_at.strftime('%d %B %Y')%></h6>
             </div>
           </div><!-- end row -->
           <br>
           <div class="row-fluid item_body" style="font-size: 11px;">
             <%= raw @news.description %>
+            <% if @news.attachments.present? %>
+            <h4>Attachments</h4>
+              <% @news.attachments.each do |k| %>
+                <%= link_to File.basename(k.file.path), k.file.url.to_s, :target => k.id %>
+              <% end %>
+            <% end %>
           </div><!-- end row -->
         </div>
       </div><!-- end row -->
@@ -40,3 +46,6 @@
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
+<% if can? :edit, News %>
+  <%= render :partial => "news/partials/config_button" %>
+<% end %>
