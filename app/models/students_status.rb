@@ -45,7 +45,11 @@ class StudentsStatus < ActiveRecord::Base
     when 2
       "proposal"
     when 3
-      "final project"
+      "Tugas Akhir"
+    when 4
+      "masa Sidang"
+    when 5
+      "Revisi"
     end
   end
   

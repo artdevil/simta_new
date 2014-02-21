@@ -54,6 +54,9 @@
             <%= link_to send_sms_users_path(:contact_phone => f.id), :class => "btn btn-minier btn-success btn-tooltip", :title => "Kirim SMS ke mahasiswa", :data => {:placement => "bottom"} do %>
               <i class="icon-external-link"></i>
             <% end %>
+            <%= link_to edit_user_path(f), :class => "btn btn-minier btn-alert btn-tooltip", :title => "Edit Mahasiswa", :data => {:placement => "bottom"} do %>
+              <i class="icon-edit"></i>
+            <% end %>
           </td>
         </tr>
       <% end %>

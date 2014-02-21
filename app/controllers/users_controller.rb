@@ -13,6 +13,25 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+    add_breadcrumb 'Edit User'
+  end
+  
+  def update
+    if @user.update_without_password(params[:user])
+      flash[:success] = "User telah terupdate"
+      if @user.is_student?
+        redirect_to students_users_path
+      elsif @user.is_advisor?
+        redirect_to advisors_users_path
+      end
+    else
+      add_breadcrumb 'Edit User'
+      flash[:success] = "User gagal terupdate"
+      render :edit
+    end
+  end
+  
   def students
     add_breadcrumb "Data Mahasiswa"
     if current_user.is_admin?

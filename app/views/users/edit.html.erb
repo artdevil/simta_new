@@ -3,7 +3,7 @@
 	<div id="page-content" class="clearfix">
 		<div class="page-header position-relative">
 			<h1>
-				News
+				Edit <%= @user.user_is_role %>
 				<small>
 					<i class="icon-double-angle-right"></i>
 					Hasil Pencarian
@@ -15,24 +15,12 @@
 			<%= bootstrap_flash %>
       <!-- end bootstrap flash -->
 			<!--PAGE CONTENT BEGINS HERE-->
-      <div class="row-fluid">
-        <div class="span12">
-          <% @news.each do |f| %>
-            <%= render :partial => 'news/partials/news_item', :locals => {:news => f} %>
-          <% end %>
-        </div>
-      </div><!-- end row fluid-->
-      <div class="row-fluid">
-        <div class="span12" style="text-align: center;">
-          <div class="pagination">
-            <%= paginate @news %>
-          </div>
-        </div>
-      </div>
+      <% if @user.is_student? %>
+        <%= render 'users/form/student_form' %>
+      <% elsif @user.is_advisor? %>
+        <%= render 'users/form/advisor_form' %>
+      <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
-<% if can? :create, News.new %>
-  <%= render :partial => "news/partials/config_button" %>
-<% end %>

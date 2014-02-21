@@ -9,7 +9,7 @@
         <i class="icon-envelope"></i>
       <% end %>
       
-      <% if current_user.is_advisor? %>
+      <% if can? :create, Topic.new %>
         <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
           <i class="icon-pencil"></i>
         <% end %>
@@ -44,7 +44,7 @@
     <% if can? :index, User %>
   		<li class="<%= 'active' if controller_name == 'users' %>">
   			<a href="#" class="dropdown-toggle">
-  				<i class="icon-edit"></i>
+  				<i class="icon-user"></i>
   				<span>User</span>
 
   				<b class="arrow icon-angle-down"></b>
@@ -65,7 +65,7 @@
             <% end %>
   				</li>
           
-  				<% if can? :import_students, User %>
+  				<% if can? :import_students, User.new %>
     				<li class="<%= 'active' if action_name == 'import_advisors_schedule' %>">
     					<%= link_to import_advisors_schedule_users_path do %>
     						<i class="icon-double-angle-right"></i>
@@ -87,6 +87,45 @@
               <% end %>
     				</li>
           <% end %>
+  			</ul>
+  		</li>
+    <% end %>
+    <% if can? :index, Proposal.new %>
+  		<li class="<%= 'active' if controller_name == 'proposals' or controller_name == 'final_projects' or controller_name == 'examiners' %>">
+  			<a href="#" class="dropdown-toggle">
+  				<i class="icon-book"></i>
+  				<span>Tugas Akhir</span>
+  				<b class="arrow icon-angle-down"></b>
+  			</a>
+
+  			<ul class="submenu">
+  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'proposals' %>">
+  					<%= link_to proposals_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Proposal
+            <% end %>
+  				</li>
+          
+  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'final_projects' %>">
+  					<%= link_to final_projects_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Tugas Akhir
+            <% end %>
+  				</li>
+          
+  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'examiners' %>">
+  					<%= link_to examiners_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Sidang
+            <% end %>
+  				</li>
+          
+  				<li class="<%= 'active' if action_name == 'schedule' and controller_name == 'examiners' %>">
+  					<%= link_to schedule_examiners_path do %>
+  						<i class="icon-double-angle-right"></i>
+  						Jadwal Sidang
+            <% end %>
+  				</li>
   			</ul>
   		</li>
     <% end %>

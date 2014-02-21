@@ -1,6 +1,16 @@
 class FinalProjectsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Proposals", :final_projects_path
+  
+  def index
+    if current_user.is_admin?
+      @final_projects = FinalProject.in_progress
+    elsif current_user.is_kaprodi?
+      @final_projects = FinalProject.kaprodi(current_user.faculty_id)
+    end
+  end
   
   def show
   
@@ -70,10 +80,10 @@ class FinalProjectsController < ApplicationController
   
   def create_report
     @final_project_report = @final_project.report_final_projects.new(params[:report_final_project])
-    @final_project_report.user = current_user
+    @final_project_report.user = current_user if params[:report_final_project][:user_id].blank?
     if @final_project_report.save
       data = render_to_string(:partial => "todo_final_projects/partials/reports_data", :locals => {:report_data => @final_project_report}).to_json
-      render :js => "$('#table_bug_report_#{current_user.id} tbody').prepend(#{data});$('#reportFinalProjectModal').modal('hide');"
+      render :js => "$('#table_bug_report_#{@final_project_report.user_id} tbody').prepend(#{data});$('#reportFinalProjectModal').modal('hide');"
     else
       form = render_to_string(:partial => "todo_final_projects/issue/report_form", :locals => {:final_project_report => @final_project_report}).to_json
       render :js => "$('#reportFinalProjectModal .modal-content').html(#{form});"

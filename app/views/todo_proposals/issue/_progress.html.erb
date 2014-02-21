@@ -36,13 +36,20 @@
   				<div class="progress" data-percent="<%= proposal.progress %>%" id="progress_bar">
   					<div class="bar" style="width: <%= proposal.progress %>%;" id="progress_bar_count"></div>
   				</div>
-          <% if can? :update_progress, Proposal and proposal.current_user_is_advisor_1?(current_user) %>
+          <% if can? :update_progress, proposal %>
             <div id="update_progress_form">
               <%= render :partial => 'todo_proposals/partials/update_progress_form', :locals => {:proposal => proposal} %>
             </div>
           <% end %>
         </div>
       </div><!-- row fluid end -->
+      <% if proposal.complete? and current_user.is_admin? %>
+        <div class="row-fluid">
+          <div class="span12" id="upload_file_proposal">
+            <%= render :partial => "todo_proposals/issue/upload_sk_form", :locals => {:proposal => proposal} %>
+          </div>
+        </div>
+      <% end %>
       <% if proposal.complete? %>
         <%= render :partial => "todo_proposals/issue/finished_layout", :locals => {:proposal => proposal} %>
       <% end %>

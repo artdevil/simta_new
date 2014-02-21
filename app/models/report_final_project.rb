@@ -1,14 +1,14 @@
 class ReportFinalProject < ActiveRecord::Base
   # public activity
   include PublicActivity::Model
-  tracked owner: ->(controller, model) { (controller && controller.current_user) || model.user }
+  tracked owner: ->(controller, model) { model.user }
   tracked recipient: ->(controller, model) { model.final_project }
   
   belongs_to :final_project
   belongs_to :user
   attr_accessible :final_project_id, :note, :user_id
   validates_presence_of :final_project_id, :note, :user_id
-  validate :check_minimal_time
+  # validate :check_minimal_time
   
   scope :advisor_progress, lambda{|user| where{(user_id == user)}}
   

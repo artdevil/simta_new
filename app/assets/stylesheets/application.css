@@ -17,6 +17,7 @@
  *= require datepicker
  *= require bootstrap-timepicker
  *= require daterangepicker
+ *= require datetimepicker
  *= require colorpicker
  *= require ace
  *= require ace-responsive

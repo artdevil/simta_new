@@ -6,7 +6,7 @@
     <p><%= link_to 'Proposal', proposal.proposal.url unless proposal.proposal.blank? %></p>
     <p><%= link_to 'SK', proposal.decree.url unless proposal.decree.blank? %></p>
   </div>
-  <% unless proposal.exam.blank? and proposal.events.blank? and proposal.proposal.blank? %>
+  <% unless proposal.exam.blank? and proposal.events.blank? and proposal.proposal.blank? and proposal.decree.url.blank? %>
     <% if can? :finished, proposal %>
       <% if proposal.finished %>
         <btn class="btn btn-warning disabled">

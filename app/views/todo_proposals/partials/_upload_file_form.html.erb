@@ -1,37 +1,32 @@
-<% if proposal.finished? %>
-  <div class="row-fluid">
-    <div class="span12">
-      <h3>Upload File</h3>
-      <p><%= link_to 'lembar pemeriksa', proposal.exam.url unless proposal.exam.blank? %></p>
-      <p><%= link_to 'lembar berita acara', proposal.events.url unless proposal.events.blank? %></p>
-      <p><%= link_to 'Proposal', proposal.proposal.url unless proposal.proposal.blank? %></p>
-      <p><%= link_to 'SK', proposal.decree.url unless proposal.decree.blank? %></p>
-    </div>
-  </div>
-<% else %>
-  <%= simple_form_for proposal, :url => update_document_proposal_path(proposal), :method => :post, :remote => true do |f| %>
+<%= simple_form_for proposal, :url => update_document_proposal_path(proposal), :method => :post, :remote => true do |f| %>
+  
     <%= link_to File.basename(proposal.exam.path), proposal.exam.url unless proposal.exam.blank? %>
-    <%= f.input :exam, :input_html => {:class => "upload_file"}, :label => "lembar pemeriksa" %>
+    <% if !proposal.finished? %>
+      <%= f.input :exam, :input_html => {:class => "upload_file"}, :label => "lembar pemeriksa" %>
+    <% end %>
     <%= link_to File.basename(proposal.events.path), proposal.events.url unless proposal.events.blank? %>
-    <%= f.input :events, :input_html => {:class => "upload_file"}, :label => "Berita Acara" %>
+    <% if !proposal.finished? %>
+      <%= f.input :events, :input_html => {:class => "upload_file"}, :label => "Berita Acara" %>
+    <% end %>
     <%= link_to File.basename(proposal.proposal.path), proposal.proposal.url unless proposal.proposal.blank? %>
-    <%= f.input :proposal, :input_html => {:class => "upload_file"}, :label => "Proposal" %>
-    <%= link_to File.basename(proposal.decree.path), proposal.decree.url unless proposal.decree.blank? %>
-    <%= f.input :decree, :input_html => {:class => "upload_file"}, :label => "SK" %>
-    <%= f.submit 'upload file', :class => "btn btn-success"%>
-  <% end %>
-  <script type="text/javascript">
-  $('.upload_file').ace_file_input({
-  	no_file:'No File',
-  	btn_choose:'Choose',
-  	btn_change:'Change',
-  	droppable:false,
-  	onchange:null,
-  	thumbnail:true, //| true | large
-  	whitelist: 'png|jpg|jpeg|pdf|JPG'
-  	//blacklist:'exe|php'
-  	//onchange:''
-  	//
-  });
-  </script>
+    <% if !proposal.finished? %>
+      <%= f.input :proposal, :input_html => {:class => "upload_file"}, :label => "Proposal" %>
+    <% end %>
+  <%= link_to File.basename(proposal.decree.path), proposal.decree.url unless proposal.decree.blank? %>
+  <%= f.input :decree, :input_html => {:class => "upload_file"}, :label => "SK" %>
+  <%= f.submit 'upload file', :class => "btn btn-success"%>
 <% end %>
+<script type="text/javascript">
+$('.upload_file').ace_file_input({
+	no_file:'No File',
+	btn_choose:'Choose',
+	btn_change:'Change',
+	droppable:false,
+	onchange:null,
+	thumbnail:true, //| true | large
+	whitelist: 'png|jpg|jpeg|pdf|JPG'
+	//blacklist:'exe|php'
+	//onchange:''
+	//
+});
+</script>

@@ -108,6 +108,11 @@ SimtaNew::Application.routes.draw do
   resources :examiners do
     member do
       get :revision_status
+      get :search
+    end
+    
+    collection do
+      get :schedule
     end
   end
 

@@ -21,9 +21,9 @@ class ScheduleFinalProjectPdf < Prawn::Document
   end
   
   def line_item_rows
-    [["Mahasiswa", "Pembimbing 1", "Pembimbing 1", "Penguji 1", "Penguji 2", "Penguji 3"]] +
+    [["Mahasiswa", "Pembimbing 1", "Pembimbing 1", "Penguji 1", "Penguji 2", "Penguji 3", "Ruang", "Tanggal"]] +
       @examiner_schedule.map do |f|
-        [f['mahasiswa']]+f['pembimbing'].map{|k| k}+f['penguji'].map{|k| k}
+        [f['mahasiswa']]+f['pembimbing'].map{|k| k}+f['penguji'].map{|k| k}+[f['ruang']]+[f['tanggal']]
       end
   end
 end

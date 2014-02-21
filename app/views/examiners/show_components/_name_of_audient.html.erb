@@ -12,10 +12,10 @@
   <div class="span6">
     <dl class="dl-horizontal">
       <dt>Penguji 1 : </dt>
-      <dd><%= link_to @examiner.examiner_1.username, user_profile_path(@examiner.examiner_1) %></dd>
+      <dd><%= link_to @examiner.examiner_1.username, user_profile_path(@examiner.examiner_1) if @examiner.examiner_1.present? %></dd>
       <dt>Penguji 2 : </dt>
-      <dd><%= link_to @examiner.examiner_2.username, user_profile_path(@examiner.examiner_2) %></dd>
+      <dd><%= link_to @examiner.examiner_2.username, user_profile_path(@examiner.examiner_2) if @examiner.examiner_2.present? %></dd>
       <dt>Penguji 3 : </dt>
-      <dd><%= link_to @examiner.examiner_3.username, user_profile_path(@examiner.examiner_3) %></dd>
+      <dd><%= link_to @examiner.examiner_3.username, user_profile_path(@examiner.examiner_3) if @examiner.examiner_3.present? %></dd>
     </dl>
   </div>

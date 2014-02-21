@@ -10,7 +10,7 @@ class Topic < ActiveRecord::Base
   has_many :proposals
   has_many :attachments, :as => :attachmentable , :dependent => :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
-  accepts_nested_attributes_for :proposals, :reject_if => proc { |attributes| attributes['title'].blank? && attributes['advisor_2_name'].blank? && attributes['user_name'].blank?}, :allow_destroy => true
+  accepts_nested_attributes_for :proposals, :reject_if => proc { |attributes| attributes['title'].blank? && attributes['advisor_2_name'].blank? && attributes['username'].blank?}, :allow_destroy => true
   has_many :topic_tags
   
   attr_accessible :description, :proposals_count, :status, :tag_list, :title, :proposals_attributes, :user_id, :attachments_attributes, :slug
@@ -32,7 +32,7 @@ class Topic < ActiveRecord::Base
   
   private
     def check_user_role
-      unless self.user.is_advisor?
+      unless self.user.is_advisor? or self.user.is_kaprodi?
         errors.add(:user_id, "not authorized user")
       end
     end

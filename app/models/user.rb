@@ -18,10 +18,12 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :advisor_1_proposals, :allow_destroy => true
   has_many :advisor_2_final_projects, :class_name => "FinalProject", :foreign_key => "advisor_2_id"
   has_one :students_status, :dependent => :destroy
-  has_one :advisors_status, :dependent => :destroy
-  has_one :advisors_schedule, :dependent => :destroy
-  has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
   accepts_nested_attributes_for :students_status, :allow_destroy => true
+  has_one :advisors_status, :dependent => :destroy
+  accepts_nested_attributes_for :advisors_status, :allow_destroy => true
+  has_one :advisors_schedule, :dependent => :destroy
+  accepts_nested_attributes_for :advisors_schedule, :allow_destroy => true
+  has_many :advisor_topic_tag, :class_name => "TopicTag", :foreign_key => "advisor_id"
   has_many :todo_proposals, :dependent => :destroy
   has_many :todo_final_projects, :dependent => :destroy
   has_many :attachments, :dependent => :destroy
@@ -36,7 +38,7 @@ class User < ActiveRecord::Base
   attr_accessor :birthday
   # Setup accessible (or protected) attributes for your model
   attr_accessible :password,:birthday, :password_confirmation, :remember_me, :username, :avatar, :user_role_id, :keyid, :slug, :students_status_attributes, :advisor_1_proposals_attributes, :faculty_id,
-  :phone, :address
+  :phone, :address, :advisors_status_attributes
   # attr_accessible :title, :body
   
   
@@ -101,6 +103,26 @@ class User < ActiveRecord::Base
   
   def is_kaprodi?
     user_role_id == 4
+  end
+  
+  def user_is_role
+    if is_student?
+      "Mahasiswa"
+    elsif is_advisor?
+      "Dosen"
+    elsif is_admin?
+      "Admin"
+    elsif is_kaprodi?
+      "Kaprodi"
+    end
+  end
+  
+  def admin_area?
+    is_admin? or is_kaprodi?
+  end
+  
+  def public_area?
+    is_student? or is_advisor?
   end
   
   def is_profile_complete?

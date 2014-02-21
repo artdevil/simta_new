@@ -1,0 +1,18 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "shared/breadcrumbs" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Edit Sidang
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @examiner.final_project.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+    <!-- bootstrap flash -->
+		<%= bootstrap_flash %>
+    <!-- end bootstrap flash -->
+    <%= render 'examiners/partials/form' %>
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

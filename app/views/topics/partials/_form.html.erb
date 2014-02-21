@@ -25,9 +25,10 @@
           <hr>
           <h3>Tag Mahasiswa Untuk Mengerjakan Tugas Akhir</h3>
           <%= n.input :advisor_2_name, :label => "Nama Pembimbing 2", :placeholder => "masukkan nama atau NIP", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_advisor_user_profiles_path, :input => "recipient_id"}} %>
-          <%= n.input :user_name, :label => "Nama Mahasiswa", :placeholder => "masukkan nama atau NIM", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_student_user_profiles_path, :input => "user_id"}} %>
+          <%= n.input :username, :label => "Nama Mahasiswa", :placeholder => "masukkan nama atau NIM", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_student_user_profiles_path, :input => "user_id"}} %>
           <%= n.input :title, :label => "Judul Proposal Tugas Akhir" %>
           <%= n.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+          <%= n.input :field, :as => :select, :collection => AdvisorsStatus.skill_all %>
           <%= n.input :user_id, :as => :hidden, :input_html => {:id => "user_id"} %>
           <%= n.input :advisor_1_id, :as => :hidden %>
           <%= n.input :advisor_2_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>

@@ -1,0 +1,32 @@
+<%= simple_nested_form_for @user, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <% if @user.errors.any? %>
+    <%= render :partial => "shared/error_messages", :locals => {:context => @user } %>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= f.input :username, :label => "Nama" %>
+      <%= f.input :keyid, :label => "NIP" %>
+      <%= f.input :user_role_id, :label => "Jabatan", :as => :select, :collection => UserRole.all %>
+      <%= f.input :address, :label => "alamat" %>
+      <%= f.input :phone, :label => "telephone" %>
+    </div>
+    <div class="span6">
+      <%= f.simple_fields_for :advisors_status do |n| %>
+        <%= n.input :max_coordinator, :label => "Maximum bimbingan" %>
+        <%= n.input :coordinator, :label => "Jumlah Bimbingan", :disabled => true %>
+        <%= n.input :skills, :label => "Skill", :hint => "pisahkan dengan coma" %>
+        <%= n.input :code_advisor, :label => "Kode Dosen" %>
+      <% end %>
+      <%= f.input :password, :label => "Password", :hint => "Kosongkan jika tidak diganti" %>
+      <%= f.input :password_confirmation, :label => "Password Konfirmasi" %>
+    </div>
+  </div><!-- end row -->
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-info" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Submit
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

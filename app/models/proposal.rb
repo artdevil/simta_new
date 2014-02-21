@@ -7,7 +7,8 @@ class Proposal < ActiveRecord::Base
   has_one :final_project, :dependent => :destroy
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
-  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :advisor_2_name, :exam, :events, :proposal, :decree, :finished, :field
+  attr_accessor :username
+  attr_accessible :advisor_1_id, :username, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :exam, :events, :proposal, :decree, :finished, :field
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
@@ -54,6 +55,10 @@ class Proposal < ActiveRecord::Base
   
   def finished?
     finished == true
+  end
+  
+  def self.kaprodi(faculty)
+    in_progress.select{|f| f.user.faculty_id == faculty}
   end
   
   private

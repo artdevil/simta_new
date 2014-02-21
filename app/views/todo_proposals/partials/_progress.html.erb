@@ -35,7 +35,7 @@
   				<div class="progress" data-percent="<%= proposal.progress %>%" id="progress_bar">
   					<div class="bar" style="width: <%= proposal.progress %>%;" id="progress_bar_count"></div>
   				</div>
-          <% if can? :update_progress, Proposal %>
+          <% if can? :update_progress, proposal %>
             <div id="update_progress_form">
               <%= render :partial => 'todo_proposals/partials/update_progress_form', :locals => {:proposal => proposal} %>
             </div>

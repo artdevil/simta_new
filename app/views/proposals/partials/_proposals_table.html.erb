@@ -1,0 +1,56 @@
+<%= form_tag '/users/send_sms', :method => :post, :id => "send_sms_table" do %>
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Data Proposal
+	</div>
+	<table id="table_report" class="data_proposal_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="center">
+					<label>
+						<input type="checkbox" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th>NIM</th>
+				<th class="hidden-phone">Nama</th>
+        <th>Pembimbing 1</th>
+        <th>Pembimbing 2</th>
+        <th>Progress</th>
+        <th></th>
+			</tr>
+		</thead>
+		<tbody>
+      <% @proposals.each do |proposal| %>
+        <tr>
+  				<td class="center">
+  					<label>
+              <%= check_box_tag 'collection_selection[]', proposal.user.id %>
+  						<span class="lbl"></span>
+  					</label>
+  				</td>
+          <td><%= proposal.user.keyid %></td>
+          <td><%= proposal.user.username %></td>
+          <td><%= proposal.advisor_1.username %></td>
+          <td><%= proposal.advisor_2.present? ? proposal.advisor_2.username : proposal.advisor_2_name %></td>
+          <td>
+						<div class="progress" data-percent="<%= proposal.progress %>%">
+							<div class="bar bar-success" style="width: <%= proposal.progress %>%;"></div>
+						</div>
+          </td>
+          <td>
+            <%= link_to proposal_path(proposal), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Proposal", :data => {:placement => "bottom"} do %>
+              <i class="icon-eye-open"></i>
+            <% end %>
+            <%= link_to "/todo_proposals/issue/#{proposal.user.slug}", :class => "btn btn-minier btn-success btn-tooltip", :title => "Lihat Todo Proposal", :data => {:placement => "bottom"} do %>
+              <i class="icon-external-link"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->
+<% end %>

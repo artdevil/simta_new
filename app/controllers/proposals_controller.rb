@@ -1,9 +1,15 @@
 class ProposalsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  add_breadcrumb "Dashboard", :root_path
+  add_breadcrumb "Proposals", :proposals_path
   
   def index
-    
+    if current_user.is_admin?
+      @proposals = Proposal.in_progress
+    elsif current_user.is_kaprodi?
+      @proposals = Proposal.kaprodi(current_user.faculty_id)
+    end
   end
   
   def create
@@ -42,10 +48,18 @@ class ProposalsController < ApplicationController
   
   def update_document
     if @proposal.update_attributes(params[:proposal])
-      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
+      if current_user.is_admin?
+        form = render_to_string(:partial => "todo_proposals/issue/upload_sk_form", :locals => {:proposal => @proposal}).to_json
+      else
+        form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
+      end
       render :js => "$('#upload_file_proposal').html(#{form});"
     else
-      form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
+      if current_user.is_admin?
+        form = render_to_string(:partial => "todo_proposals/issue/upload_sk_form", :locals => {:proposal => @proposal}).to_json
+      else
+        form = render_to_string(:partial => "todo_proposals/partials/upload_file_form", :locals => {:proposal => @proposal}).to_json
+      end
       render :js => "$('#upload_file_proposal').html(#{form});"
     end
   end

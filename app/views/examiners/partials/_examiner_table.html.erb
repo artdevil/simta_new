@@ -1,0 +1,54 @@
+<%= form_tag '/users/send_sms', :method => :post, :id => "send_sms_table" do %>
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Data Proposal
+	</div>
+	<table id="table_report" class="data_examiner_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="center">
+					<label>
+						<input type="checkbox" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th>NIM</th>
+				<th class="hidden-phone">Nama</th>
+        <th>Peng.1</th>
+        <th>Peng.2</th>
+        <th>Peng.3</th>
+        <th>status</th>
+        <th></th>
+			</tr>
+		</thead>
+		<tbody>
+      <% @examiners.each do |examiner| %>
+        <tr>
+  				<td class="center">
+  					<label>
+              <%= check_box_tag 'collection_selection[]', examiner.user.id %>
+  						<span class="lbl"></span>
+  					</label>
+  				</td>
+          <td><%= examiner.user.keyid %></td>
+          <td><%= examiner.user.username %></td>
+          <td><%= examiner.examiner_1_status.try(:code_advisor) %></td>
+          <td><%= examiner.examiner_2_status.try(:code_advisor) %></td>
+          <td><%= examiner.examiner_3_status.try(:code_advisor) %></td>
+          <td><%= examiner.status %></td>
+          <td>
+            <%= link_to examiner_path(examiner.final_project), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Sidang", :data => {:placement => "bottom"} do %>
+              <i class="icon-eye-open"></i>
+            <% end %>
+            <%= link_to edit_examiner_path(examiner), :class => "btn btn-minier btn-success btn-tooltip", :title => "Edit Sidang", :data => {:placement => "bottom"} do %>
+              <i class="icon-external-link"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->
+<% end %>

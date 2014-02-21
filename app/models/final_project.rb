@@ -31,10 +31,11 @@ class FinalProject < ActiveRecord::Base
   
   #callback
   after_update :update_user_status_to_finished, :if => Proc.new{ self.finished }
-  after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished and !self.examiners.not_accepted_status.present?}
+  after_update :set_notification_100, :if => Proc.new{ self.progress == 100 and !self.finished and !self.examiners.present?}
   before_update :check_change_advisor_2
   
   scope :advisor_student, lambda{|f| where("finished = false and (advisor_1_id = ? or advisor_2_id = ? )",f.id,f.id)}
+  scope :in_progress, where("progress < ? and finished = ? ", 100, false)
   
   def check_user_access(user_id)
     if self.user_id != user_id and self.advisor_1_id != user_id and self.advisor_2_id != user_id
@@ -50,6 +51,22 @@ class FinalProject < ActiveRecord::Base
   
   def collection_advisor
     [self.advisor_1, (self.advisor_2 unless self.advisor_2_id.nil?)]
+  end
+  
+  def self.kaprodi(faculty)
+    in_progress.select{|f| f.user.faculty_id == faculty}
+  end
+  
+  def status_now
+    if progress < 100
+      "Masa Tugas Akhir"
+    elsif progress == 100 and !document_final_project.present?
+      "Masa Daftar Sidang"
+    elsif progress == 100 and document_final_project.present?
+      "Masa Sidang"
+    elsif progress == 100 and document_final_project.present? and examiners.present? and examiners.first.revision?
+      "Masa Revisi"
+    end
   end
   
   private

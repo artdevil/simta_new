@@ -61,5 +61,7 @@
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
-  <%= render :partial => "todo_final_projects/issue/config_button", :locals => {:final_project => @final_project} %>
+  <% if can? :new_todo, TodoFinalProject.new %>
+    <%= render :partial => "todo_final_projects/issue/config_button", :locals => {:final_project => @final_project} %>
+  <% end %>
 </div><!--/#main-content-->

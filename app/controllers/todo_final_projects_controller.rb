@@ -5,8 +5,10 @@ class TodoFinalProjectsController < ApplicationController
   
   def index
     @final_project = current_user.final_project
-    if @final_project.progress == 100
+    if @final_project.status_now == "Masa Daftar Sidang"
       flash[:notice] = "#{I18n.t('final_project.completed')}"
+    elsif @final_project.status_now == "Masa Sidang"
+      flash[:notice] = "Anda memasuki masa sidang. Silahkan berkoordinasi dengan admin Fakultas"
     end
     @report_final_projects = @final_project.report_final_projects
     @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
@@ -97,7 +99,7 @@ class TodoFinalProjectsController < ApplicationController
     if current_user.is_student?
       open = render_to_string(:partial => "todo_final_projects/partials/open_issue", :locals => {:open_issue => @todo_final_projects}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
-    elsif current_user.is_advisor?
+    elsif current_user.is_advisor? or current_user.is_admin? or current_user.is_kaprodi?
       open = render_to_string(:partial => "todo_final_projects/issue/open_issue", :locals => {:open_issue => @todo_final_projects}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
     end
@@ -110,7 +112,7 @@ class TodoFinalProjectsController < ApplicationController
     if current_user.is_student?
       close = render_to_string(:partial => "todo_final_projects/partials/close_issue", :locals => {:close_issue => @todo_final_projects}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
-    elsif current_user.is_advisor?
+    elsif current_user.is_advisor? or current_user.is_admin? or current_user.is_kaprodi?
       close = render_to_string(:partial => "todo_final_projects/issue/close_issue", :locals => {:close_issue => @todo_final_projects}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
     end

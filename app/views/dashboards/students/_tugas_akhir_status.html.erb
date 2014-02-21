@@ -27,7 +27,26 @@
             <% elsif current_user.students_status.is_working_final_project? %>
               <%= render :partial => "dashboards/students/progress_final_project", :locals => {:final_project_status => current_user.final_project} %>
             <% elsif current_user.students_status.is_final_session? %>
-              Tugas Akhir anda telah selesai dan memasuki masa sidang. Silahkan mengupload buku tugas akhir anda di <%= link_to 'sini', todo_final_projects_path %> dan ajukan sidang ke admin
+              <% examiner_now = current_user.final_project.examiners.first %>
+              <% if examiner_now.status == "siap sidang" %>
+                Jadwal sidang :
+                <dl class="dl-horizontal">
+                  <dt>Hari dan Jam</dt>
+                  <dd><%= examiner_now.datetime.strftime('%d %b %y, %H:%M')%></dd>
+                  <dt>Ruang</dt>
+                  <dd><%= examiner_now.location %></dd>
+                  <dt>Penguji</dt>
+                  <dd><%= examiner_now.examiner_1.username %></dd>
+                  <dt><br></dt>
+                  <dd><%= examiner_now.examiner_2.username %></dd>
+                  <dt><br></dt>
+                  <dd><%= examiner_now.examiner_3.try(:username) %></dd>
+                </dl>
+              <% else %>
+                Tugas Akhir anda telah selesai dan memasuki masa sidang. Silahkan mengupload buku tugas akhir anda di <%= link_to 'sini', todo_final_projects_path %> dan ajukan sidang ke admin.
+              <% end %>
+            <% elsif current_user.students_status.is_working_revision? %>
+              Anda dalam masa revisi. Silahkan upload revisi buku tugas akhir di <%= link_to 'sini', todo_final_projects_path %> dan hubungi sekertaris sidang anda.
             <% elsif current_user.students_status.is_finished? %>
               Tugas akhir anda telah selesai
             <% end %>

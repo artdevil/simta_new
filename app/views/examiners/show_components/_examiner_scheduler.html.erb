@@ -19,9 +19,9 @@
   			<div class="widget-main">
           <dl>
             <dt>Hari dan Tanggal : </dt>
-            <dd><%= @examiner.datetime.strftime("%A, %d %B %Y") %></dd>
+            <dd><%= @examiner.datetime.strftime("%A, %d %B %Y") if @examiner.datetime.present? %></dd>
             <dt>Jam : </dt>
-            <dd><%= @examiner.datetime.strftime("%H : %M") %></dd>
+            <dd><%= @examiner.datetime.strftime("%H : %M") if @examiner.datetime.present?  %></dd>
             <dt>Note : </dt>
             <dd><%= raw @examiner.note %></dd>
           </dl>

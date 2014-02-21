@@ -89,7 +89,7 @@ class TodoProposalsController < ApplicationController
     if current_user.is_student?
       open = render_to_string(:partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
-    elsif current_user.is_advisor?
+    elsif current_user.is_advisor? or current_user.is_admin? or current_user.is_kaprodi?
       open = render_to_string(:partial => "todo_proposals/issue/open_issue", :locals => {:open_issue => @todo_proposals}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
     end
@@ -102,7 +102,7 @@ class TodoProposalsController < ApplicationController
     if current_user.is_student?
       close = render_to_string(:partial => "todo_proposals/partials/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
-    elsif current_user.is_advisor?
+    elsif current_user.is_advisor? or current_user.is_admin? or current_user.is_kaprodi?
       close = render_to_string(:partial => "todo_proposals/issue/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"
     end

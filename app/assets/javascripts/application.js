@@ -26,6 +26,7 @@
 //= require date-time/bootstrap-datepicker.min
 //= require date-time/bootstrap-timepicker.min
 //= require date-time/daterangepicker.min
+//= require jquery.datetimepicker
 //= require bootstrap-colorpicker.min
 //= require jquery.dataTables.min
 //= require jquery.dataTables.bootstrap

@@ -1,0 +1,29 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "shared/breadcrumbs" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Jadwal Sidang Sementara
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Hasil Pencarian
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <%= render 'examiners/partials/schedule_table' %>
+			<!--PAGE CONTENT ENDS HERE-->
+      <fieldset class="actions">
+        <ol>
+          <li class="cancel">
+            <%= link_to "print PDF", schedule_examiners_path(schedule: @examiner_schedule, format: "pdf") %>
+          </li>
+        </ol>
+      </fieldset>
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

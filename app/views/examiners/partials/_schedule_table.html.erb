@@ -1,0 +1,38 @@
+<%= form_tag '/users/send_sms', :method => :post, :id => "send_sms_table" do %>
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Data Jadwal Sidang
+	</div>
+  <table id="table_report" class="data_examiner_tables table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Mahasiswa</th>
+        <th>Pembimbing 1</th>
+        <th>Pembimbing 2</th>
+        <th>Penguji 1</th>
+        <th>Penguji 2</th>
+        <th>Penguji 3</th>
+        <th>Ruang</th>
+        <th>Tanggal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @examiner_schedule.each do |f| %>
+        <tr>
+          <td><%= f['mahasiswa'] %></td>
+          <% f['pembimbing'].each do |k| %>
+            <td><%= k %></td>
+          <% end %>
+          <% f['penguji'].each do |k| %>
+            <td><%= k %></td>
+          <% end %>
+          <td><%= f['ruang'] %></td>
+          <td><%= f['tanggal'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div><!-- end row fluid -->
+<!-- end inbox -->
+<% end %>

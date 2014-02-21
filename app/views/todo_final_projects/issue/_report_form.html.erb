@@ -7,6 +7,9 @@
     <div class="row-fluid">
       <div class="span12">
         <%= f.input :note, :as => :ckeditor, :input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+        <% if current_user.is_admin? %>
+        <%= f.input :user_id, :as => :select, :include_blank => false, :collection => [[f.object.final_project.advisor_1.username, f.object.final_project.advisor_1_id], [f.object.final_project.advisor_2.username, f.object.final_project.advisor_2_id]]%>
+        <% end %>
         <%= f.input :final_project_id, :as => :hidden %>
       </div>
     </div>

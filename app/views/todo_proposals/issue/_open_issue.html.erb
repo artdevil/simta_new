@@ -20,7 +20,7 @@
   				<%= link_to f.title, "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}" %>
   			</div>
   		</div>
-			<% if can? :finished, TodoProposal %>
+			<% if can? :finished, f %>
   			<div class="tools">
           <%= link_to "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}", :class => "btn btn-minier btn-success", :remote => true, :method => "put", :confirm => "anda yakin ?" do %>
             <i class="icon-only icon-ok"></i>
