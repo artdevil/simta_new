@@ -21,6 +21,14 @@ class Comment < ActiveRecord::Base
   #callback
   after_create :set_notification
   
+  def shared_comments
+    if self.commentable_type == "TodoProposal"
+      Proposal.where('id != ? and group_token = ? ',self.commentable.proposal.id, self.commentable.proposal.group_token)
+    elsif self.commentable_type == "TodoFinalProject"
+      FinalProject.where('id != ? and group_token = ? ',self.commentable.final_project.id, self.commentable.final_project.group_token)
+    end
+  end
+  
   def is_proposal?
     self.commentable.todo_final_project.present?
   end
@@ -46,6 +54,13 @@ class Comment < ActiveRecord::Base
           #for advisor 1
           self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.proposal.advisor_1_id, :message => "Mengomentari todos proposal")
         end
+        
+        # for comment group
+        if self.commentable.proposal.group_token.present?
+          shared_comments.each do |proposal|
+            self.notifications.create(:sender_id => self.user_id, :recipient_id => proposal.user_id, :message => "Mengomentari todos proposal")
+          end
+        end
       elsif self.commentable_type == "TodoFinalProject"
         if self.user.is_student?
           self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_1_id, :message => "Mengomentari todos final project")
@@ -60,6 +75,13 @@ class Comment < ActiveRecord::Base
           self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.user_id, :message => "Mengomentari todos final project")
           #for advisor 1
           self.notifications.create(:sender_id => self.user_id, :recipient_id => self.commentable.final_project.advisor_1_id, :message => "Mengomentari todos final project")
+        end
+        
+        # for comment group
+        if self.commentable.final_project.group_token.present?
+          shared_comments.each do |final_project|
+            self.notifications.create(:sender_id => self.user_id, :recipient_id => final_project.user_id, :message => "Mengomentari todos final project")
+          end
         end
       end
     end

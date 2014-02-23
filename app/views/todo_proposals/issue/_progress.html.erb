@@ -23,11 +23,11 @@
 				<div class="span12">
 				  <dl>
 				    <dt>Judul Proposal</dt>
-            <dd><%= proposal.title %></dt>
+            <dd><%= link_to proposal.title, proposal %></dt>
   				  <dt>Pembimbing 1</dt>
-            <dd><%= proposal.advisor_1.username %></dt>
+            <dd><%= link_to proposal.advisor_1.username, user_profile_path(proposal.advisor_1) %></dt>
     				<dt>Pembimbing 2</dt>
-            <dd><%= proposal.advisor_2.try(:username) || proposal.advisor_2_name %></dt>
+            <dd><%= proposal.advisor_2.present? ? (link_to proposal.advisor_2.try(:username)) : proposal.advisor_2_name %></dt>
 				  </dl>
 				</div>
 			</div><!-- row fluid end -->

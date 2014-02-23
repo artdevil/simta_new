@@ -14,28 +14,24 @@
     <%= render :partial => "shared/file_upload", :locals => {:n => n} %>
   <% end %>
   <p><%= f.link_to_add "Add a attachment", :attachments %></p>
-  <% if @topic.new_record? %>
-    <%= link_to "#tag_init_show", :id => "tag_show", :class => "btn btn-mini btn-success" do %>
-      <i class="icon-ok"></i>
-      Tag Mahasiswa
-    <% end %>
-    <%= f.simple_fields_for :proposals do |n| %>
-      <div class="row-fluid" id="tag_init_show">
-        <div class="span12">
-          <hr>
-          <h3>Tag Mahasiswa Untuk Mengerjakan Tugas Akhir</h3>
-          <%= n.input :advisor_2_name, :label => "Nama Pembimbing 2", :placeholder => "masukkan nama atau NIP", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_advisor_user_profiles_path, :input => "recipient_id"}} %>
-          <%= n.input :username, :label => "Nama Mahasiswa", :placeholder => "masukkan nama atau NIM", :input_html => {:class => "user_find_ajax", :data => {:autocomplete_source => search_only_student_user_profiles_path, :input => "user_id"}} %>
-          <%= n.input :title, :label => "Judul Proposal Tugas Akhir" %>
-          <%= n.input :description, :as => :ckeditor, :label => "Deskripsi",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
-          <%= n.input :field, :as => :select, :collection => AdvisorsStatus.skill_all %>
-          <%= n.input :user_id, :as => :hidden, :input_html => {:id => "user_id"} %>
-          <%= n.input :advisor_1_id, :as => :hidden %>
-          <%= n.input :advisor_2_id, :as => :hidden, :input_html => {:id => "recipient_id"} %>
-        </div>
-      </div>
-    <% end %>
+  <%= link_to "#tag_init_show", :id => "tag_show", :class => "btn btn-mini btn-success" do %>
+    <i class="icon-ok"></i>
+    Tag Mahasiswa
   <% end %>
+  <div class="row-fluid" id="tag_init_show">
+    <div class="span12">
+      <hr>
+      <h3>Tag Mahasiswa Untuk Mengerjakan Tugas Akhir</h3>
+      <%= f.simple_fields_for :proposals do |n| %>
+        <% unless n.object.persisted? %>
+          <%= render :partial => "topics/partials/tag_mahasiswa", :locals => {:n => n} %>
+        <% end %>
+      <% end %>
+      <% if current_user.faculty_id == 4 %>
+        <%= f.link_to_add "Tambah Mahasiswa", :proposals %>
+      <% end %>
+    </div>
+  </div>
   <div class="row-fluid">
 		<div class="form-actions">
 			<button class="btn btn-info" type="submit">

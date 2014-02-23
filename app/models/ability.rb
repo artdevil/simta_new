@@ -81,7 +81,7 @@ class Ability
         end
         
         # EXAMINER
-        can [:index, :updated, :search, :schedule], Examiner
+        can [:index, :updated, :search, :schedule, :revision_status], Examiner
         
         can [:show], Examiner do |examiner|
           examiner.status == "siap sidang" or examiner.status == "revisi"

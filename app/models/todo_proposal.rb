@@ -24,6 +24,11 @@ class TodoProposal < ActiveRecord::Base
   after_create :set_notification
   
   private
+  
+    def shared_todo_proposal
+      Proposal.where('id != ? and group_token = ? ',self.proposal.id, self.proposal.group_token)
+    end
+    
     def check_user_status
       if self.user.is_student? and !self.user.students_status.is_working_proposal?
         errors.add(:user, "Not Authorized")
@@ -50,6 +55,13 @@ class TodoProposal < ActiveRecord::Base
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.user_id, :message => "Membuat to do baru")
         #for advisor 2
         self.notifications.create(:sender_id => self.user_id, :recipient_id => self.proposal.advisor_2_id, :message => "Membuat to do baru")
+      end
+      
+      # for todos group
+      if self.proposal.group_token.present?
+        shared_todo_proposal.each do |proposal|
+          self.notifications.create(:sender_id => self.user_id, :recipient_id => proposal.user_id, :message => "Membuat to do baru")
+        end
       end
     end       
 end

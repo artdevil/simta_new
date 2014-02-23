@@ -36,8 +36,8 @@ users = [
   {:username => "Nira Pebriani", :keyid => "111128382", :password => "tes123456", :faculty_id => 2},
   {:username => "Burhanuddin Dirgantara,Ir,MT.", :keyid => "93680086-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Efri Suhartono, ST., MT.", :keyid => "99730171-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:username => "Istikmal,ST,MT.", :keyid => "08790474-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
-  {:username => "Muhammad Iqbal,ST,MT.", :keyid => "10840586-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
+  {:username => "Istikmal,ST,MT.", :keyid => "08790474-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 4},
+  {:username => "Muhammad Iqbal,ST,MT.", :keyid => "10840586-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 4},
   {:username => "Tody Ariefianto Wibowo,ST ,MT.", :keyid => "10820584-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Rita Magdalena,Ir,MT.", :keyid => "99640168-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
   {:username => "Leana Vidya Yovita,ST.,MT.", :keyid => "08830413-1", :password => "tes123456", :user_role_id => 2, :faculty_id => 2},
@@ -77,17 +77,17 @@ description = '<p>
 # judul TA
 
 topics = [
-  {:user_id => 9, :title => "Perancangan dan implementasi monitoring tugas akhir", :tag_list => "monitoring", :description => "#{description}"},
-  {:user_id => 9, :title => "perancangan quadcopter dengan menggunakan raspberry", :tag_list => "quadcopter, raspberry", :description => "#{description}"},
-  {:user_id => 9, :title => "augmented reality untuk jalan raya", :tag_list => "augmented reality", :description => "#{description}"},
-  {:user_id => 9, :title => "perancangan web services untuk rumah sakit", :tag_list => "web services, rumah sakit", :description => "#{description}"},
-  {:user_id => 10, :title => "pencarian lokasi terdekat dengan menggunakan algoritma djikstra", :tag_list => "algoritma djikstra", :description => "#{description}"},
-  {:user_id => 10, :title => "monitoring pada jalur kereta api", :tag_list => "monitoring, kereta api", :description => "#{description}"},
-  {:user_id => 10, :title => "pencitraan menggunakan matlab", :tag_list => "pencitraan,matlab", :description => "#{description}"},
-  {:user_id => 11, :title => "pembuatan aplikasi web dengan menggunakan node.js", :tag_list => "aplikasi web,node.js", :description => "#{description}"},
-  {:user_id => 11, :title => "aplikasi android untuk monitoring kesehatan", :tag_list => "android,monitoring, kesehatan", :description => "#{description}"},
-  {:user_id => 11, :title => "antena mikrostrip", :tag_list => "antena, mikrostrip", :description => "#{description}"},
-  {:user_id => 10, :title => "collaborator application dengan ruby on rails web framework", :tag_list => "collaborator application,ruby on rails, web framework", :description => "#{description}"}
+  {:user_id => 12, :title => "Perancangan dan implementasi monitoring tugas akhir", :tag_list => "monitoring", :description => "#{description}"},
+  {:user_id => 12, :title => "perancangan quadcopter dengan menggunakan raspberry", :tag_list => "quadcopter, raspberry", :description => "#{description}"},
+  {:user_id => 12, :title => "augmented reality untuk jalan raya", :tag_list => "augmented reality", :description => "#{description}"},
+  {:user_id => 12, :title => "perancangan web services untuk rumah sakit", :tag_list => "web services, rumah sakit", :description => "#{description}"},
+  {:user_id => 13, :title => "pencarian lokasi terdekat dengan menggunakan algoritma djikstra", :tag_list => "algoritma djikstra", :description => "#{description}"},
+  {:user_id => 13, :title => "monitoring pada jalur kereta api", :tag_list => "monitoring, kereta api", :description => "#{description}"},
+  {:user_id => 13, :title => "pencitraan menggunakan matlab", :tag_list => "pencitraan,matlab", :description => "#{description}"},
+  {:user_id => 14, :title => "pembuatan aplikasi web dengan menggunakan node.js", :tag_list => "aplikasi web,node.js", :description => "#{description}"},
+  {:user_id => 14, :title => "aplikasi android untuk monitoring kesehatan", :tag_list => "android,monitoring, kesehatan", :description => "#{description}"},
+  {:user_id => 14, :title => "antena mikrostrip", :tag_list => "antena, mikrostrip", :description => "#{description}"},
+  {:user_id => 13, :title => "collaborator application dengan ruby on rails web framework", :tag_list => "collaborator application,ruby on rails, web framework", :description => "#{description}"}
 ]
 
 # bikin TA

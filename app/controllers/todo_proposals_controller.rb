@@ -8,8 +8,13 @@ class TodoProposalsController < ApplicationController
     if @proposal.progress == 100 and !@proposal.finished?
       flash[:notice] = "#{I18n.t('proposal.completed')}"
     end
-    @todo_proposals_open = @proposal.todo_proposals.includes(:user).open_issue
-    @todo_proposals_close = @proposal.todo_proposals.includes(:user).close_issue
+    if @proposal.group_token.present?
+      @todo_proposals_open = @proposal.shared_open_todo_proposal
+      @todo_proposals_close = @proposal.shared_close_todo_proposal
+    else
+      @todo_proposals_open = @proposal.todo_proposals.includes(:user).open_issue
+      @todo_proposals_close = @proposal.todo_proposals.includes(:user).close_issue
+    end
   end
 
   def show

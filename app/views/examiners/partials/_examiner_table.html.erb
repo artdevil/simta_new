@@ -2,7 +2,7 @@
 <!-- inbox -->
 <div class="row-fluid">
 	<div class="table-header">
-		Data Proposal
+		Data Tugas Akhir
 	</div>
 	<table id="table_report" class="data_examiner_tables table table-striped table-bordered table-hover">
 		<thead>
@@ -36,7 +36,7 @@
           <td><%= examiner.examiner_1_status.try(:code_advisor) %></td>
           <td><%= examiner.examiner_2_status.try(:code_advisor) %></td>
           <td><%= examiner.examiner_3_status.try(:code_advisor) %></td>
-          <td><%= examiner.status %></td>
+          <td><%= examiner.status + (examiner.status == "revisi" ? " : #{examiner.revision_date.strftime('%d %b %y')}" : (examiner.status == "siap sidang" ? " : #{examiner.datetime.strftime('%d %b %y %H:%M')}" : "") ) %></td>
           <td>
             <%= link_to examiner_path(examiner.final_project), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Sidang", :data => {:placement => "bottom"} do %>
               <i class="icon-eye-open"></i>

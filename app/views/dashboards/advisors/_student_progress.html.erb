@@ -43,7 +43,7 @@
 					</thead>
 
 					<tbody>
-            <% Proposal.advisor_student(current_user).includes(:user).each do |f| %>
+            <% Proposal.advisor_student(current_user).each do |f| %>
   						<tr>
   							<td><%= f.user.username %></td>
   							<td class="hidden-phone">

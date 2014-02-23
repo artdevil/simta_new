@@ -24,7 +24,11 @@ class ExaminersController < ApplicationController
   
   def revision_status
     if @examiner.update_attributes(params[:examiner])
+      flash[:success] = "Tugas Akhir Telah Selesai"
       redirect_to root_path
+    else
+      flash[:success] = "Buku Revisi Tugas Akhir Belum Di Upload"
+      redirect_to examiner_path(@examiner.final_project)
     end
   end
   

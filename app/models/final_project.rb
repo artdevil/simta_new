@@ -16,7 +16,7 @@ class FinalProject < ActiveRecord::Base
   has_many :report_final_projects, :dependent => :destroy
   has_many :examiners, :dependent => :destroy
   
-  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project, :field
+  attr_accessible :advisor_1_id, :advisor_2_id, :advisor_2_name, :description, :finished, :progress, :proposal_id, :title, :user_id, :document_final_project, :document_revision_final_project, :field, :group_token
   
   #upload image
   mount_uploader :document_final_project, DocumentFinalProjectUploader

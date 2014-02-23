@@ -8,7 +8,7 @@ class Proposal < ActiveRecord::Base
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   has_many :todo_proposals, :dependent => :destroy
   attr_accessor :username
-  attr_accessible :advisor_1_id, :username, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :exam, :events, :proposal, :decree, :finished, :field
+  attr_accessible :advisor_1_id, :username, :advisor_2_id, :advisor_2_name, :description, :progress, :title, :topic_id, :user_id, :exam, :events, :proposal, :decree, :finished, :field, :group_token
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
@@ -34,12 +34,19 @@ class Proposal < ActiveRecord::Base
   before_destroy :set_quota_decrease, :set_user_status_decrease, :send_message_destroy_student
   before_update :check_change_advisor_2
   
-  scope :advisor_student, lambda{|f| where{(advisor_1_id == f.id or advisor_2_id == f.id) and finished == false}}
-  
+  scope :advisor_student, lambda{|f| where('finished = false and (advisor_1_id = ? or advisor_2_id = ? )', f.id, f.id)}
   #for active admin
   scope :in_progress, where("progress < ? and finished = ? ", 100, false)
   scope :completed, where(:progress => 100, :finished => false)
   scope :archieved, where(:finished => true)
+  
+  def shared_open_todo_proposal
+    (todo_proposals + Proposal.where('id != ? ',id).find_by_group_token(group_token).todo_proposals).select{|f| f.status == false}
+  end
+  
+  def shared_close_todo_proposal
+    (todo_proposals + Proposal.where('id != ? ',id).find_by_group_token(group_token).todo_proposals).select{|f| f.status == true}
+  end
   
   def current_user_is_advisor_1?(user)
     advisor_1 == user
@@ -182,7 +189,7 @@ class Proposal < ActiveRecord::Base
     end
     
     def create_final_project
-      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name, :proposal_id => self.id, :title => self.title, :description => self.description, :field => self.field)
+      final_project = FinalProject.new(:user_id => self.user_id, :advisor_1_id => self.advisor_1_id, :advisor_2_id => self.advisor_2_id, :advisor_2_name => self.advisor_2_name, :proposal_id => self.id, :title => self.title, :description => self.description, :field => self.field, :group_token => self.group_token)
       if final_project.save
         notification = self.notifications.new(:sender_id => self.advisor_1_id, :recipient_id => self.user_id, :message => "Pengerjaan proposal telah selesai silahkan mengerjakan tugas akhir")
         notification.save

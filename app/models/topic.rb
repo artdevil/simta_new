@@ -18,8 +18,31 @@ class Topic < ActiveRecord::Base
   #validates
   validates_presence_of :description, :title, :user_id
   validate :check_user_role, :if => :new_record?
+  validate :check_number_proposal, :if => :new_record?
+  before_save :set_token_for_proposal, :if => Proc.new{proposals.reject(&:persisted?).count > 1}
+  
+  def set_token_for_proposal
+    Rails.logger.info('running token')
+    token_generate = generate_token
+    proposals.reject(&:persisted?).each do |proposal|
+      proposal.group_token = token_generate
+    end
+  end
   
   #callback
+  def check_number_proposal
+    if proposals.reject(&:persisted?).size > 3
+      self.errors.add(:base, "Jumlah mahasiswa se-group tidak boleh lebih dari 3")
+    end
+  end
+  
+  def generate_token
+    token = loop do
+      random_token = SecureRandom.hex(4)
+      break random_token unless Proposal.exists?(group_token: random_token)
+    end
+    return token
+  end
   
   def advisor_limit_quota
     advisor_status = self.user.advisors_status

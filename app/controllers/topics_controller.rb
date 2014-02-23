@@ -22,6 +22,7 @@ class TopicsController < ApplicationController
   
   def edit
     @topic = current_user.topics.find(params[:id])
+    @topic.proposals.build(:advisor_1_id => current_user.id)
   end
   
   def update

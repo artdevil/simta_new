@@ -24,6 +24,7 @@ class Examiner < ActiveRecord::Base
   validate :check_revision_date
   validate :check_book_final_project, :on => :update, :if => Proc.new{ can_session }
   validates :datetime, :location, :presence => true, :if => Proc.new{ can_session }
+  validate :cek_final_project_revision, :if => Proc.new{ revision_status == 'accept' }
   
   before_update :check_pass_status
   before_update :check_revision_status
@@ -37,6 +38,12 @@ class Examiner < ActiveRecord::Base
       "siap sidang"
     elsif can_session and finished and revision and examiner_completed and accepted == nil
       "revisi"
+    end
+  end
+  
+  def cek_final_project_revision
+    unless final_project.document_revision_final_project.present?
+      errors.add(:base, "Buku revisi tugas akhir belum di upload")
     end
   end
   
@@ -87,7 +94,7 @@ class Examiner < ActiveRecord::Base
         final_project.update_attributes(:finished => true)
       when 'decline'
         accepted = false
-        final_project.update_attributes(:progress => 0)
+        final_project.update_attributes(:progress => 0, :document_final_project => '', :document_revision_final_project => '')
         final_project.user.students_status.update_column(:status, 3)
       end
     end
