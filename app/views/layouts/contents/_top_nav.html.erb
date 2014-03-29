@@ -1,16 +1,18 @@
-<div class="navbar navbar-inverse">
-	<div class="navbar-inner">
-		<div class="container-fluid">
-      <%= link_to root_path, :class => "brand" do %>
-  			<small>
-          <i class="icon-tasks"></i>
-  				SIMTA
-  			</small>
-      <% end %><!--/.brand-->
-			<ul class="nav ace-nav pull-right">
-				<%= render :partial => "layouts/contents/notification_box" %>
-        <%= render :partial => "layouts/contents/profile_box" %>
-			</ul><!--/.ace-nav-->
-		</div><!--/.container-fluid-->
-	</div><!--/.navbar-inner-->
-</div>
+<% if current_user %>
+  <div class="navbar navbar-inverse">
+  	<div class="navbar-inner">
+  		<div class="container-fluid">
+        <%= link_to root_path, :class => "brand" do %>
+    			<small>
+            <i class="icon-tasks"></i>
+    				SIMTA
+    			</small>
+        <% end %><!--/.brand-->
+  			<ul class="nav ace-nav pull-right">
+  				<%= render :partial => "layouts/contents/notification_box" %>
+          <%= render :partial => "layouts/contents/profile_box" %>
+  			</ul><!--/.ace-nav-->
+  		</div><!--/.container-fluid-->
+  	</div><!--/.navbar-inner-->
+  </div>
+<% end %>

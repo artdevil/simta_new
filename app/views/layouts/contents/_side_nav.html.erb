@@ -1,190 +1,192 @@
-<a id="menu-toggler" href="#">
-	<span></span>
-</a>
+<% if current_user %>
+  <a id="menu-toggler" href="#">
+  	<span></span>
+  </a>
 
-<div id="sidebar">
-	<div id="sidebar-shortcuts">
-		<div id="sidebar-shortcuts-large">
-      <%= link_to messages_path, :class => "btn btn-small btn-success" do %>
-        <i class="icon-envelope"></i>
-      <% end %>
+  <div id="sidebar">
+  	<div id="sidebar-shortcuts">
+  		<div id="sidebar-shortcuts-large">
+        <%= link_to messages_path, :class => "btn btn-small btn-success" do %>
+          <i class="icon-envelope"></i>
+        <% end %>
       
-      <% if can? :create, Topic.new %>
-        <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
-          <i class="icon-pencil"></i>
-        <% end %>
-      <% end %>
-
-			<button class="btn btn-small btn-warning">
-				<i class="icon-user"></i>
-			</button>
-
-			<%= link_to edit_user_profile_path(current_user), :class => "btn btn-small btn-danger" do %>
-        <i class="icon-cogs"></i>
-      <% end %>
-		</div>
-
-		<div id="sidebar-shortcuts-mini">
-			<span class="btn btn-success"></span>
-
-			<span class="btn btn-info"></span>
-
-			<span class="btn btn-warning"></span>
-
-			<span class="btn btn-danger"></span>
-		</div>
-	</div><!--#sidebar-shortcuts-->
-
-	<ul class="nav nav-list">
-		<li class="<%= 'active' if controller_name == 'dashboards' %>">
-      <%= link_to root_path do %>
-			  <i class="icon-dashboard"></i><span>Dashboard</span>
-      <% end %>
-		</li>
-    <% if can? :index, User %>
-  		<li class="<%= 'active' if controller_name == 'users' %>">
-  			<a href="#" class="dropdown-toggle">
-  				<i class="icon-user"></i>
-  				<span>User</span>
-
-  				<b class="arrow icon-angle-down"></b>
-  			</a>
-
-  			<ul class="submenu">
-  				<li class="<%= 'active' if action_name == 'advisors' %>">
-  					<%= link_to advisors_users_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Dosen
-            <% end %>
-  				</li>
-          
-  				<li class="<%= 'active' if action_name == 'students' %>">
-  					<%= link_to students_users_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Mahasiswa
-            <% end %>
-  				</li>
-          
-  				<% if can? :import_students, User.new %>
-    				<li class="<%= 'active' if action_name == 'import_advisors_schedule' %>">
-    					<%= link_to import_advisors_schedule_users_path do %>
-    						<i class="icon-double-angle-right"></i>
-    						Jadwal Dosen
-              <% end %>
-    				</li>
-          
-    				<li class="<%= 'active' if action_name == 'import_students' %>">
-    					<%= link_to import_students_users_path do %>
-    						<i class="icon-double-angle-right"></i>
-    						Import Mahasiswa
-              <% end %>
-    				</li>
-          
-    				<li class="<%= 'active' if action_name == 'send_sms' %>">
-    					<%= link_to send_sms_users_path do %>
-    						<i class="icon-double-angle-right"></i>
-    						Kirim SMS
-              <% end %>
-    				</li>
+        <% if can? :create, Topic.new %>
+          <%= link_to new_topic_path, :class => "btn btn-small btn-info" do %>
+            <i class="icon-pencil"></i>
           <% end %>
-  			</ul>
-  		</li>
-    <% end %>
-    <% if can? :index, Proposal.new %>
-  		<li class="<%= 'active' if controller_name == 'proposals' or controller_name == 'final_projects' or controller_name == 'examiners' %>">
-  			<a href="#" class="dropdown-toggle">
-  				<i class="icon-book"></i>
-  				<span>Tugas Akhir</span>
-  				<b class="arrow icon-angle-down"></b>
-  			</a>
+        <% end %>
 
-  			<ul class="submenu">
-  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'proposals' %>">
-  					<%= link_to proposals_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Proposal
-            <% end %>
-  				</li>
-          
-  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'final_projects' %>">
-  					<%= link_to final_projects_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Tugas Akhir
-            <% end %>
-  				</li>
-          
-  				<li class="<%= 'active' if action_name == 'index' and controller_name == 'examiners' %>">
-  					<%= link_to examiners_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Sidang
-            <% end %>
-  				</li>
-          
-  				<li class="<%= 'active' if action_name == 'schedule' and controller_name == 'examiners' %>">
-  					<%= link_to schedule_examiners_path do %>
-  						<i class="icon-double-angle-right"></i>
-  						Jadwal Sidang
-            <% end %>
-  				</li>
-  			</ul>
-  		</li>
-    <% end %>
-		<li class="<%= 'active' if controller_name == 'messages' %>">
-      <%= link_to messages_path do %>
-			  <i class="icon-envelope"></i><span>Messages</span>
-      <% end %>
-		</li>
-	  <% if can? :read, Topic %>
-  		<li class="<%= 'active' if controller_name == 'topics' %>">
-        <%= link_to topics_path do %>
-  			  <i class="icon-list"></i><span>Topik Tugas Akhir</span>
+  			<button class="btn btn-small btn-warning">
+  				<i class="icon-user"></i>
+  			</button>
+
+  			<%= link_to edit_user_profile_path(current_user), :class => "btn btn-small btn-danger" do %>
+          <i class="icon-cogs"></i>
+        <% end %>
+  		</div>
+
+  		<div id="sidebar-shortcuts-mini">
+  			<span class="btn btn-success"></span>
+
+  			<span class="btn btn-info"></span>
+
+  			<span class="btn btn-warning"></span>
+
+  			<span class="btn btn-danger"></span>
+  		</div>
+  	</div><!--#sidebar-shortcuts-->
+
+  	<ul class="nav nav-list">
+  		<li class="<%= 'active' if controller_name == 'dashboards' %>">
+        <%= link_to root_path do %>
+  			  <i class="icon-dashboard"></i><span>Dashboard</span>
         <% end %>
   		</li>
-    <% end %>
-    <% if current_user.is_student? and current_user.topic_tags.present? and current_user.students_status.is_tag_topic? %>
-		<li class="<%= 'active' if controller_name == 'topic_tags' %>">
-      <%= link_to topic_tag_path(current_user.topic_tags.first) do %>
-			  <i class="icon-tasks"></i><span>Topic Tag</span>
-      <% end %>
-		</li>
-    <% end %>
-		<% if current_user.is_student? and current_user.proposal.present? and current_user.students_status.is_working_proposal? %>
-			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
-	      <%= link_to todo_proposals_path do %>
-				  <i class="icon-tasks"></i><span>Todo Proposal</span>
-	      <% end %>
-			</li>
-		<% end %>
-		<% if current_user.is_student? and current_user.final_project.present? and current_user.students_status.is_working_final_project? %>
-			<li class="<%= 'active' if controller_name == 'todo_final_projects' || controller_name == 'final_projects' %>">
-	      <%= link_to todo_final_projects_path do %>
-				  <i class="icon-tasks"></i><span>Todo Final Projects</span>
-	      <% end %>
-			</li>
-		<% end %>
-		<li class="<%= 'active' if controller_name == 'news' %>">
-      <%= link_to news_index_path do %>
-			  <i class="icon-list-alt"></i><span>News</span>
-      <% end %>
-		</li>
-		<li class="<%= 'active' if controller_name == 'documents' %>">
-      <%= link_to documents_path do %>
-			  <i class="icon-edit"></i><span>Documents</span>
-      <% end %>
-		</li>
-		<li class="<%= 'active' if controller_name == 'notifications' %>">
-      <%= link_to old_notifications_path do %>
-			  <i class="icon-comments"></i><span>Notifications</span>
-      <% end %>
-		</li>
-		<li class="<%= 'active' if controller_name == 'archives' %>">
-      <%= link_to archives_path do %>
-			  <i class="icon-copy"></i><span>Archives</span>
-      <% end %>
-		</li>
-	</ul><!--/.nav-list-->
+      <% if can? :index, User %>
+    		<li class="<%= 'active' if controller_name == 'users' %>">
+    			<a href="#" class="dropdown-toggle">
+    				<i class="icon-user"></i>
+    				<span>User</span>
 
-	<div id="sidebar-collapse">
-		<i class="icon-double-angle-left"></i>
-	</div>
-</div>
+    				<b class="arrow icon-angle-down"></b>
+    			</a>
+
+    			<ul class="submenu">
+    				<li class="<%= 'active' if action_name == 'advisors' %>">
+    					<%= link_to advisors_users_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Dosen
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'students' %>">
+    					<%= link_to students_users_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Mahasiswa
+              <% end %>
+    				</li>
+          
+    				<% if can? :import_students, User.new %>
+      				<li class="<%= 'active' if action_name == 'import_advisors_schedule' %>">
+      					<%= link_to import_advisors_schedule_users_path do %>
+      						<i class="icon-double-angle-right"></i>
+      						Jadwal Dosen
+                <% end %>
+      				</li>
+          
+      				<li class="<%= 'active' if action_name == 'import_students' %>">
+      					<%= link_to import_students_users_path do %>
+      						<i class="icon-double-angle-right"></i>
+      						Import Mahasiswa
+                <% end %>
+      				</li>
+          
+      				<li class="<%= 'active' if action_name == 'send_sms' %>">
+      					<%= link_to send_sms_users_path do %>
+      						<i class="icon-double-angle-right"></i>
+      						Kirim SMS
+                <% end %>
+      				</li>
+            <% end %>
+    			</ul>
+    		</li>
+      <% end %>
+      <% if can? :index, Proposal.new %>
+    		<li class="<%= 'active' if controller_name == 'proposals' or controller_name == 'final_projects' or controller_name == 'examiners' %>">
+    			<a href="#" class="dropdown-toggle">
+    				<i class="icon-book"></i>
+    				<span>Tugas Akhir</span>
+    				<b class="arrow icon-angle-down"></b>
+    			</a>
+
+    			<ul class="submenu">
+    				<li class="<%= 'active' if action_name == 'index' and controller_name == 'proposals' %>">
+    					<%= link_to proposals_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Proposal
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'index' and controller_name == 'final_projects' %>">
+    					<%= link_to final_projects_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Tugas Akhir
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'index' and controller_name == 'examiners' %>">
+    					<%= link_to examiners_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Sidang
+              <% end %>
+    				</li>
+          
+    				<li class="<%= 'active' if action_name == 'schedule' and controller_name == 'examiners' %>">
+    					<%= link_to schedule_examiners_path do %>
+    						<i class="icon-double-angle-right"></i>
+    						Jadwal Sidang
+              <% end %>
+    				</li>
+    			</ul>
+    		</li>
+      <% end %>
+  		<li class="<%= 'active' if controller_name == 'messages' %>">
+        <%= link_to messages_path do %>
+  			  <i class="icon-envelope"></i><span>Messages</span>
+        <% end %>
+  		</li>
+  	  <% if can? :read, Topic %>
+    		<li class="<%= 'active' if controller_name == 'topics' %>">
+          <%= link_to topics_path do %>
+    			  <i class="icon-list"></i><span>Topik Tugas Akhir</span>
+          <% end %>
+    		</li>
+      <% end %>
+      <% if current_user.is_student? and current_user.topic_tags.present? and current_user.students_status.is_tag_topic? %>
+  		<li class="<%= 'active' if controller_name == 'topic_tags' %>">
+        <%= link_to topic_tag_path(current_user.topic_tags.first) do %>
+  			  <i class="icon-tasks"></i><span>Topic Tag</span>
+        <% end %>
+  		</li>
+      <% end %>
+  		<% if current_user.is_student? and current_user.proposal.present? and current_user.students_status.is_working_proposal? %>
+  			<li class="<%= 'active' if controller_name == 'todo_proposals' || controller_name == 'proposals' %>">
+  	      <%= link_to todo_proposals_path do %>
+  				  <i class="icon-tasks"></i><span>Todo Proposal</span>
+  	      <% end %>
+  			</li>
+  		<% end %>
+  		<% if current_user.is_student? and current_user.final_project.present? and current_user.students_status.is_working_final_project? %>
+  			<li class="<%= 'active' if controller_name == 'todo_final_projects' || controller_name == 'final_projects' %>">
+  	      <%= link_to todo_final_projects_path do %>
+  				  <i class="icon-tasks"></i><span>Todo Final Projects</span>
+  	      <% end %>
+  			</li>
+  		<% end %>
+  		<li class="<%= 'active' if controller_name == 'news' %>">
+        <%= link_to news_index_path do %>
+  			  <i class="icon-list-alt"></i><span>News</span>
+        <% end %>
+  		</li>
+  		<li class="<%= 'active' if controller_name == 'documents' %>">
+        <%= link_to documents_path do %>
+  			  <i class="icon-edit"></i><span>Documents</span>
+        <% end %>
+  		</li>
+  		<li class="<%= 'active' if controller_name == 'notifications' %>">
+        <%= link_to old_notifications_path do %>
+  			  <i class="icon-comments"></i><span>Notifications</span>
+        <% end %>
+  		</li>
+  		<li class="<%= 'active' if controller_name == 'archives' %>">
+        <%= link_to archives_path do %>
+  			  <i class="icon-copy"></i><span>Archives</span>
+        <% end %>
+  		</li>
+  	</ul><!--/.nav-list-->
+
+  	<div id="sidebar-collapse">
+  		<i class="icon-double-angle-left"></i>
+  	</div>
+  </div>
+<% end %>

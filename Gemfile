@@ -35,6 +35,7 @@ gem 'prawn'
 gem 'inherited_resources'
 gem 'breadcrumbs_on_rails'
 gem 'unicorn'
+gem 'unicorn-worker-killer'
 
 
 # Gems used only for assets and not required
