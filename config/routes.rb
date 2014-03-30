@@ -22,6 +22,8 @@ SimtaNew::Application.routes.draw do
       get :import_students
       post :import_advisors_schedule
       get :import_advisors_schedule
+      get :add_advisor
+      post :create_advisor
     end
   end
   resources :dashboards
@@ -115,6 +117,7 @@ SimtaNew::Application.routes.draw do
       get :schedule
     end
   end
+  resources :admin_settings, :only => [:index, :update]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

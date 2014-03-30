@@ -18,7 +18,7 @@ class Ability
           news.user == user
         end
         # USERS
-        can [:import_advisors_schedule, :import_students, :send_sms, :index, :advisors, :students, :updated], User
+        can [:import_advisors_schedule, :import_students, :send_sms, :index, :advisors, :students, :updated, :add_advisor, :create_advisor], User
         
         # PROPOSAL
         can [:index, :show, :updated, :access_todo_proposal, :update_document], Proposal
@@ -38,6 +38,9 @@ class Ability
         can [:show], Examiner do |examiner|
           examiner.status == "siap sidang" or examiner.status == "revisi"
         end
+        
+        # ADMIN SETTING
+        can [:index, :update], AdminSetting
         
       elsif user.is_kaprodi?
         # NEWS
@@ -136,8 +139,11 @@ class Ability
         
         # PROPOSAL
         can :create, Proposal
-        can [:show, :update, :update_document, :update_progress, :finished, :destroy], Proposal do |proposal|
+        can [:update, :update_document, :update_progress, :finished, :destroy], Proposal do |proposal|
           proposal.advisor_1 == user
+        end
+        can [:show], Proposal do |proposal|
+          proposal.advisor_1 == user || proposal.advisor_2 == user
         end
         
         # TODO PROPOSAL

@@ -80,6 +80,13 @@
       						Import Mahasiswa
                 <% end %>
       				</li>
+              
+      				<li class="<%= 'active' if action_name == 'add_advisor' || action_name == 'create_advisor' %>">
+      					<%= link_to add_advisor_users_path do %>
+      						<i class="icon-double-angle-right"></i>
+      						Tambah Dosen
+                <% end %>
+      				</li>
           
       				<li class="<%= 'active' if action_name == 'send_sms' %>">
       					<%= link_to send_sms_users_path do %>
@@ -128,6 +135,13 @@
               <% end %>
     				</li>
     			</ul>
+    		</li>
+      <% end %>
+      <% if can? :index, AdminSetting.new %>
+    		<li class="<%= 'active' if controller_name == 'admin_settings' %>">
+          <%= link_to admin_settings_path do %>
+    			  <i class="icon-config"></i><span>Admin Setting</span>
+          <% end %>
     		</li>
       <% end %>
   		<li class="<%= 'active' if controller_name == 'messages' %>">

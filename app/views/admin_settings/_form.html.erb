@@ -1,0 +1,15 @@
+<%= simple_form_for @admin_setting, :html => {:class => "form-horizontal"} do |f| %>
+  <h4>Set minimal waktu bimbingan</h4>
+  <%= f.input :guidance_time_s1_telecommunication, :as => :select, :label => "S1 TT", :collection => AdminSetting.setting_time_minimal %>
+  <%= f.input :guidance_time_s1_extension_telecommunication, :as => :select, :label => "S1 exTT", :collection => AdminSetting.setting_time_minimal %>
+  <%= f.input :guidance_time_d3_telecommunication, :as => :select, :label => "D3 TT", :collection => AdminSetting.setting_time_minimal %>
+  <%= f.input :guidance_time_s1_computer_system, :as => :select, :label => "S1 SK", :collection => AdminSetting.setting_time_minimal %>
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-info" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Submit
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

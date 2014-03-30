@@ -13,6 +13,22 @@ class UsersController < ApplicationController
     end
   end
   
+  def add_advisor
+    add_breadcrumb "Tambah Dosen"
+    @user = User.new
+  end
+  
+  def create_advisor
+    @user = User.new(params[:user])
+    if @user.save
+      flash[:success] = "User telah ditambah"
+      redirect_to advisors_users_path
+    else
+      flash[:error] = "User tidak berhasil ditambah"
+      render :add_advisor
+    end
+  end
+  
   def edit
     add_breadcrumb 'Edit User'
   end
@@ -22,7 +38,7 @@ class UsersController < ApplicationController
       flash[:success] = "User telah terupdate"
       if @user.is_student?
         redirect_to students_users_path
-      elsif @user.is_advisor?
+      elsif @user.is_advisor? or @user.is_kaprodi?
         redirect_to advisors_users_path
       end
     else

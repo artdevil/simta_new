@@ -3,7 +3,7 @@
 	<div id="page-content" class="clearfix">
 		<div class="page-header position-relative">
 			<h1>
-				Edit <%= @user.user_is_role %>
+				Add Advisor
 				<small>
 					<i class="icon-double-angle-right"></i>
 					Hasil Pencarian
@@ -15,13 +15,7 @@
 			<%= bootstrap_flash %>
       <!-- end bootstrap flash -->
 			<!--PAGE CONTENT BEGINS HERE-->
-      <% if @user.is_student? %>
-        <%= render 'users/form/student_form' %>
-      <% elsif @user.is_advisor? %>
-        <%= render 'users/form/advisor_form' %>
-      <% elsif @user.is_kaprodi? %>
-        <%= render 'users/form/advisor_form' %>
-      <% end %>
+      <%= render 'users/form/advisor_form' %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->

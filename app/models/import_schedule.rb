@@ -44,12 +44,35 @@ class ImportSchedule
     (3..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       row["nip"] = row["nip"]
+      row["monday"] = split_timing(row["monday"])
+      row["tuesday"] = split_timing(row["tuesday"])
+      row["wednesday"] = split_timing(row["wednesday"])
+      row["thursday"] = split_timing(row["thursday"])
+      row["friday"] = split_timing(row["friday"])
       advisor = User.find_by_keyid(row["nip"])
       if advisor.present?
         advisor.advisors_schedule.update_attributes(:monday => row["monday"], :tuesday => row["tuesday"], :wednesday => row["wednesday"], :thursday => row["thursday"], :friday => row["friday"])
       end
       advisor
     end
+  end
+  
+  def split_timing(timing)
+    timing = timing.try(:split,',').try(:map) do |f|
+      case f
+      when '1'
+        '06.30-08.30'
+      when '2'
+        '08.30-10.30'
+      when '3'
+        '10.30-12.30'
+      when '4'
+        '12.30-14.30'
+      when '5'
+        '14.30-16.30'
+      end
+    end
+    timing.try(:join,',')
   end
 
   def open_spreadsheet

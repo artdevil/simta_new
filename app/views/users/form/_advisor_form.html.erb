@@ -1,4 +1,4 @@
-<%= simple_nested_form_for @user, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+<%= simple_nested_form_for @user, :url => (@user.persisted? ? user_path(@user) : create_advisor_users_path), :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
   <% if @user.errors.any? %>
     <%= render :partial => "shared/error_messages", :locals => {:context => @user } %>
   <% end %>
@@ -6,7 +6,8 @@
     <div class="span6">
       <%= f.input :username, :label => "Nama" %>
       <%= f.input :keyid, :label => "NIP" %>
-      <%= f.input :user_role_id, :label => "Jabatan", :as => :select, :collection => UserRole.all %>
+      <%= f.input :user_role_id, :label => "Jabatan", :as => :select, :include_blank => false, :collection => UserRole.all.reject{|f| f.name == 'student' || f.name == 'admin'} %>
+      <%= f.association :faculty, :label => "Jurusan", :include_blank => false %>
       <%= f.input :address, :label => "alamat" %>
       <%= f.input :phone, :label => "telephone" %>
     </div>
