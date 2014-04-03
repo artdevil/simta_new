@@ -21,6 +21,10 @@
           <%= render :partial => "dashboards/students/dashboards" %>
         <% elsif current_user.is_advisor? %>
           <%= render :partial => "dashboards/advisors/dashboards" %>
+        <% elsif current_user.is_admin? %>
+          <%= render :partial => "dashboards/admins/dashboards" %>
+        <% elsif current_user.is_kaprodi? %>
+          <%= render :partial => "dashboards/kaprodi/dashboards" %>
         <% end %>
       </div>
 			<!--PAGE CONTENT ENDS HERE-->

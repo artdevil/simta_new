@@ -61,7 +61,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def finished?
-    finished == true
+    self.finished == true
   end
   
   def self.kaprodi(faculty)
@@ -105,8 +105,8 @@ class Proposal < ActiveRecord::Base
     end
     
     def cek_user_documents
-      if self.exam.blank? and self.events.blank? and self.proposal.blank? and self.decree.blank?
-        errors.add(:base, "the document is not finished")
+      unless self.exam.present? and self.events.present? and self.proposal.present? and self.decree.present?
+        errors.add(:progress, "the document is not finished")
       end
     end
     

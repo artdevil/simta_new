@@ -25,4 +25,14 @@ class ReportFinalProject < ActiveRecord::Base
   def last_report_final report_final
     ReportFinalProject.where(:user_id => report_final.user_id, :final_project_id => report_final.final_project_id).last
   end
+  
+  def self.last_report_time
+    out_of_bond = ReportFinalProject.where("created_at <= ? ", DateTime.now - 2.week).last
+    all_of_data = ReportFinalProject.where("created_at >= ? and final_project_id = ? ",DateTime.now - 2.week, out_of_bond.final_project_id).present? if out_of_bond.present?
+    if !out_of_bond.present? or all_of_data
+      true
+    else
+      false
+    end
+  end
 end

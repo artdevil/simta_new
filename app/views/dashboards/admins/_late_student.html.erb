@@ -1,0 +1,53 @@
+<div class="span6">
+	<div class="widget-box transparent">
+		<div class="widget-header widget-header-flat">
+			<h4 class="lighter">
+				<i class="icon-edit orange"></i>
+				Mahasiswa Tidak Bimbingan
+			</h4>
+
+			<div class="widget-toolbar">
+				<a href="#" data-action="collapse">
+					<i class="icon-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="widget-body">
+      <div class="clearfix"></div>
+			<div class="widget-main no-padding">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>
+								Nama
+							</th>
+							<th>
+								NIM
+							</th>
+              <th>
+                
+              </th>
+						</tr>
+					</thead>
+					<tbody>
+            <% @user_late.each do |f| %>
+              <tr>
+                <td><%= f.username %></td>
+                <td><%= f.keyid %></td>
+                <td>
+                  <%= link_to send_sms_users_path(:contact_phone => f.id), :class => "btn btn-minier btn-success btn-tooltip", :title => "Kirim SMS ke mahasiswa", :data => {:placement => "bottom"} do %>
+                    <i class="icon-external-link"></i>
+                  <% end %>
+                  <%= link_to "/todo_final_projects/issue/#{f.slug}", :class => "btn btn-minier btn-alert btn-tooltip", :title => "Lihat Todo Final Project", :data => {:placement => "bottom"} do %>
+                    <i class="icon-eye-open"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+					</tbody>
+				</table>
+			</div><!--/widget-main-->
+		</div><!--/widget-body-->
+	</div><!--/widget-box-->
+</div><!-- end span-->

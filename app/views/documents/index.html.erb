@@ -20,25 +20,27 @@
 					<ul id="browser" class="filetree">
 						<li class="closed"><span class="folder">Folder Tugas Akhir</span>
 							<ul>
-								<li><span class="file">Item 1.1</span></li>
+			          <% @documents_ta.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
+									</li>
+			          <% end %>
 							</ul>
 						</li>
 						<li class="closed"><span class="folder">Folder Proposal</span>
 							<ul>
-								<li><span class="folder">Subfolder 2.1</span>
-									<ul id="folder21">
-										<li><span class="file">File 2.1.1</span></li>
-										<li><span class="file">File 2.1.2</span></li>
-									</ul>
-								</li>
-								<li><span class="file">File 2.2</span></li>
+			          <% @documents_proposal.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
+									</li>
+			          <% end %>
 							</ul>
 						</li>
 						<li class="closed"><span class="folder">Folder Dokumen Lain</span>
 							<ul>
 			          <% @documents_miss.each do |f| %>
 									<li>
-										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %></span>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
 									</li>
 			          <% end %>
 							</ul>
@@ -49,4 +51,7 @@
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
+  <% if can? :new, Document.new %>
+    <%= render :partial => "documents/partials/config_button" %>
+  <% end %>
 </div><!--/#main-content-->

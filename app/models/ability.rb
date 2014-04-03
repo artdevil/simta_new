@@ -42,6 +42,9 @@ class Ability
         # ADMIN SETTING
         can [:index, :update], AdminSetting
         
+        # DOCUMENT
+        can :manage, Document
+        
       elsif user.is_kaprodi?
         # NEWS
         can :created, News 
@@ -89,6 +92,9 @@ class Ability
         can [:show], Examiner do |examiner|
           examiner.status == "siap sidang" or examiner.status == "revisi"
         end
+        
+        # DOCUMENT
+        can :manage, Document
       
       elsif user.is_student?
         # TOPIC TAG
@@ -124,6 +130,9 @@ class Ability
         can :update, Comment do |comment|
           comment.try(:user) == user
         end
+        
+        # DOCUMENT
+        can :index, Document
         
       elsif user.is_advisor?
         # TOPIC
@@ -193,6 +202,9 @@ class Ability
         can :revision_status, Examiner do |examiner|
           examiner.try(:examiner_2) == user
         end
+        
+        # DOCUMENT
+        can :index, Document
       end
     end
   end

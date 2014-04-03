@@ -1,0 +1,1 @@
+CKEDITOR.editorConfig=function(t){t.toolbar=[{name:"basicstyles",items:["Bold","Italic","Underline"]},{name:"paragraph",groups:["list","align"],items:["NumberedList","BulletedList","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock"]}]};
