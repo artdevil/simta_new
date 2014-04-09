@@ -3,7 +3,9 @@ module ApplicationHelper
     if notification.notifiable.class.name == "TopicTag"
       "#{root_path}"
     elsif notification.notifiable.class.name == "Proposal"
-      if current_user.is_student?
+      if current_user.is_student? and notification.notifiable.finished?
+        "#{root_path}"
+      elsif current_user.is_student? and !notification.notifiable.finished?
         "#{todo_proposals_path}"
       elsif current_user.is_advisor?
         "/todo_proposals/issue/#{notification.notifiable.user.slug}"

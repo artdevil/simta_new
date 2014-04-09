@@ -15,7 +15,7 @@
       <%= f.simple_fields_for :advisors_status do |n| %>
         <%= n.input :max_coordinator, :label => "Maximum bimbingan" %>
         <%= n.input :coordinator, :label => "Jumlah Bimbingan", :disabled => true %>
-        <%= n.input :skills, :label => "Skill", :hint => "pisahkan dengan coma" %>
+        <%= n.input :skills, :label => "Skill", :hint => "pisahkan dengan coma. Pemilihan topik Jaringan, Transmisi, Pensinyalan, Mikro, Pemrograman" %>
         <%= n.input :code_advisor, :label => "Kode Dosen" %>
       <% end %>
       <%= f.input :password, :label => "Password", :hint => "Kosongkan jika tidak diganti" %>

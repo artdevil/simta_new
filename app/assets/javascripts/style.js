@@ -30,34 +30,34 @@ $(document).ready(function(){
     format: "dd-mm-yyyy",
     startDate: currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear()
   });
+	
+	$(document).on('click','.add_nested_fields',function(){
+	  $('.upload_file').ace_file_input({
+	  	no_file:'No File',
+	  	btn_choose:'Choose',
+	  	btn_change:'Change',
+	  	droppable:false,
+	  	onchange:null,
+	  	thumbnail:true, //| true | large
+	  	whitelist: 'png|jpg|jpeg|pdf|JPG'
+	  	//blacklist:'exe|php'
+	  	//onchange:''
+	  	//
+	  });
+	});
   
-  $(document).on('click','.add_nested_fields',function(){
-    $('.upload_file').ace_file_input({
-    	no_file:'No File',
-    	btn_choose:'Choose',
-    	btn_change:'Change',
-    	droppable:false,
-    	onchange:null,
-    	thumbnail:true, //| true | large
-    	whitelist: 'png|jpg|jpeg|pdf|JPG'
-    	//blacklist:'exe|php'
-    	//onchange:''
-    	//
-    });
-  });
-  
-  $('.upload_file').ace_file_input({
-  	no_file:'No File',
-  	btn_choose:'Choose',
-  	btn_change:'Change',
-  	droppable:false,
-  	onchange:null,
-  	thumbnail:true, //| true | large
-  	whitelist: 'png|jpg|jpeg|pdf|JPG'
-  	//blacklist:'exe|php'
-  	//onchange:''
-  	//
-  });
+  // $('.upload_file').ace_file_input({
+//   	no_file:'No File',
+//   	btn_choose:'Choose',
+//   	btn_change:'Change',
+//   	droppable:false,
+//   	onchange:null,
+//   	thumbnail:true, //| true | large
+//   	whitelist: 'png|jpg|jpeg|pdf|JPG'
+//   	//blacklist:'exe|php'
+//   	//onchange:''
+//   	//
+//   });
   
   $(document).on('click','.client_side_validation', function(){
     $("form[data-validate]").validate();
@@ -78,7 +78,7 @@ $(document).ready(function(){
   });
   
   $('.data_advisor_tables').dataTable({
-    "aoColumns": [null, null,null, { "bSortable": false }]
+    "aoColumns": [null, null,null, null, { "bSortable": false }]
   });
   $('.data_student_tables').dataTable({
     "sDom": "<'row-fluid'<'span1 selected'><'span7'l><'span4'f>r>t<'row-fluid'<'span6'i><'span6'p>>",

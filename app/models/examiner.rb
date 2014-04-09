@@ -1,5 +1,6 @@
 class Examiner < ActiveRecord::Base
   belongs_to :final_project
+  has_one :user, :through => :final_project
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   delegate :user, :to => :final_project
   delegate :proposal, :to => :final_project

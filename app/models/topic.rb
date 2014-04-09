@@ -21,6 +21,8 @@ class Topic < ActiveRecord::Base
   validate :check_number_proposal, :if => :new_record?
   before_save :set_token_for_proposal, :if => Proc.new{proposals.reject(&:persisted?).count > 1}
   
+  # Scope
+  scope :search_title, lambda{|f| where('title like ?', "%#{f}%")}
   def set_token_for_proposal
     Rails.logger.info('running token')
     token_generate = generate_token

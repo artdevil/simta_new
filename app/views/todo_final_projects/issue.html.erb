@@ -61,7 +61,7 @@
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
-  <% if can? :new_todo, TodoFinalProject.new %>
+  <% if can? :new_todo, TodoFinalProject.new and (@final_project.advisor_1 == current_user || @final_project.advisor_2 == current_user) %>
     <%= render :partial => "todo_final_projects/issue/config_button", :locals => {:final_project => @final_project} %>
   <% end %>
 </div><!--/#main-content-->

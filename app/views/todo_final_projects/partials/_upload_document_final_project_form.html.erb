@@ -1,7 +1,7 @@
 <%= simple_form_for final_project, :url => update_document_final_project_path(final_project), :method => :put, :remote => true do |f| %>
   <%= link_to "buku tugas akhir", final_project.document_final_project.url unless final_project.document_final_project.blank? %>
   <%= f.input :document_final_project, :input_html => {:class => "upload_file"}, :label => "Buku tugas akhir" %>
-  <% if final_project.examiners.unscoped.not_accepted_status.first.status == "revisi" %>
+  <% if final_project.examiners.unscoped.not_accepted_status.first.try(:status) == "revisi" %>
     <%= link_to "buku revisi tugas akhir", final_project.document_revision_final_project.url unless final_project.document_revision_final_project.blank? %>
     <%= f.input :document_revision_final_project, :input_html => {:class => "upload_file"}, :label => "Buku Revisi tugas akhir" %>
   <% end %>

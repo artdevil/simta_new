@@ -15,10 +15,10 @@
             <i class="icon-pencil"></i>
           <% end %>
         <% end %>
-
-  			<button class="btn btn-small btn-warning">
-  				<i class="icon-user"></i>
-  			</button>
+        
+        <%= link_to '/user_profiles', :class => "btn btn-small btn-warning" do %>
+          <i class="icon-user"></i>
+        <% end %>
 
   			<%= link_to edit_user_profile_path(current_user), :class => "btn btn-small btn-danger" do %>
           <i class="icon-cogs"></i>
@@ -128,12 +128,14 @@
               <% end %>
     				</li>
           
-    				<li class="<%= 'active' if action_name == 'schedule' and controller_name == 'examiners' %>">
-    					<%= link_to schedule_examiners_path do %>
-    						<i class="icon-double-angle-right"></i>
-    						Jadwal Sidang
-              <% end %>
-    				</li>
+    				<% if current_user.is_admin? %>
+      				<li class="<%= 'active' if action_name == 'schedule' and controller_name == 'examiners' %>">
+      					<%= link_to schedule_examiners_path do %>
+      						<i class="icon-double-angle-right"></i>
+      						Jadwal Sidang
+                <% end %>
+      				</li>
+            <% end %>
     			</ul>
     		</li>
       <% end %>

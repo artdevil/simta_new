@@ -179,12 +179,14 @@ treeview-red.gif: treeview-red-f00057a1c80339fb9f56547f0af85668.gif
 treeview-red/index.gif: treeview-red-f00057a1c80339fb9f56547f0af85668.gif
 active_admin.js: active_admin-e07b06d51b88351a74bacf86fac80db2.js
 active_admin/index.js: active_admin-e07b06d51b88351a74bacf86fac80db2.js
-application.js: application-2f8be666cd62e5f7b91084472049bcaa.js
-application/index.js: application-2f8be666cd62e5f7b91084472049bcaa.js
+application.js: application-3ba3bfa5c34bc3911152454f480efea8.js
+application/index.js: application-3ba3bfa5c34bc3911152454f480efea8.js
 ckeditor/myconfig.js: ckeditor/myconfig-f3eb8aa898374951961ced8d7061647c.js
 ckeditor/myconfig/index.js: ckeditor/myconfig-f3eb8aa898374951961ced8d7061647c.js
 ckeditor/plugins/timestamp/icons/timestamp.png: ckeditor/plugins/timestamp/icons/timestamp-8ecd22ee8947a67a16bad2ac119cc207.png
 ckeditor/plugins/timestamp/icons/timestamp/index.png: ckeditor/plugins/timestamp/icons/timestamp-8ecd22ee8947a67a16bad2ac119cc207.png
+style_coffe.js: style_coffe-d0eac88d83da22ab5ec91a983fe3a912.js
+style_coffe/index.js: style_coffe-d0eac88d83da22ab5ec91a983fe3a912.js
 active_admin.css: active_admin-169adf44cd068fb8270c9e3ae11adb22.css
 active_admin/index.css: active_admin-169adf44cd068fb8270c9e3ae11adb22.css
 application.css: application-a819a4f422aa39a2095fac93727b0b95.css

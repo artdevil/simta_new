@@ -2,7 +2,14 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   def index
-    @topics = Topic.includes(:user).page(params[:page]).per(5)
+    @topic_tag = Topic.tag_counts.in_groups_of(6)
+    if params[:search_key].present?
+      @topics = Topic.search_title(params[:search_key]).includes(:user).page(params[:page]).per(5)
+    elsif params[:keyword].present?
+      @topics = Topic.tagged_with(params[:keyword]).includes(:user).page(params[:page]).per(5)
+    else
+      @topics = Topic.includes(:user).page(params[:page]).per(5)
+    end
   end
   
   def new

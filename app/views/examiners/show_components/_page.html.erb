@@ -1,0 +1,25 @@
+<div class="row-fluid">
+  <div class="span12">
+  	<div class="widget-box light-border">
+  		<div class="widget-header header-color-dark">
+  			<h6>HALAMAN</h6>
+
+  			<div class="widget-toolbar">
+  				<a href="#" data-action="collapse">
+  					<i class="icon-chevron-up"></i>
+  				</a>
+  				<a href="#" data-action="close">
+  					<i class="icon-remove"></i>
+  				</a>
+  			</div>
+  		</div>
+
+  		<div class="widget-body">
+  			<div class="widget-main">
+          <%= link_to 'Final Project', "/todo_proposals/issue/#{@examiner.user.slug}", :target => "_BLANK" %><br>
+          <%= link_to 'Proposal', "/todo_final_projects/issue/#{@examiner.user.slug}", :target => "_BLANK" %>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+</div>

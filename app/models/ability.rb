@@ -52,7 +52,7 @@ class Ability
           news.user == user
         end
         # USERS
-        can [:index, :advisors, :students], User
+        can [:index, :advisors, :students, :send_sms], User
         
         can [:updated], User do |f|
           f.faculty_id == user.faculty_id
@@ -161,7 +161,8 @@ class Ability
           todo_proposal.user = user
         end
         can [:access_todo_proposal], Proposal do |proposal|
-          proposal.advisor_1 == user || proposal.advisor_2 == user
+          final_project = proposal.final_project if proposal.final_project.present?
+          proposal.advisor_1 == user || proposal.advisor_2 == user || final_project.examiners.first.examiner_1 == user || final_project.examiners.first.examiner_2 == user || final_project.examiners.first.examiner_3 == user 
         end
         
         # FINAL PROJECT
@@ -170,8 +171,12 @@ class Ability
           final_project.advisor_1 == user
         end
         
-        can [:new_report, :create_report, :show, :show_history, :activities], FinalProject do |final_project|
+        can [:new_report, :create_report, :show], FinalProject do |final_project|
           final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user
+        end
+        
+        can [:show_history, :activities], FinalProject do |final_project|
+          final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user || final_project.examiners.first.examiner_1 == user || final_project.examiners.first.examiner_2 == user || final_project.examiners.first.examiner_3 == user 
         end
         
         # TODO FINAL PROJECT
@@ -181,7 +186,7 @@ class Ability
           todo_final_project.user == user
         end
         can [:access_todo_final_project], FinalProject do |final_project|
-          final_project.advisor_1 == user || final_project.advisor_2 == user
+          final_project.advisor_1 == user || final_project.advisor_2 == user || final_project.examiners.first.examiner_1 == user || final_project.examiners.first.examiner_2 == user || final_project.examiners.first.examiner_3 == user 
         end
         
         # COMMENT

@@ -12,7 +12,7 @@ class Proposal < ActiveRecord::Base
 
   #validate
   validate :cek_user_id, :cek_status_user, :cek_advisor_1_quota, :cek_advisor_2_quota, :on => :create
-  validate :cek_advisor_2_quota, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
+  validate :cek_advisor_2_quota_on_update, :on => :update, :if => Proc.new{ self.advisor_2_name_changed? }
   validate :protected_for_update_if_finished, :on => :update
   validates_presence_of :advisor_1_id, :advisor_2_name, :title, :description, :field
   validates_numericality_of :progress, :only_integer =>true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => "invalid number"
@@ -137,6 +137,19 @@ class Proposal < ActiveRecord::Base
     end
     
     def cek_advisor_2_quota
+      if self.advisor_2_id.present?
+        advisor_2_status = User.select_lecture(self.advisor_2_id).first.try(:advisors_status)
+        if advisor_2_status.present?
+          if advisor_2_status.coordinator >= advisor_2_status.max_coordinator
+            errors.add(:advisor_2_name, "Advisor quota is full")
+          end
+        else
+          errors.add(:advisor_2_name, "can't find advisor 2")
+        end
+      end
+    end
+    
+    def cek_advisor_2_quota_on_update
       if self.advisor_2_id.present?
         advisor_2_status = User.select_lecture(self.advisor_2_id).first.try(:advisors_status)
         if advisor_2_status.present?
