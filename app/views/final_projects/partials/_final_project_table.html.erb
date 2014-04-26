@@ -42,10 +42,10 @@
 						</div>
           </td>
           <td>
-            <%= link_to final_project_path(final_project), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Proposal", :data => {:placement => "bottom"} do %>
+            <%= link_to final_project_path(final_project), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Final Project", :data => {:placement => "bottom"} do %>
               <i class="icon-eye-open"></i>
             <% end %>
-            <%= link_to "/todo_final_projects/issue/#{final_project.user.slug}", :class => "btn btn-minier btn-success btn-tooltip", :title => "Lihat Todo Proposal", :data => {:placement => "bottom"} do %>
+            <%= link_to "/todo_final_projects/issue/#{final_project.user.slug}", :class => "btn btn-minier btn-success btn-tooltip", :title => "Lihat Todo Final Project", :data => {:placement => "bottom"} do %>
               <i class="icon-external-link"></i>
             <% end %>
           </td>

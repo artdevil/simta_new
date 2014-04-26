@@ -40,8 +40,8 @@ en:
       failed: "Proposal can't be finished. Please check it again"
   final_project:
     update:
-      success: "Your Final Project Has Been Updated"
-      failed: "You Final Project Can't updated"
+      success: "Final Project Has Been Updated"
+      failed: "Final Project Can't updated"
     delete:
       success: "Final Project has been removed"
     completed: "Final Project anda telah selesai. Silahkan mengupload buku TA dan mengajukan diri untuk sidang TA"

@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   def add_advisor
     add_breadcrumb "Tambah Dosen"
     @user = User.new
+    @user.build_advisors_status
   end
   
   def create_advisor

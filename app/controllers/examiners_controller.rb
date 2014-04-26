@@ -56,7 +56,7 @@ class ExaminersController < ApplicationController
   
   def schedule
     if params[:examiner].blank?
-      if !Examiner.all.map{|f| !f.status.present? or f.status == "cari dosen penguji"}.all?
+      if Examiner.all.map{|f| !f.status.present? or f.status == "tunggu konfirmasi"}.any?
         redirect_to examiners_path, :alert => "Mohon diperiksa kesiapan status mahasiswa"
       else
         @examiner_schedule = Examiner.search_random_schedule
@@ -65,10 +65,11 @@ class ExaminersController < ApplicationController
       @examiner_schedule = params[:examiner]
       respond_to do |format|
         format.html
-        format.pdf do
-          pdf = ScheduleFinalProjectPdf.new(@examiner_schedule)
-          send_data pdf.render
-        end
+        format.xlsx
+        # format.pdf do
+#           pdf = ScheduleFinalProjectPdf.new(@examiner_schedule)
+#           send_data pdf.render
+#         end
       end
     end
   end

@@ -1,18 +1,18 @@
 <%= simple_form_for proposal, :url => update_document_proposal_path(proposal), :method => :post, :remote => true do |f| %>
   
-    <%= link_to File.basename(proposal.exam.path), proposal.exam.url unless proposal.exam.blank? %>
+    <%= link_to "Download lembar pemeriksa", proposal.exam.url unless proposal.exam.blank? %>
     <% if !proposal.finished? %>
       <%= f.input :exam, :input_html => {:class => "upload_file"}, :label => "lembar pemeriksa" %>
     <% end %>
-    <%= link_to File.basename(proposal.events.path), proposal.events.url unless proposal.events.blank? %>
+    <%= link_to "Download berita acara", proposal.events.url unless proposal.events.blank? %>
     <% if !proposal.finished? %>
       <%= f.input :events, :input_html => {:class => "upload_file"}, :label => "Berita Acara" %>
     <% end %>
-    <%= link_to File.basename(proposal.proposal.path), proposal.proposal.url unless proposal.proposal.blank? %>
+    <%= link_to "Download proposal", proposal.proposal.url unless proposal.proposal.blank? %>
     <% if !proposal.finished? %>
       <%= f.input :proposal, :input_html => {:class => "upload_file"}, :label => "Proposal" %>
     <% end %>
-  <%= link_to File.basename(proposal.decree.path), proposal.decree.url unless proposal.decree.blank? %>
+  <%= link_to "Download SK", proposal.decree.url unless proposal.decree.blank? %>
   <%= f.input :decree, :input_html => {:class => "upload_file"}, :label => "SK" %>
   <%= f.submit 'upload file', :class => "btn btn-success"%>
 <% end %>

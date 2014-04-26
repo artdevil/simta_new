@@ -36,11 +36,23 @@
           </div><!-- end row -->
         </div>
       </div><!-- end row -->
-      <div class="hr hr32 hr-dotted"></div>
+      <% if can? :destroy, @final_project %>
+        <div class="hr hr32 hr-dotted"></div>
+        <div class="row-fluid">
+          <div class="span10">
+        		<blockquote>
+        			<p>Hapus Final Project ini ? Final Project akan terhapus permanen dan tidak dapat dikembalikan</p>
+        		</blockquote>
+          </div>
+          <div class="span2">
+            <%= link_to "Hapus", final_project_path(@final_project), :method => :delete, :confirm => "Apakah anda yakin ?", :class => "btn btn-danger" %>
+          </div>
+        </div>
+      <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->
 	</div><!--/#page-content-->
 </div><!--/#main-content-->
-<%# if @final_project.is_advisor_1?(current_user) %>
-  <%#= render :partial => "final_projects/issue/config_show_button", :locals => {:final_project => @final_project} %>
-<%# end %>
+<% if can? :update, @final_project %>
+  <%= render :partial => "final_projects/issue/config_show_button", :locals => {:final_project => @final_project} %>
+<% end %>

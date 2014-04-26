@@ -7,14 +7,14 @@
     <%= f.input :location %>
     <%= f.input :can_session, :as => :hidden, :input_html => {:value => true} %>
     <%= f.submit "Siap Sidang", :class => "btn btn-info" %>
-  <% elsif @examiner.status == "cari dosen penguji" %>
-    <%= f.input :examiner_1_name, :label => "Ketua Sidang", :input_html => {:class => "user_find_ajax", :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_1_id'}} %>
+  <% elsif @examiner.status == "cari dosen penguji" or @examiner.status == "siap sidang"%>
+    <%= f.input :examiner_1_name, :label => "Ketua Sidang", :input_html => {:class => "user_find_ajax", :value => f.object.examiner_1.try(:username), :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_1_id'}} %>
     <%= f.input :examiner_1_id, :as => :hidden %>
-    <%= f.input :examiner_2_name, :label => "Sekertaris Sidang", :input_html => {:class => "user_find_ajax", :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_2_id'}} %>
+    <%= f.input :examiner_2_name, :label => "Sekertaris Sidang", :input_html => {:class => "user_find_ajax", :value => f.object.examiner_2.try(:username), :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_2_id'}} %>
     <%= f.input :examiner_2_id, :as => :hidden %>
-    <%= f.input :examiner_3_name, :label => "Penguji", :input_html => {:class => "user_find_ajax", :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_3_id'}} %>
+    <%= f.input :examiner_3_name, :label => "Penguji", :input_html => {:class => "user_find_ajax", :value => f.object.examiner_3.try(:username), :data => {'autocomplete-source' => search_examiner_path(f.object.final_project), :input => 'examiner_examiner_3_id'}} %>
     <%= f.input :examiner_3_id, :as => :hidden %>
-    <%= f.input :datetime, :label => "Tanggal dan Waktu", :as => :string, :input_html => {:class => "datetimepicker"} %>
+    <%= f.input :datetime, :label => "Tanggal dan Waktu", :as => :string, :input_html => {:class => "datetimepicker", :value => "#{f.object.datetime.try(:strftime,'%d/%m/%Y %H:%M')}"} %>
     <%= f.input :location %>
     <%= f.input :note, :as => :ckeditor, :label => "Note",:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
     <div class="row-fluid">

@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  caches_action :index
   
   def index
     if params[:recipient_key_id]
@@ -15,6 +16,7 @@ class MessagesController < ApplicationController
     end
     @message_inbox = current_user.received_messages
     @message_outbox = current_user.sent_messages
+    expires_in 5.minutes, public: true
   end
   
   def create

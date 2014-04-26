@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
     @documents_ta = Document.ta
     @documents_proposal = Document.proposal
     @documents_miss = Document.miss
+    expires_in 5.minutes, public: true
   end
   
   def new

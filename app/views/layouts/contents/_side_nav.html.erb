@@ -65,14 +65,17 @@
     						Mahasiswa
               <% end %>
     				</li>
-          
-    				<% if can? :import_students, User.new %>
+            
+            <% if can? :import_advisors_schedule, User.new %>
       				<li class="<%= 'active' if action_name == 'import_advisors_schedule' %>">
       					<%= link_to import_advisors_schedule_users_path do %>
       						<i class="icon-double-angle-right"></i>
       						Jadwal Dosen
                 <% end %>
       				</li>
+            <% end %>
+            
+    				<% if can? :import_students, User.new %>
           
       				<li class="<%= 'active' if action_name == 'import_students' %>">
       					<%= link_to import_students_users_path do %>
@@ -87,7 +90,8 @@
       						Tambah Dosen
                 <% end %>
       				</li>
-          
+            <% end %>
+            <% if can? :send_sms, User.new %>
       				<li class="<%= 'active' if action_name == 'send_sms' %>">
       					<%= link_to send_sms_users_path do %>
       						<i class="icon-double-angle-right"></i>

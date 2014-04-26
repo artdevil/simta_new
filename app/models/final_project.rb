@@ -8,7 +8,7 @@ class FinalProject < ActiveRecord::Base
   
   #relation
   belongs_to :user
-  belongs_to :proposal
+  belongs_to :proposal, :dependent => :destroy
   belongs_to :advisor_1, :class_name => "User", :foreign_key => "advisor_1_id"
   belongs_to :advisor_2, :class_name => "User", :foreign_key => "advisor_2_id"
   has_many :notifications, :as => :notifiable, :dependent => :destroy
@@ -66,6 +66,17 @@ class FinalProject < ActiveRecord::Base
       "Masa Sidang"
     elsif progress == 100 and document_final_project.present? and examiners.present? and examiners.first.revision?
       "Masa Revisi"
+    end
+  end
+  
+  def last_report_time
+    out_of_bond = self.report_final_projects.where("created_at <= ? ", DateTime.now - 2.week).last
+    out_of_month = self.created_at <  DateTime.now - 1.month unless out_of_bond.present?
+    all_of_data = self.report_final_projects.where("created_at >= ? ",DateTime.now - 2.week).present? if out_of_bond.present?
+    if (out_of_bond.present? and !all_of_data.present?) or out_of_month.present?
+      true
+    else
+      false
     end
   end
   

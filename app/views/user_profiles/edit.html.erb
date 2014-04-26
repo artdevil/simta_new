@@ -32,6 +32,9 @@
               <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
             </div>
             <div class="span6">
+              <%= f.simple_fields_for :advisors_status do |n| %>
+                <%= n.input :skills, :label => "Skill", :hint => "pisahkan dengan coma. Pemilihan topik Jaringan, Transmisi, Pensinyalan, Mikro, Pemrograman" %>
+              <% end %>
               <%= f.input :username, :disabled => true %>
               <%= f.input :phone %>
               <%= f.input :address, :input_html => {:rows => 5} %>

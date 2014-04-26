@@ -11,7 +11,9 @@
 			<%= bootstrap_flash %>
       <!-- end bootstrap flash -->
 			<!--PAGE CONTENT BEGINS HERE-->
-      <%= render :partial => "users/partials/import_advisors_schedule" %>
+      <% if current_user.is_admin? %>
+        <%= render :partial => "users/partials/import_advisors_schedule" %>
+      <% end %>
       <%= render :partial => "users/partials/advisors_schedule_table" %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->

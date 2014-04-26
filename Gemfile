@@ -36,6 +36,9 @@ gem 'inherited_resources'
 gem 'breadcrumbs_on_rails'
 gem 'unicorn'
 gem 'unicorn-worker-killer'
+gem 'axlsx_rails'
+gem 'zip-zip'
+gem 'dalli'
 
 
 # Gems used only for assets and not required
@@ -64,7 +67,7 @@ group :development do
   gem "binding_of_caller"
   gem 'rack-mini-profiler'
   gem 'quiet_assets'
-  gem "rails-erd"
+  gem 'rails-erd', git: 'https://github.com/paulwittmann/rails-erd', branch: 'mavericks'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

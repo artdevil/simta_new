@@ -8,6 +8,17 @@ $(document).on('click','.examiner_status',function(){
 });
 
 $(document).ready(function(){
+  $('.datetimepicker').datetimepicker({
+    onGenerate:function( ct ){
+        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
+          .addClass('xdsoft_disabled');
+      },
+    minDate:'-1970/01/01',
+		format:'d/m/Y H:i',
+    allowTimes:[
+      '08:30', '10:30', '12:30', '14:30', '16:30'
+    ]
+  });
   $("#browser").treeview();
   $(document).on('change','.ace-file-input label span',function(){
     $("form[data-validate]").resetClientSideValidations();
@@ -78,7 +89,7 @@ $(document).ready(function(){
   });
   
   $('.data_advisor_tables').dataTable({
-    "aoColumns": [null, null,null, null, { "bSortable": false }]
+    "aoColumns": [null, null, null, { "bSortable": false }]
   });
   $('.data_student_tables').dataTable({
     "sDom": "<'row-fluid'<'span1 selected'><'span7'l><'span4'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
@@ -138,15 +149,6 @@ $(document).ready(function(){
 			size: size
 		});
 	});
-  
-  $(document).on('click','.datetimepicker', function(){
-    $('.datetimepicker').datetimepicker({
-      minDate:'-1970/01/01',
-      allowTimes:[
-        '08:30', '10:30', '12:30', '14:30', '16.30'
-      ]
-    });
-  });
 });
 
 function updateComments() {

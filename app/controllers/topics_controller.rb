@@ -10,6 +10,7 @@ class TopicsController < ApplicationController
     else
       @topics = Topic.includes(:user).page(params[:page]).per(5)
     end
+    expires_in 5.minutes, public: true
   end
   
   def new
@@ -45,5 +46,12 @@ class TopicsController < ApplicationController
   def show
     @topic = Topic.find(params[:id])
     @topic_tag = current_user.topic_tags.new(:topic_id => @topic.id)
+  end
+  
+  def destroy
+    @topic = Topic.find(params[:id])
+    if @topic.destroy
+      redirect_to topics_path, :notice => "Topik berhasil dihapus"
+    end
   end
 end

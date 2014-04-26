@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221023510) do
+ActiveRecord::Schema.define(:version => 20140409161604) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20140221023510) do
   end
 
   create_table "advisors_statuses", :force => true do |t|
-    t.integer  "user_id",                        :null => false
+    t.integer  "user_id"
     t.integer  "max_coordinator", :default => 5, :null => false
     t.integer  "coordinator",     :default => 0, :null => false
     t.string   "skills"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20140221023510) do
     t.datetime "updated_at",                     :null => false
     t.integer  "quota_examiner"
     t.string   "code_advisor"
+    t.text     "examiner_time"
   end
 
   create_table "attachments", :force => true do |t|
@@ -96,7 +97,7 @@ ActiveRecord::Schema.define(:version => 20140221023510) do
   end
 
   create_table "documents", :force => true do |t|
-    t.integer  "admin_user_id"
+    t.integer  "user_id"
     t.string   "name"
     t.string   "file"
     t.string   "document_type"

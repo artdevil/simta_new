@@ -10,7 +10,6 @@
 				<th class="hidden-phone">NIP</th>
 				<th>Nama</th>
         <th>Jumlah bimbingan</th>
-        <th>Quota Pengujian</th>
         <th></th>
 			</tr>
 		</thead>
@@ -20,10 +19,11 @@
           <td><%= f.keyid %></td>
           <td><%= link_to f.username, user_profile_path(f) %></td>
           <td><%= f.advisors_status.coordinator %>/<%= f.advisors_status.max_coordinator %></td>
-          <td><%= f.advisors_status.quota_examiner %></td>
           <td>
-            <%= link_to edit_user_path(f), :class => "btn btn-minier btn-success btn-tooltip", :title => "Edit Dosen", :data => {:placement => "bottom"} do %>
-              <i class="icon-edit"></i>
+            <% if can? :edit, f %>
+              <%= link_to edit_user_path(f), :class => "btn btn-minier btn-success btn-tooltip", :title => "Edit Dosen", :data => {:placement => "bottom"} do %>
+                <i class="icon-edit"></i>
+              <% end %>
             <% end %>
           </td>
         </tr>

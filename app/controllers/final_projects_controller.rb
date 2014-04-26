@@ -16,18 +16,18 @@ class FinalProjectsController < ApplicationController
   
   end
   
-  # def edit
-#     
-#   end
-#   
-#   def update
-#     if @final_project.update_attributes(params[:final_project])
-#       redirect_to "/todo_final_projects/issue/#{@final_project.user.slug}", :notice => "#{I18n.t('final_project.update.success')}"
-#     else
-#       flash[:alert] = "#{I18n.t('final_project.update.failed')}"
-#       render :edit
-#     end
-#   end
+  def edit
+    
+  end
+  
+  def update
+    if @final_project.update_attributes(params[:final_project])
+      redirect_to "/todo_final_projects/issue/#{@final_project.user.slug}", :notice => "#{I18n.t('final_project.update.success')}"
+    else
+      flash[:alert] = "#{I18n.t('final_project.update.failed')}"
+      render :edit
+    end
+  end
   
   def update_document
     if @final_project.update_attributes(params[:final_project])
@@ -40,6 +40,7 @@ class FinalProjectsController < ApplicationController
   end
 
   def show_history
+    @final_project = FinalProject.find(params[:id])
     @activities = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").page(params[:page]).per(20)
     @activities_graph = PublicActivity::Activity.order("created_at desc").where(recipient_id: @final_project.id, recipient_type: "FinalProject").group_by{|f| f.created_at.to_date}.map do |k,v|
       {
@@ -98,9 +99,9 @@ class FinalProjectsController < ApplicationController
     end
   end
   
-  # def destroy
-  #   if @final_project.destroy
-  #     redirect_to dashboards_path, :notice => "#{I18n.t('final_project.delete.success')}"
-  #   end
-  # end
+  def destroy
+    if @final_project.destroy
+      redirect_to dashboards_path, :notice => "#{I18n.t('final_project.delete.success')}"
+    end
+  end
 end

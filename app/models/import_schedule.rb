@@ -19,6 +19,7 @@ class ImportSchedule
     if check_extension_file
       Rails.logger.info(imported_schedules)
       if imported_schedules.map(&:present?).all?
+        AdvisorsSchedule.all.each{|f| f.update_empty}
         true
       else
         imported_schedules.each_with_index do |schedule, index|

@@ -16,5 +16,6 @@ class NotificationsController < ApplicationController
   
   def old
     @notifications = Notification.includes(:sender).includes(:notifiable).notification_all(current_user.id)
+    expires_in 5.minutes, public: true
   end
 end

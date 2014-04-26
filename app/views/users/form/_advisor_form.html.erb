@@ -1,4 +1,4 @@
-<%= simple_nested_form_for @user, :url => (@user.persisted? ? user_path(@user) : create_advisor_users_path), :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+<%= simple_nested_form_for @user, :url => (@user.persisted? ? user_path(@user) : create_advisor_users_path), :validate => true, :html => {:class => "client_side_validation",:multipart => true, :autocomplete => "off"} do |f| %>
   <% if @user.errors.any? %>
     <%= render :partial => "shared/error_messages", :locals => {:context => @user } %>
   <% end %>
@@ -16,9 +16,9 @@
         <%= n.input :max_coordinator, :label => "Maximum bimbingan" %>
         <%= n.input :coordinator, :label => "Jumlah Bimbingan", :disabled => true %>
         <%= n.input :skills, :label => "Skill", :hint => "pisahkan dengan coma. Pemilihan topik Jaringan, Transmisi, Pensinyalan, Mikro, Pemrograman" %>
-        <%= n.input :code_advisor, :label => "Kode Dosen" %>
+        <%= n.input :code_advisor, :label => "Kode Dosen", :autocomplete => "off" %>
       <% end %>
-      <%= f.input :password, :label => "Password", :hint => "Kosongkan jika tidak diganti" %>
+      <%= f.input :password, :label => "Password", :hint => "Kosongkan jika tidak diganti", :input_html => {:autocomplete => "off"} %>
       <%= f.input :password_confirmation, :label => "Password Konfirmasi" %>
     </div>
   </div><!-- end row -->

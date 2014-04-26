@@ -28,11 +28,13 @@
 				</div>
       </div><!-- end row -->
       <% unless @todo_proposal.status %>
-        <div class="row-fluid">
-          <div class="span12" id="comment_form">
-            <%= render :partial => "todo_proposals/partials/todo_form", :locals => {:todo_comment => @todo_proposal.comments.new } %>
-          </div>
-        </div><!-- end row -->
+        <% if can? :create, Comment.new %>
+          <div class="row-fluid">
+            <div class="span12" id="comment_form">
+              <%= render :partial => "todo_proposals/partials/todo_form", :locals => {:todo_comment => @todo_proposal.comments.new } %>
+            </div>
+          </div><!-- end row -->
+        <% end %>
       <% end %>
 			<!--PAGE CONTENT ENDS HERE-->
 		</div><!--/row-->

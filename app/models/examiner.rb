@@ -116,9 +116,16 @@ class Examiner < ActiveRecord::Base
   end
   
   def self.search_random_schedule
-    AdvisorsStatus.update_all(:quota_examiner => 5)
+    AdvisorsStatus.update_all(:quota_examiner => 5, :examiner_time => "")
     Examiner.can_go_session.map do |exam|
-      {"mahasiswa" => exam.final_project.user.username, "pembimbing" => exam.search_advisor, "penguji" => exam.search_examiner_with_skill, "ruang" => exam.location, "tanggal" => exam.datetime.strftime('%d %b %Y, %H:%M')}
+      {
+        "NIM" => exam.final_project.user.keyid, 
+        "mahasiswa" => exam.final_project.user.username, 
+        "pembimbing" => exam.search_advisor, 
+        "penguji" => exam.search_examiner_with_skill(exam.datetime.strftime('%d%m%Y%H%M')), 
+        "ruang" => exam.location, 
+        "tanggal" => exam.datetime.strftime('%d %b %Y, %H:%M')
+      }
     end
   end
   
@@ -126,18 +133,31 @@ class Examiner < ActiveRecord::Base
     [final_project.advisor_1.advisors_status.code_advisor, (final_project.advisor_2.present? ? final_project.advisor_2.advisors_status.code_advisor : final_project.advisor_2_name)]
   end
   
-  def search_examiner_with_skill
+  def search_examiner_with_skill(timing)
     dont_include = [final_project.advisor_1_id, (final_project.advisor_2.present? ? final_project.advisor_2_id : 0)]
-    first_level = User.search_examiner_with_skill(final_project.field, dont_include, self, 3)
-    first_level.map{|f| f.advisors_status.decrement!(:quota_examiner) }
+    first_level = User.search_examiner_with_skill(final_project.field, dont_include, self, 3, timing)
+    first_level.each{|f| 
+      f.advisors_status.decrement!(:quota_examiner)
+      f.advisors_status.update_column(:examiner_time, f.advisors_status.examiner_time + " #{timing}")
+    }
     if first_level.length == 3
       return first_level.collect{|f| f.advisors_status.code_advisor }
+    elsif first_level.length == 0
+      return Array.new(3)
     else
       length_first_level = first_level.length
-      dont_include + first_level.map(&:id)
-      second_level = User.search_examiner_without_skill(dont_include, self, 3-length_first_level)
-      second_level.map{|f| f.advisors_status.decrement!(:quota_examiner) }
-      return first_level.collect{|f| f.advisors_status.code_advisor } + second_level.collect{|f| f.advisors_status.code_advisor }
+      dont_include += first_level.map(&:id)
+      second_level = User.search_examiner_without_skill(dont_include, self, 3-length_first_level, timing)
+      second_level.each{|f| 
+        f.advisors_status.decrement!(:quota_examiner) 
+        f.advisors_status.update_column(:examiner_time, f.advisors_status.examiner_time + " #{timing}")
+      }
+      list_code_name_second_level = second_level.collect{|f| f.advisors_status.code_advisor }
+      length_first_level += second_level.length
+      if length_first_level < 3
+        list_code_name_second_level += Array.new(3 - length_first_level)
+      end
+      return first_level.collect{|f| f.advisors_status.code_advisor } + list_code_name_second_level
     end
   end
   

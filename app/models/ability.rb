@@ -13,21 +13,18 @@ class Ability
       
       if user.is_admin?
         # NEWS
-        can :created, News
-        can [:updated, :destroy], News do |news|
-          news.user == user
-        end
+        can [:created, :destroy, :updated], News
         # USERS
         can [:import_advisors_schedule, :import_students, :send_sms, :index, :advisors, :students, :updated, :add_advisor, :create_advisor], User
         
         # PROPOSAL
-        can [:index, :show, :updated, :access_todo_proposal, :update_document], Proposal
+        can [:index, :show, :access_todo_proposal, :update_document], Proposal
         
         # TODO PROPOSAL
         can [:issue, :issue_todo, :open, :close, :check_user_advisor], TodoProposal
         
         # FINAL PROJECT
-        can [:index, :new_report, :create_report, :show, :show_history, :activities, :access_todo_final_project], FinalProject
+        can [:index, :new_report, :create_report, :show, :show_history, :activities, :access_todo_final_project, :updated], FinalProject
         
         # TODO FINAL PROJECT
         can [:issue, :issue_todo, :open, :close], TodoFinalProject
@@ -45,6 +42,9 @@ class Ability
         # DOCUMENT
         can :manage, Document
         
+        # USERS
+        can [:updated], User
+        
       elsif user.is_kaprodi?
         # NEWS
         can :created, News 
@@ -52,17 +52,32 @@ class Ability
           news.user == user
         end
         # USERS
-        can [:index, :advisors, :students, :send_sms], User
+        can [:index, :advisors, :students, :send_sms, :import_advisors_schedule], User
         
         can [:updated], User do |f|
-          f.faculty_id == user.faculty_id
+          f == user
+        end
+        
+        # TOPIC
+        can :create, Topic
+        can :ud, Topic do |topic|
+          topic.try(:user) == user
+        end
+        
+        # TOPIC TAG
+        can [:read, :update], TopicTag do |topic_tag|
+          topic_tag.try(:advisor_topic_tag) == user
         end
         
         # PROPOSAL
-        can [:index], Proposal
+        can [:index, :create], Proposal
         
-        can [:show, :updated, :update_document, :update_progress, :finished, :destroy, :access_todo_proposal], Proposal do |proposal|
+        can [:show, :access_todo_proposal, :create_todo], Proposal do |proposal|
           proposal.user.faculty_id == user.faculty_id
+        end
+        
+        can [:update, :update_document, :update_progress, :finished, :destroy], Proposal do |proposal|
+          proposal.advisor_1 == user
         end
         
         # TODO PROPOSAL
@@ -75,7 +90,7 @@ class Ability
         # FINAL PROJECT
         can [:index], FinalProject
         
-        can [:update_progress, :finished, :show, :show_history, :activities, :access_todo_final_project], FinalProject do |final_project|
+        can [:update_progress, :finished, :show, :show_history, :activities, :access_todo_final_project, :destroy, :new_todo], FinalProject do |final_project|
           final_project.user.faculty_id == user.faculty_id
         end
         
@@ -87,7 +102,7 @@ class Ability
         end
         
         # EXAMINER
-        can [:index, :updated, :search, :schedule, :revision_status], Examiner
+        can [:index, :search, :schedule, :revision_status], Examiner
         
         can [:show], Examiner do |examiner|
           examiner.status == "siap sidang" or examiner.status == "revisi"
@@ -95,6 +110,12 @@ class Ability
         
         # DOCUMENT
         can :manage, Document
+        
+        # COMMENT
+        can :create, Comment
+        can :update, Comment do |comment|
+          comment.try(:user) == user
+        end
       
       elsif user.is_student?
         # TOPIC TAG
@@ -151,7 +172,7 @@ class Ability
         can [:update, :update_document, :update_progress, :finished, :destroy], Proposal do |proposal|
           proposal.advisor_1 == user
         end
-        can [:show], Proposal do |proposal|
+        can [:show, :create_todo], Proposal do |proposal|
           proposal.advisor_1 == user || proposal.advisor_2 == user
         end
         
@@ -171,12 +192,12 @@ class Ability
           final_project.advisor_1 == user
         end
         
-        can [:new_report, :create_report, :show], FinalProject do |final_project|
-          final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user
+        can [:new_report, :create_report, :new_todo, :show], FinalProject do |final_project|
+          final_project.advisor_1 == user || final_project.advisor_2 == user
         end
         
         can [:show_history, :activities], FinalProject do |final_project|
-          final_project.user == user || final_project.advisor_1 == user || final_project.advisor_2 == user || final_project.examiners.first.examiner_1 == user || final_project.examiners.first.examiner_2 == user || final_project.examiners.first.examiner_3 == user 
+          final_project.advisor_1 == user || final_project.advisor_2 == user || final_project.examiners.first.examiner_1 == user || final_project.examiners.first.examiner_2 == user || final_project.examiners.first.examiner_3 == user 
         end
         
         # TODO FINAL PROJECT

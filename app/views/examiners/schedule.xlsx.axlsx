@@ -1,0 +1,24 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Jadwal Sidang") do |sheet|
+  sheet.add_row ["NIM", "Mahasiswa","Pembimbing 1", "Pembimbing 2", "Penguji 1", "Penguji 2", "Penguji 3", "Ruang", "Tanggal"]
+  @examiner_schedule.each do |f|
+    data = [f['NIM']]
+    data += [f['mahasiswa']]
+    data += f['pembimbing']
+    data += f['penguji']
+    data += [f['ruang']]
+    data += [f['tanggal']]
+    sheet.add_row data
+  end
+end
+
+wb.add_worksheet(name: "Kuota dosen") do |sheet|
+  sheet.add_row ["NIP", "Kode Dosen", "Nama Dosen", "Total Sidang"]
+  AdvisorsStatus.all.each do |f|
+    data = [f.user.keyid]
+    data += [f.code_advisor]
+    data += [f.user.username]
+    data += [5-f.quota_examiner]
+    sheet.add_row data
+  end
+end

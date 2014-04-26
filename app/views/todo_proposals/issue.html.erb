@@ -58,6 +58,8 @@
 		</div><!--/row-->
 	</div><!--/#page-content-->
   <% unless @proposal.finished? %>
-    <%= render :partial => "todo_proposals/issue/config_button", :locals => {:proposal => @proposal} %>
+    <% if can? :create_todo, @proposal %>
+      <%= render :partial => "todo_proposals/issue/config_button", :locals => {:proposal => @proposal} %>
+    <% end %>
   <% end %>
 </div><!--/#main-content-->

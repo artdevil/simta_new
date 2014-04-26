@@ -41,8 +41,10 @@
             <%= link_to examiner_path(examiner.final_project), :class => "btn btn-minier btn-primary btn-tooltip", :title => "Lihat Sidang", :data => {:placement => "bottom"} do %>
               <i class="icon-eye-open"></i>
             <% end %>
-            <%= link_to edit_examiner_path(examiner), :class => "btn btn-minier btn-success btn-tooltip", :title => "Edit Sidang", :data => {:placement => "bottom"} do %>
-              <i class="icon-external-link"></i>
+            <% if can? :update, examiner %>
+              <%= link_to edit_examiner_path(examiner), :class => "btn btn-minier btn-success btn-tooltip", :title => "Edit Sidang", :data => {:placement => "bottom"} do %>
+                <i class="icon-external-link"></i>
+              <% end %>
             <% end %>
           </td>
         </tr>

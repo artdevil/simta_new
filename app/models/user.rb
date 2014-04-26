@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
   scope :select_student, lambda{|user| where{(id == user) & (user_role_id == 1)}}
   scope :select_lecture, lambda{|user| where{(id == user) & (user_role_id == 2)}}
   scope :search_examiner, lambda{|user, users| where('(username like ? or keyid like ? ) and user_role_id = 2 and id not in (?)', "%#{user}%","%#{user}%", users)}
-  scope :search_examiner_with_skill, lambda{|skill, users, day, size| joins(:advisors_status, :advisors_schedule).where("users.id not in (?) and advisors_statuses.skills like ? and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0", users, "%#{skill}%", "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%").sample(size)}
-  scope :search_examiner_without_skill, lambda{|users, day, size| joins(:advisors_status,:advisors_schedule).where("users.id not in (?)  and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0", users, "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%").sample(size)}
+  scope :search_examiner_with_skill, lambda{|skill, users, day, size, timing| joins(:advisors_status, :advisors_schedule).where("users.id not in (?) and advisors_statuses.skills like ? and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0 and advisors_statuses.examiner_time not like ?", users, "%#{skill}%", "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%", "%#{timing}%").sample(size)}
+  scope :search_examiner_without_skill, lambda{|users, day, size, timing| joins(:advisors_status,:advisors_schedule).where("users.id not in (?)  and advisors_schedules.#{day.datetime.strftime('%A').downcase} not like ? and advisors_statuses.quota_examiner > 0 and advisors_statuses.examiner_time not like ?", users, "%#{day.datetime.strftime('%H.%M')}-#{(day.datetime+2.hours).strftime('%H.%M')}%", "%#{timing}%").sample(size)}
   
   # active admin
   scope :final_project, joins(:students_status).where(:students_status => { :status => 3})
@@ -78,13 +78,13 @@ class User < ActiveRecord::Base
   #callback
   before_create :set_password, :if => Proc.new{ self.password.blank? }
   after_create :build_students_status, :if => Proc.new{ self.user_role_id.blank? or self.is_student?}
-  after_create :build_advisors_status, :if => Proc.new{ self.is_advisor? or self.is_kaprodi?}
+  after_create :build_advisors_status_on_create, :if => Proc.new{ self.is_advisor? or self.is_kaprodi?}
   
   def build_students_status
     StudentsStatus.create(:user_id => self.id)
   end
   
-  def build_advisors_status
+  def build_advisors_status_on_create
     AdvisorsStatus.create(:user_id => self.id)
     AdvisorsSchedule.create(:user_id => self.id)
   end
