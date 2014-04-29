@@ -39,6 +39,9 @@ gem 'unicorn-worker-killer'
 gem 'axlsx_rails'
 gem 'zip-zip'
 gem 'dalli'
+gem 'sidekiq', '~> 2.17.7'
+gem 'sidetiq'
+gem 'sinatra'
 
 
 # Gems used only for assets and not required

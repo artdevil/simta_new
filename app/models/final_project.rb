@@ -37,6 +37,14 @@ class FinalProject < ActiveRecord::Base
   scope :advisor_student, lambda{|f| where("finished = false and (advisor_1_id = ? or advisor_2_id = ? )",f.id,f.id)}
   scope :in_progress, where("progress < ? and finished = ? ", 100, false)
   
+  def shared_open_todo_final_project
+    (todo_final_projects + FinalProject.find_by_group_token(group_token).try(:todo_final_projects)).select{|f| f.status == false}
+  end
+  
+  def shared_close_todo_final_project
+    (todo_final_projects + FinalProject.find_by_group_token(group_token).try(:todo_final_projects)).select{|f| f.status == true}
+  end
+  
   def check_user_access(user_id)
     if self.user_id != user_id and self.advisor_1_id != user_id and self.advisor_2_id != user_id
       return true

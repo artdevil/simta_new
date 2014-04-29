@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 SimtaNew::Application.routes.draw do
   devise_for :users
   authenticated :user do
@@ -118,6 +120,8 @@ SimtaNew::Application.routes.draw do
     end
   end
   resources :admin_settings, :only => [:index, :update]
+  
+  mount Sidekiq::Web, at: "/sidekiq"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

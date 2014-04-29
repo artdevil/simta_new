@@ -17,7 +17,12 @@
 
   			<div class="text">
   				<i class="icon-quote-left"></i>
-  				<%= link_to f.title, "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}" %>
+          <% if @final_project.group_token.present? %>
+            <%= link_to f.title, "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}" %><br>
+            <p style="color: #ffb44b"><%= f.final_project.user.username %></p>
+          <% else %>
+            <%= link_to f.title, "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}" %>
+          <% end %>
   			</div>
   		</div>
 			<% if can? :finished, TodoProposal %>

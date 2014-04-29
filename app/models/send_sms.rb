@@ -50,4 +50,27 @@ class SendSms
       sms
     end
   end
+  
+  def self.send_to_all
+    user_late = User.student.select{|f| f.students_status.is_working_final_project? and f.final_project.last_report_time}
+    send_sms = SendSms.new
+    send_sms.all_number = user_late.map(&:phone).join(',')
+    send_sms.message = "Anda tidak melakukan bimbingan selama lebih dari 2 minggu. Silahkan hubungi dosen pembimbing anda - SIMTA -"
+    send_sms.from_form = true
+    send_sms.save_all
+    send_sms.send_to_advisor(user_late)
+  end
+  
+  def send_to_advisor(user_late)
+    user_late.each do |f|
+      advisor = f.final_project.advisor_1.phone
+      if advisor.present?
+        send_sms = SendSms.new
+        send_sms.all_number = advisor
+        send_sms.message = "Mahasiswa anda (#{f.username}/#{f.keyid}) tidak melakukan bimbingan selama lebih dari 2 minggu - SIMTA -"
+        send_sms.from_form = true
+        send_sms.save_all
+      end
+    end
+  end
 end

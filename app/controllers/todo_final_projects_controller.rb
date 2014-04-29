@@ -11,8 +11,13 @@ class TodoFinalProjectsController < ApplicationController
       flash[:notice] = "Anda memasuki masa sidang. Silahkan berkoordinasi dengan admin Fakultas"
     end
     @report_final_projects = @final_project.report_final_projects
-    @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
-    @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
+    if @final_project.group_token.present?
+      @todo_final_project_open = @final_project.shared_open_todo_final_project
+      @todo_final_project_close = @final_project.shared_close_todo_final_project
+    else
+      @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
+      @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
+    end
   end
   
   def show
@@ -22,8 +27,13 @@ class TodoFinalProjectsController < ApplicationController
   
   def issue
     @report_final_projects = @final_project.report_final_projects
-    @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
-    @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
+    if @final_project.group_token.present?
+      @todo_final_project_open = @final_project.shared_open_todo_final_project
+      @todo_final_project_close = @final_project.shared_close_todo_final_project
+    else
+      @todo_final_project_open = @final_project.todo_final_projects.includes(:user).open_issue
+      @todo_final_project_close = @final_project.todo_final_projects.includes(:user).close_issue
+    end
   end
   
   def issue_todo
@@ -95,7 +105,11 @@ class TodoFinalProjectsController < ApplicationController
   def open
     user = User.find(params[:user_id])
     @final_project = FinalProject.where(:user_id => user.id).first
-    @todo_final_projects = @final_project.todo_final_projects.includes(:user).open_issue
+    if @final_project.group_token.present?
+      @todo_final_projects = @final_project.shared_open_todo_final_project
+    else
+      @todo_final_projects = @final_project.todo_final_projects.includes(:user).open_issue
+    end
     if current_user.is_student?
       open = render_to_string(:partial => "todo_final_projects/partials/open_issue", :locals => {:open_issue => @todo_final_projects}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
@@ -108,7 +122,11 @@ class TodoFinalProjectsController < ApplicationController
   def close
     user = User.find(params[:user_id])
     @final_project = FinalProject.where(:user_id => user.id).first
-    @todo_final_projects = @final_project.todo_final_projects.includes(:user).close_issue
+    if @final_project.group_token.present?
+      @todo_final_projects = @final_project.shared_close_todo_final_project
+    else
+      @todo_final_projects = @final_project.todo_final_projects.includes(:user).close_issue
+    end
     if current_user.is_student?
       close = render_to_string(:partial => "todo_final_projects/partials/close_issue", :locals => {:close_issue => @todo_final_projects}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"

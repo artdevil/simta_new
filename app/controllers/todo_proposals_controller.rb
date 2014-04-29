@@ -79,8 +79,13 @@ class TodoProposalsController < ApplicationController
   end
   
   def issue
-    @todo_proposals_open = @proposal.todo_proposals.includes(:user).includes(:proposal).open_issue
-    @todo_proposals_close = @proposal.todo_proposals.includes(:user).includes(:proposal).close_issue
+    if @proposal.group_token.present?
+      @todo_proposals_open = @proposal.shared_open_todo_proposal
+      @todo_proposals_close = @proposal.shared_close_todo_proposal
+    else
+      @todo_proposals_open = @proposal.todo_proposals.includes(:user).open_issue
+      @todo_proposals_close = @proposal.todo_proposals.includes(:user).close_issue
+    end
   end
   
   def issue_todo
@@ -90,7 +95,11 @@ class TodoProposalsController < ApplicationController
   def open
     user = User.find(params[:user_id])
     @proposal = Proposal.where(:user_id => user.id).first
-    @todo_proposals = @proposal.todo_proposals.includes(:user).open_issue
+    if @proposal.group_token.present?
+      @todo_proposals = @proposal.shared_open_todo_proposal
+    else
+      @todo_proposals = @proposal.todo_proposals.includes(:user).open_issue
+    end
     if current_user.is_student?
       open = render_to_string(:partial => "todo_proposals/partials/open_issue", :locals => {:open_issue => @todo_proposals}).to_json
       render :js => "$('#open').html(#{open});$('.timeago').timeago();"
@@ -103,7 +112,11 @@ class TodoProposalsController < ApplicationController
   def close
     user = User.find(params[:user_id])
     @proposal = Proposal.where(:user_id => user.id).first
-    @todo_proposals = @proposal.todo_proposals.includes(:user).close_issue
+    if @proposal.group_token.present?
+      @todo_proposals = @proposal.shared_close_todo_proposal
+    else
+      @todo_proposals = @proposal.todo_proposals.includes(:user).close_issue
+    end
     if current_user.is_student?
       close = render_to_string(:partial => "todo_proposals/partials/close_issue", :locals => {:close_issue => @todo_proposals}).to_json
       render :js => "$('#close').html(#{close});$('.timeago').timeago();"

@@ -14,7 +14,12 @@
   			</div>
   			<div class="text">
   				<i class="icon-quote-left"></i>
-  				<%= link_to f.title, "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}" %>
+          <% if @proposal.group_token.present? %>
+            <%= link_to f.title, "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}" %><br>
+            <p style="color: #ffb44b"><%= f.proposal.user.username %></p>
+          <% else %>
+            <%= link_to f.title, "/todo_proposals/issue/#{f.proposal.user.slug}/#{f.slug}" %>
+          <% end %>
   			</div>
   		</div>
   	</div>

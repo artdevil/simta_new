@@ -14,7 +14,12 @@
   			</div>
   			<div class="text">
   				<i class="icon-quote-left"></i>
-  				<%= link_to f.title, todo_proposal_path(f) %>
+          <% if @proposal.group_token.present? %>
+            <%= link_to f.title, todo_proposal_path(f) %><br>
+            <p style="color: #ffb44b"><%= f.proposal.user.username %></p>
+          <% else %>
+            <%= link_to f.title, todo_proposal_path(f) %>
+          <% end %>
   			</div>
   		</div>
   	</div>

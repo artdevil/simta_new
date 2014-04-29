@@ -39,6 +39,9 @@
                   <%= link_to send_sms_users_path(:contact_phone => f.id), :class => "btn btn-minier btn-success btn-tooltip", :title => "Kirim SMS ke mahasiswa", :data => {:placement => "bottom"} do %>
                     <i class="icon-external-link"></i>
                   <% end %>
+                  <%= link_to send_sms_users_path(:contact_phone => f.final_project.advisor_1.id), :class => "btn btn-minier btn-warning btn-tooltip", :title => "Kirim SMS ke Dosen Pembimbing", :data => {:placement => "bottom"} do %>
+                    <i class="icon-external-link"></i>
+                  <% end %>
                   <%= link_to "/todo_final_projects/issue/#{f.slug}", :class => "btn btn-minier btn-alert btn-tooltip", :title => "Lihat Todo Final Project", :data => {:placement => "bottom"} do %>
                     <i class="icon-eye-open"></i>
                   <% end %>
