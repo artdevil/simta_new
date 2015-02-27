@@ -1,0 +1,28 @@
+<div class="row-fluid">
+	<div class="span12 infobox-container">
+		<div class="infobox infobox-green  ">
+			<div class="infobox-icon">
+				<i class="icon-comments"></i>
+			</div>
+
+			<div class="infobox-data">
+				<span class="infobox-data-number"><%= "#{link_to proposal_status.todo_proposals.size.to_s+" to dos", todo_proposals_path }".html_safe %></span>
+				<div class="infobox-content">
+          <span style="color: #438EB9;"><%= "#{proposal_status.todo_proposals.open_issue.size} open" %></span>
+          <span style="color: red;"><%= "#{proposal_status.todo_proposals.close_issue.size} close" %></span>
+        </div>
+			</div>
+		</div>
+		<div class="infobox infobox-blue2">
+			<div class="infobox-progress">
+				<div class="easy-pie-chart percentage" data-percent="<%= proposal_status.progress %>" data-size="46">
+					<span class="percent"><%= proposal_status.progress %></span>%
+				</div>
+			</div>
+
+			<div class="infobox-data">
+				<span class="infobox-text">Progress Proposal</span>
+			</div>
+		</div>
+	</div><!-- end span 12-->
+</div><!--/row-->

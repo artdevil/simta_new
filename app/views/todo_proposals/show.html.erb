@@ -1,0 +1,51 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "todo_proposals/breadcrumbs/show", :locals => {:topic_title => @todo_proposal.title} %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Todo Proposal
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @todo_proposal.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid">
+        <%= render :partial => "todo_proposals/partials/todo_title", :locals => {:todo_proposal => @todo_proposal} %>
+      </div><!-- end row -->
+      <div class="hr hr32 hr-dotted"></div>
+			<h4>Comments</h4>
+      <div class="row-fluid">
+				<div class="dialogs" id="comments">
+          <% @todo_proposal.comments.includes(:user).includes(:attachments).each do |f| %>
+            <%= render :partial => "todo_proposals/partials/item_todo_comment", :locals => {:comment_status => f}%>
+          <% end %>
+				</div>
+      </div><!-- end row -->
+			<div class="hr hr32 hr-dotted"></div>
+      <% unless @todo_proposal.status %>
+        <div class="row-fluid">
+          <div class="span12" id="comment_form">
+            <%= render :partial => "todo_proposals/partials/todo_form", :locals => {:todo_comment => @todo_proposal.comments.new } %>
+          </div>
+        </div><!-- end row -->
+      <% end %>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->
+<div id="commentModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Comment</h3>
+  </div>
+  <div id="comment_form_input">
+    
+  </div>
+</div>

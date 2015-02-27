@@ -1,0 +1,36 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "archives/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Archives
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Hasil Pencarian
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+        <div class="span12">
+					<ul id="browser" class="filetree">
+						<% @archives.each do |month, archives| %>
+							<li class="closed"><span class="folder"><%= month.strftime("%B %Y") %></span>
+								<ul>
+									<% archives.each do |f| %>
+										<li><span class="file"><%= link_to File.basename(f.file.url), f.file.url, :target => "_BLANK" %></span></li>
+									<% end %>
+								</ul>
+							</li>
+						<% end %>
+					</ul>
+        </div>
+      </div><!-- end row fluid-->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

@@ -1,0 +1,16 @@
+<%= simple_nested_form_for @document, :validate => true, :html => {:class => "client_side_validation",:multipart => true} do |f| %>
+  <%= render :partial => "shared/error_messages", :locals => {:context => @document} %>
+  <div class="row-fluid">
+    <%= f.input :name, :label => "Nama Dokumen", :input_html => {:class => "span12"} %>
+    <%= f.input :file, :input_html => {:class => "upload_file"} %>
+    <%= f.input :document_type, :as => :select, :collection => f.object.document_type_file, :include_blank => false %>
+  </div><!-- end row -->
+  <div class="row-fluid">
+		<div class="form-actions">
+			<button class="btn btn-success" type="submit">
+				<i class="icon-ok bigger-110"></i>
+				Save
+			</button>
+		</div>
+  </div><!--/row-->
+<% end %>

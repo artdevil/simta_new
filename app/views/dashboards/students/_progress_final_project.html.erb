@@ -1,0 +1,28 @@
+<div class="row-fluid">
+	<div class="span12 infobox-container">
+		<div class="infobox infobox-green  ">
+			<div class="infobox-icon">
+				<i class="icon-comments"></i>
+			</div>
+
+			<div class="infobox-data">
+				<span class="infobox-data-number"><%= "#{link_to final_project_status.todo_final_projects.size.to_s+" to dos", todo_final_projects_path }".html_safe %></span>
+				<div class="infobox-content">
+          <span style="color: #438EB9;"><%= "#{final_project_status.todo_final_projects.open_issue.size} open" %></span>
+          <span style="color: red;"><%= "#{final_project_status.todo_final_projects.close_issue.size} close" %></span>
+        </div>
+			</div>
+		</div>
+		<div class="infobox infobox-blue2">
+			<div class="infobox-progress">
+				<div class="easy-pie-chart percentage" data-percent="<%= final_project_status.progress %>" data-size="46">
+					<span class="percent"><%= final_project_status.progress %></span>%
+				</div>
+			</div>
+
+			<div class="infobox-data">
+				<span class="infobox-text">Progress Final<br>Project</span>
+			</div>
+		</div>
+	</div><!-- end span 12-->
+</div><!--/row-->

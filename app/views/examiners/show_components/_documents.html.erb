@@ -1,0 +1,35 @@
+<div class="row-fluid">
+  <div class="span12">
+  	<div class="widget-box light-border">
+  		<div class="widget-header header-color-dark">
+  			<h6>DOCUMENTS</h6>
+
+  			<div class="widget-toolbar">
+  				<a href="#" data-action="collapse">
+  					<i class="icon-chevron-up"></i>
+  				</a>
+  				<a href="#" data-action="close">
+  					<i class="icon-remove"></i>
+  				</a>
+  			</div>
+  		</div>
+
+  		<div class="widget-body">
+  			<div class="widget-main">
+          <dl>
+            <% if @examiner.final_project.document_revision_final_project.present? %>
+              <dd><%= link_to "Buku Revisi Tugas Akhir", @examiner.final_project.document_revision_final_project.url, :target => "_BLANK" %></dd>
+            <% end %>
+            <% if @examiner.final_project.document_final_project.present? %>
+              <dd><%= link_to "Buku Tugas Akhir", @examiner.final_project.document_final_project.url, :target => "_BLANK" %></dd>
+            <% end %>
+            <dd><%= link_to "Lembar Pemeriksa", @examiner.proposal.exam.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Lembar Berita Acara", @examiner.proposal.events.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Proposal", @examiner.proposal.proposal.url, :target => "_BLANK" %></dd>
+            <dd><%= link_to "Lembar SK", @examiner.proposal.decree.url, :target => "_BLANK" %></dd>
+          </dl>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+</div>

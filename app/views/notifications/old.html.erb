@@ -1,0 +1,45 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "notifications/breadcrumbs/old" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Notifications
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="comments">
+						<% @notifications.each do |f| %>
+						<div class="itemdiv commentdiv">
+							<div class="user">
+								<%= image_tag f.sender.avatar_url(:thumb).to_s %>
+							</div>
+							<div class="body">
+								<div class="name">
+									<a href="#"><%= f.sender.username %></a>
+								</div>
+
+								<div class="time">
+									<i class="icon-time"></i>
+									<span class="timeago green" title="<%= f.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+								</div>
+
+								<div class="text">
+									<i class="icon-quote-left"></i>
+										<%= f.message %>. <a href="<%= notification_link(f) %>">Selengkapnya</a>
+								</div>
+							</div>
+						</div>
+						<% end %>
+					</div>
+				</div><!--/span-->
+			</div><!-- end row fluid-->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

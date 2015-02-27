@@ -1,0 +1,25 @@
+<div id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to dashboards_path do %>
+        Dashboards
+      <% end %>
+
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li>
+			<i class="icon-profile"></i>
+			<%= link_to "/todo_final_projects/issue/#{final_project.user.slug}" do %>
+        Todos Final Projects <%= final_project.user.username %>
+      <% end %>
+
+			<span class="divider">
+				<i class="icon-angle-right"></i>
+			</span>
+		</li>
+		<li class="active"><%= todo_final_project_title %></li>
+	</ul><!--.breadcrumb-->
+</div>

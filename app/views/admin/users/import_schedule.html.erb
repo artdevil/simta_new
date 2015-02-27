@@ -1,0 +1,15 @@
+<% if @import_schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@import_schedule.errors.count, "error") %> prohibited this import from completing:</h2>
+      <ul>
+      <% @import_schedule.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= simple_form_for @import_schedule, :url => create_import_schedule_admin_users_path  do |f| %>
+  <%= f.input :file, :as => :file %>
+  <br>
+  <%= f.submit "Import" %>
+<% end %>

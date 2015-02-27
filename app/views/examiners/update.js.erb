@@ -1,0 +1,8 @@
+$('#form_examiner_update').html("<%= escape_javascript(render 'examiners/show_components/form_update').html_safe %>");
+$('#alert-data').html("<%= escape_javascript(bootstrap_flash).html_safe %>");
+$("input.examiner_status[value='<%= @examiner.pass %>']").click();
+var currentDate = new Date();
+$('.date-picker').datepicker({
+  format: "dd-mm-yyyy",
+  startDate: currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear()
+});

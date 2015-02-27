@@ -1,0 +1,61 @@
+<div class="widget-box">
+	<div class="widget-header">
+		<h4>
+			<i class="icon-list"></i>
+			Final Project Data
+		</h4>
+		<span class="widget-toolbar">
+      <% if can? :show, final_project %>
+        <%= link_to final_project_path(final_project) do %>
+          <i class="icon-cog"></i>
+        <% end %>
+      <% end %>
+      <% if can? :show_history, final_project %>
+        <%= link_to show_history_final_project_path(final_project) do %>
+          <i class="icon-calendar"></i>
+        <% end %>
+      <% end %>
+			<a href="#" data-action="collapse">
+				<i class="icon-chevron-up"></i>
+			</a>
+
+			<a href="#" data-action="close">
+				<i class="icon-remove"></i>
+			</a>
+		</span>
+	</div>
+	<div class="widget-body">
+		<div class="widget-main">
+			<div class="row-fluid">
+				<div class="span12">
+				  <dl>
+				    <dt>Judul Tugas Akhir</dt>
+            <dd>
+              <%= link_to final_project_path(final_project) do %>
+                <%= final_project.title %>
+              <% end %>
+            </dd>
+            <dt>Mahasiswa</dt>
+            <dd><%= link_to final_project.user.username, user_profile_path(final_project.user) %></dd>
+  				  <dt>Pembimbing 1</dt>
+            <dd><%= link_to final_project.advisor_1.username, user_profile_path(final_project.advisor_1) %></dd>
+    				<dt>Pembimbing 2</dt>
+            <dd><%= final_project.advisor_2.present? ? link_to(final_project.advisor_2.username, user_profile_path(final_project.advisor_2)) : final_project.advisor_2_name %></dd>
+				  </dl>
+				</div>
+			</div><!-- row fluid end -->
+      <div class="row-fluid">
+        <div class="span12">
+  				<div class="progress" data-percent="<%= final_project.progress %>%" id="progress_bar">
+  					<div class="bar" style="width: <%= final_project.progress %>%;" id="progress_bar_count"></div>
+  				</div>
+        </div>
+      </div><!-- row fluid end -->
+      <div class="row-fluid">
+        <div class="span12">
+          <%= link_to "lihat dokumen proposal", todo_proposals_path %>
+        </div>
+      </div><!-- row fluid end -->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,57 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "documents/breadcrumbs/index" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Documents
+				<small>
+					<i class="icon-double-angle-right"></i>
+					Hasil Pencarian
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+		<div class="row-fluid">
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+			<!--PAGE CONTENT BEGINS HERE-->
+      <div class="row-fluid">
+        <div class="span12">
+					<ul id="browser" class="filetree">
+						<li class="closed"><span class="folder">Folder Tugas Akhir</span>
+							<ul>
+			          <% @documents_ta.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
+									</li>
+			          <% end %>
+							</ul>
+						</li>
+						<li class="closed"><span class="folder">Folder Proposal</span>
+							<ul>
+			          <% @documents_proposal.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
+									</li>
+			          <% end %>
+							</ul>
+						</li>
+						<li class="closed"><span class="folder">Folder Dokumen Lain</span>
+							<ul>
+			          <% @documents_miss.each do |f| %>
+									<li>
+										<span class="file"><%= link_to f.name, f.file.url, :target => "_BLANK" %> | <%= link_to 'delete', document_path(f), :method => :delete if can? :destroy, f %></span>
+									</li>
+			          <% end %>
+							</ul>
+						</li>
+					</ul>
+        </div>
+      </div><!-- end row fluid-->
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+  <% if can? :new, Document.new %>
+    <%= render :partial => "documents/partials/config_button" %>
+  <% end %>
+</div><!--/#main-content-->

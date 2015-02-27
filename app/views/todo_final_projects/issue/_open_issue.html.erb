@@ -1,0 +1,37 @@
+<div class="comments">
+  <% open_issue.includes(:final_project).each do |f| %>
+  	<div class="itemdiv commentdiv open" id="issue_open_<%= f.id %>">
+  		<div class="user">
+  			<%= image_tag f.user.avatar.thumb.url %>
+  		</div>
+
+  		<div class="body">
+  			<div class="name">
+  				<a href="#"><%= f.user.username %></a>
+  			</div>
+
+  			<div class="time">
+  				<i class="icon-time"></i>
+  				<span class="timeago blue" title="<%= f.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  			</div>
+
+  			<div class="text">
+  				<i class="icon-quote-left"></i>
+          <% if @final_project.group_token.present? %>
+            <%= link_to f.title, "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}" %><br>
+            <p style="color: #ffb44b"><%= f.final_project.user.username %></p>
+          <% else %>
+            <%= link_to f.title, "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}" %>
+          <% end %>
+  			</div>
+  		</div>
+			<% if can? :finished, TodoProposal %>
+  			<div class="tools">
+          <%= link_to "/todo_final_projects/issue/#{f.final_project.user.slug}/#{f.slug}", :class => "btn btn-minier btn-success", :remote => true, :method => "put", :confirm => "anda yakin ?" do %>
+            <i class="icon-only icon-ok"></i>
+          <% end %>
+  			</div>
+      <% end %>
+  	</div>
+  <% end %>
+</div>

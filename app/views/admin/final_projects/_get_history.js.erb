@@ -1,0 +1,2 @@
+$('#paging_body').html('<%= escape_javascript render_activities(activities) %>');
+$('.paging_tab').html("<%= escape_javascript(paginate(activities, :remote => true, :params => { :controller => 'admin/final_projects', :action => 'get_history', :id => final_project.id}).to_s) %>");

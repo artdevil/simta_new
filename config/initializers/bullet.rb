@@ -1,0 +1,1 @@
+# Bullet.add_whitelist :type => :unused_eager_loading, :class_name => "UserRole", :association => :users

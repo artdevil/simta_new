@@ -1,0 +1,30 @@
+<div class="comments">
+  <% open_issue.each do |f| %>
+  	<div class="itemdiv commentdiv open" id="issue_open_<%= f.id %>">
+  		<div class="user">
+  			<%= image_tag f.user.avatar.thumb.url %>
+  		</div>
+
+  		<div class="body">
+  			<div class="name">
+  				<a href="#"><%= f.user.username %></a>
+  			</div>
+
+  			<div class="time">
+  				<i class="icon-time"></i>
+  				<span class="timeago blue" title="<%= f.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+  			</div>
+
+  			<div class="text">
+  				<i class="icon-quote-left"></i>
+          <% if @final_project.group_token.present? %>
+            <%= link_to f.title, todo_final_project_path(f) %><br>
+            <p style="color: #ffb44b"><%= f.final_project.user.username %></p>
+          <% else %>
+            <%= link_to f.title, todo_final_project_path(f) %>
+          <% end %>
+  			</div>
+  		</div>
+  	</div>
+  <% end %>
+</div>

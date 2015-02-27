@@ -1,0 +1,9 @@
+<%= simple_form_for comment, :remote => true, :url => comment_path(comment) do |f| %>
+<div class="modal-body">
+  <%= f.input :comment, :as => :ckeditor, :label => false,:input_html => {:ckeditor => {:customConfig => '/assets/ckeditor/myconfig.js'}} %>
+</div>
+<div class="modal-footer">
+  <%= f.submit "save", :class => "btn btn-primary btn-small"%>
+  <button class="btn btn-small" data-dismiss="modal" aria-hidden="true">Close</button>
+</div>
+<% end %>

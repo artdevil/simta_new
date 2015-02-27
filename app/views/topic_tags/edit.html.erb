@@ -1,0 +1,18 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "topic_tags/breadcrumbs/edit" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Edit Pengajuan Topik
+				<small>
+					<i class="icon-double-angle-right"></i>
+					<%= @topic_tag.topic.title %>
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+    <!-- bootstrap flash -->
+		<%= bootstrap_flash %>
+    <!-- end bootstrap flash -->
+    <%= render 'topic_tags/partials/form' %>
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

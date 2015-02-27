@@ -1,0 +1,15 @@
+<%= simple_form_for final_project, :url => update_progress_final_project_path(final_project), :remote => true do |f| %>
+  <%= f.input :progress, :title => "update_progress" %>
+  <% if final_project.finished %>
+    <btn class="btn btn-warning disabled">
+      Update Progress
+    </btn>
+  <% else %>
+    <%= f.submit 'update progress', :class => "btn btn-success"%>
+  <% end %>
+<% end %>
+<% if error_report.present? %>
+<script type="text/javascript">
+  alert("<%= error_report %>");
+</script>
+<% end %>

@@ -1,0 +1,28 @@
+<% if @examiner.working_revision? %>
+<div class="alert">
+  Revisi Terakhir :<br><%= @examiner.revision_date.strftime('%d %B %Y')%>
+</div>
+<%= link_to "revisi diterima", revision_status_examiner_path(@examiner,"examiner[revision_status]" => "accept"), :class => "btn btn-primary btn-small" , :confirm => "Apakah yakin menerima revisi ?" %>
+<%= link_to "revisi ditolak", revision_status_examiner_path(@examiner,"examiner[revision_status]" => "decline"), :class => "btn btn-danger btn-small", :confirm => "Apakah yakin menolak revisi ?" %>
+<% else %>
+  <%= simple_form_for @examiner, :remote => true do |f| %>
+  <div class="controls">
+  	<label>
+  		<input name="examiner[pass]" type="radio" class="examiner_status" value="lulus" />
+  		<span class="lbl">Lulus</span>
+  	</label>
+
+  	<label>
+  		<input name="examiner[pass]" type="radio" class="examiner_status" value="tidak lulus" />
+  		<span class="lbl">Tidak lulus</span>
+  	</label>
+
+  	<label>
+  		<input name="examiner[pass]" type="radio" class="examiner_status" value="lulus dengan revisi" />
+  		<span class="lbl">Lulus dengan Revisi</span>
+  	</label>
+    <%= f.input :revision_date, :as => :string, :input_html => {:class => "date-picker", :style => "display: none;"}, :label => false %>
+    <%= f.submit "Save", :class => "btn btn-primary" %>
+  </div>
+  <% end %>
+<% end %>

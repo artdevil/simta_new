@@ -1,0 +1,64 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  message:
+    notification:
+      sent: "Your Message Has Been Sent"
+      failed: "Your Message Has Been Sent"
+  cancan:
+    unauthorized: "You are not authorized to access this page."
+  topic:
+    create:
+      success: "Your Topic Has Been Created"
+      failed: "Your Topic Can't Save"
+    update:
+      success: "Your Topic Has Been Updated"
+      failed: "You Topic Can't updated"
+  topic_tag:
+    create:
+      success: "Your Send Request Has Been Sent"
+      failed: "Your Send Request Failed To Sent"
+    update:
+      success: "Your Send Request Has Been Update"
+      failed: "Your Send Request Failed To update"
+    proposal:
+      failed: "This Topic Tag has been approve or remove"
+  proposal:
+    create:
+      success: "Your proposal has been create"
+      failed: "Your proposal Can't Save"
+    update:
+      success: "Your proposal Has Been Updated"
+      failed: "You proposal Can't updated"
+    delete:
+      success: "Proposal has been removed"
+    completed: "Please download and upload document for sidang proposal"
+    finished: 
+      success: "Proposal is finished."
+      failed: "Proposal can't be finished. Please check it again"
+  final_project:
+    update:
+      success: "Final Project Has Been Updated"
+      failed: "Final Project Can't updated"
+    delete:
+      success: "Final Project has been removed"
+    completed: "Final Project anda telah selesai. Silahkan mengupload buku TA dan mengajukan diri untuk sidang TA"
+    finished: 
+      success: "Final Project is finished."
+      failed: "Final Project can't be finished. Please check it again"
+  todo_proposals:
+    create:
+      success: "Your to do proposal has been create"
+      failed: "Your to do proposal Can't Save"
+    update:
+      success: "Your to do proposal has been update"
+      failed: "Your to do proposal Can't Update"
+  todo_final_projects:
+    create:
+      success: "Your to do final project has been create"
+      failed: "Your to do final project Can't Save"
+    update:
+      success: "Your to do final project has been update"
+      failed: "Your to do final project Can't Update"

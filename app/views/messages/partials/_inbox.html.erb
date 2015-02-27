@@ -1,0 +1,38 @@
+<!-- inbox -->
+<div class="row-fluid">
+	<div class="table-header">
+		Inbox Messages
+	</div>
+
+	<table id="table_report" class="data_tables table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Pengirim</th>
+				<th class="hidden-phone">Tanggal</th>
+        <th class="hidden-phone">Jam</th>
+				<th>Subject</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+      <% message_inbox.each do |f| %>
+        <tr id="message_<%= f.id %>" class="<%= 'unread' unless f.message_read? %>">
+          <td><%= f.sender.username %></td>
+          <td class="hidden-phone"><%= f.created_at.strftime('%d %B %Y')%></td>
+          <td class="hidden-phone"><%= f.created_at.strftime('%H:%M')%></td>
+          <td><%= f.subject.truncate(40) %></td>
+          <td>
+            <%= link_to message_path(f), :remote => true, :class => "btn btn-mini btn-yellow" do %>
+              <i class="icon-eye-open bigger-120"></i>
+            <% end %>
+            &nbsp;
+            <%= link_to message_path(f), :confirm => "apa anda yakin untuk menghapus pesan ini ?",:remote => true, :method => "delete", :class => "btn btn-mini btn-danger" do %>
+              <i class="icon-trash bigger-120"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+		</tbody>
+	</table>
+</div><!-- end row fluid -->
+<!-- end inbox -->

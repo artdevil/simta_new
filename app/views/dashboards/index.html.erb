@@ -1,0 +1,33 @@
+<div id="main-content" class="clearfix">
+	<%= render :partial => "dashboards/breadcrumbs/dashboard" %>
+	<div id="page-content" class="clearfix">
+		<div class="page-header position-relative">
+			<h1>
+				Dashboard
+				<small>
+					<i class="icon-double-angle-right"></i>
+					overview &amp; stats
+				</small>
+			</h1>
+		</div><!--/.page-header-->
+
+		<div class="row-fluid">
+			<!--PAGE CONTENT BEGINS HERE-->
+      <!-- bootstrap flash -->
+			<%= bootstrap_flash %>
+      <!-- end bootstrap flash -->
+      <div class="row-fluid">
+        <% if current_user.is_student? %>
+          <%= render :partial => "dashboards/students/dashboards" %>
+        <% elsif current_user.is_advisor? %>
+          <%= render :partial => "dashboards/advisors/dashboards" %>
+        <% elsif current_user.is_admin? %>
+          <%= render :partial => "dashboards/admins/dashboards" %>
+        <% elsif current_user.is_kaprodi? %>
+          <%= render :partial => "dashboards/kaprodi/dashboards" %>
+        <% end %>
+      </div>
+			<!--PAGE CONTENT ENDS HERE-->
+		</div><!--/row-->
+	</div><!--/#page-content-->
+</div><!--/#main-content-->

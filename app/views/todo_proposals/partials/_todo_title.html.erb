@@ -1,0 +1,32 @@
+<div class="comments">
+  <div class="itemdiv commentdiv">
+    <div class="user">
+      <%= image_tag @todo_proposal.user.avatar.thumb.url %>
+    </div>
+    <div class="body">
+      <div class="name">
+        <a href="#"><%= @todo_proposal.user.username %></a>
+      </div>
+			<div class="time">
+				<i class="icon-time"></i>
+				<span class="timeago blue" title="<%= @todo_proposal.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+			</div>
+			<div class="text">
+        <%= raw @todo_proposal.message %>
+			</div>
+    </div>
+		<div class="tools">
+      <% if (can? :update, @todo_proposal) or (can? :edit_todo, @todo_proposal) %>
+        <% if current_user.is_student? %>
+          <%= link_to edit_todo_proposal_path(@todo_proposal), :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% elsif current_user.is_advisor? or current_user.is_kaprodi? %>
+          <%= link_to "/todo_proposals/#{@todo_proposal.slug}/issue/#{@todo_proposal.proposal.user.slug}/edit", :class => "btn btn-minier btn-info" do %>
+            <i class="icon-only icon-pencil"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+		</div>
+  </div>
+</div>

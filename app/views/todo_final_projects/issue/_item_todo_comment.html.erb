@@ -1,0 +1,33 @@
+<div class="itemdiv dialogdiv">
+	<div class="user">
+		<%= image_tag comment.user.avatar.thumb.url %>
+	</div>
+	<div class="body">
+		<div class="time">
+			<i class="icon-time"></i>
+			<span class="timeago green" title="<%= comment.created_at.strftime('%Y-%m-%dT%H:%M:%IZ')%>"></span>
+		</div>
+
+		<div class="name">
+			<a href="#"><%= comment.user.username %></a>
+		</div>
+		<div class="text">
+		  <%= raw comment.comment %>
+      <br>
+      <% unless comment.attachments.includes(:attachments).blank? %>
+        <div class="row-fluid">
+          <div class="span12">
+            <h5 style="color: #d15b47;">Attachments</h5>
+          </div>
+        </div>
+        <% comment.attachments.each do |f| %>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= link_to File.basename(f.file.path), f.file.url.to_s, :target => f.id %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+		</div>
+	</div>
+</div>

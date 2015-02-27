@@ -1,0 +1,31 @@
+<div class="row-fluid item_topic">
+  <div class="span12">
+    <div class="row-fluid item_header">
+      <div class="span12">
+    		<%= link_to topic_path(topic) do %>
+      		<h4 class="<%= topic.status ? 'active' : 'nonactive' %>">
+            <%= topic.title %>
+          </h4>
+        <% end %>
+        <h6>Di posting oleh : <%= topic.user.username %></h6>
+        <h6>pada tanggal <%= topic.created_at.strftime('%d %B %Y')%></h6>
+      </div>
+    </div><!-- end row -->
+    <br>
+    <div class="row-fluid item_body" style="font-size: 11px;">
+      <%#= raw "#{topic.description.truncate(600)} #{}" %>
+      <%# = truncate(topic.description) %>
+      <%= truncate_html(topic.description, :length => 500, :omission => "... #{link_to 'read more', topic_path(topic)}") %>
+    </div><!-- end row -->
+    <div class="row-fluid item_footer">
+      <p>Kata Kunci: <%= raw topic.tag_list.map { |t| link_to t, topics_path(:keyword => t) }.join(', ') %></p>
+      <% if can? :edit, topic %>
+        <%= link_to edit_topic_path(topic), :class => "btn btn-mini" do %>
+          <i class="icon-edit"></i>
+          Edit
+        <% end %>
+      <% end %>
+    </div><!-- end row -->
+  </div>
+</div>
+<div class="hr hr32 hr-dotted"></div>

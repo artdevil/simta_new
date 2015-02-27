@@ -1,0 +1,26 @@
+<div class="widget-box light-border">
+	<div class="widget-header header-color-dark">
+		<h4>
+			<i class="icon-list"></i>
+			Final Project Document
+		</h4>
+		<span class="widget-toolbar">
+			<a href="#" data-action="collapse">
+				<i class="icon-chevron-up"></i>
+			</a>
+
+			<a href="#" data-action="close">
+				<i class="icon-remove"></i>
+			</a>
+		</span>
+	</div>
+	<div class="widget-body">
+		<div class="widget-main">
+			<div class="row-fluid">
+				<div class="span12" id="document_final_project">
+          <%= render :partial => "todo_final_projects/partials/upload_document_final_project_form", :locals => {:final_project => final_project} %>
+				</div>
+			</div><!-- row fluid end -->
+		</div>
+	</div>
+</div>
